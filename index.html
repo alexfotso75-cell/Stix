@@ -1148,7 +1148,8 @@ async function doForgot(){
   catch(err){showMsg('lMsg',ERRS[err.code]||err.message);}
 }
 
-// AUTH STATE
+// AUTH STATE — SESSION persistence: user must log in each time the browser/tab is opened
+auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
 auth.onAuthStateChanged(async u=>{
   U=u;
   if(u){
@@ -1879,9 +1880,8 @@ function cleanUp(){
 }
 
 function doLogout(){
-  confirm2('Se déconnecter ?','Vous serez redirigé vers la page de connexion.',async()=>{
-    try{setPresence(false);cleanUp();await auth.signOut();}catch(e){toast('❌ '+e.message);}
-  },'d');
+  if(!window.confirm('Se déconnecter ?\nVous serez redirigé vers la page de connexion.'))return;
+  setPresence(false);cleanUp();auth.signOut().catch(e=>toast('❌ '+e.message));
 }
 
 function startCall(media){
@@ -1924,7 +1924,7 @@ async function doEditProfile(){
   const csp=document.getElementById('epCsp')?.value.trim();
   if(!pn||!nm){toast('❌ Prénom et nom requis');return;}
   try{
-    await db.collection('users').doc(U.uid).update({prenom:pn,nom:nm,csp:csp||''});
+    await db.collection('users').doc(U.uid).set({prenom:pn,nom:nm,csp:csp||''},{merge:true});
     PRO={...PRO,prenom:pn,nom:nm,csp:csp||''};
     updateProUI();closeMdl();toast('✅ Profil mis à jour !');
   }catch(err){toast('❌ '+err.message);}
@@ -1938,7 +1938,7 @@ async function uploadPhoto(input){
   const reader=new FileReader();
   reader.onload=async()=>{
     try{
-      await db.collection('users').doc(U.uid).update({photoBase64:reader.result});
+      await db.collection('users').doc(U.uid).set({photoBase64:reader.result},{merge:true});
       PRO={...PRO,photoBase64:reader.result};
       updateProUI();toast('✅ Photo mise à jour !');
     }catch(err){toast('❌ '+err.message);}
@@ -2000,16 +2000,16 @@ function setTheme(v){
 
 // ── AVATAR BIBLIQUE ───────────────────────────────────
 const VRSETS=[
-  {ref:'Jean 3:16',txt:'Car Dieu a tant aimé le monde qu'il a donné son Fils unique.'},
-  {ref:'Phil 4:13',txt:'Je puis tout par Christ qui me fortifie.'},
-  {ref:'Ps 23:1',txt:'L'Éternel est mon berger, je ne manquerai de rien.'},
-  {ref:'Prov 3:5',txt:'Confie-toi en l'Éternel de tout ton cœur.'},
-  {ref:'Rom 8:28',txt:'Toutes choses concourent au bien de ceux qui aiment Dieu.'},
-  {ref:'És 40:31',txt:'Ceux qui espèrent en l'Éternel renouvellent leurs forces.'},
-  {ref:'Matt 6:33',txt:'Cherchez premièrement le Royaume de Dieu et sa justice.'},
-  {ref:'Ps 46:1',txt:'Dieu est pour nous un refuge et un appui, un secours dans la détresse.'},
-  {ref:'Jér 29:11',txt:'Je connais les projets que j'ai formés sur vous, dit l'Éternel, projets de paix.'},
-  {ref:'1 Cor 13:4',txt:'L'amour est patient, l'amour est plein de bonté.'}
+  {ref:'Jean 3:16',txt:`Car Dieu a tant aimé le monde qu'il a donné son Fils unique.`},
+  {ref:'Phil 4:13',txt:`Je puis tout par Christ qui me fortifie.`},
+  {ref:'Ps 23:1',txt:`L'Éternel est mon berger, je ne manquerai de rien.`},
+  {ref:'Prov 3:5',txt:`Confie-toi en l'Éternel de tout ton cœur.`},
+  {ref:'Rom 8:28',txt:`Toutes choses concourent au bien de ceux qui aiment Dieu.`},
+  {ref:'És 40:31',txt:`Ceux qui espèrent en l'Éternel renouvellent leurs forces.`},
+  {ref:'Matt 6:33',txt:`Cherchez premièrement le Royaume de Dieu et sa justice.`},
+  {ref:'Ps 46:1',txt:`Dieu est pour nous un refuge et un appui, un secours dans la détresse.`},
+  {ref:'Jér 29:11',txt:`Je connais les projets que j'ai formés sur vous, dit l'Éternel, projets de paix.`},
+  {ref:'1 Cor 13:4',txt:`L'amour est patient, l'amour est plein de bonté.`}
 ];
 let _vIdx=0;
 
