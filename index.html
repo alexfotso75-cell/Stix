@@ -328,12 +328,12 @@ button,input,textarea,select{font-family:inherit;outline:none;}
 .empty .es{font-size:13px;line-height:1.55;}
 
 /* AVATAR BIBLIQUE */
-#avt{position:fixed;right:14px;z-index:600;display:none;flex-direction:column;align-items:flex-end;gap:6px;pointer-events:none;}
+#avt{position:fixed;right:14px;z-index:8999;display:none;flex-direction:column;align-items:flex-end;gap:6px;pointer-events:none;}
 #avt-bbl{background:rgba(7,24,40,.96);border:1px solid rgba(0,212,180,.25);backdrop-filter:blur(14px);border-radius:14px 14px 4px 14px;padding:9px 13px;max-width:210px;font-size:12px;color:#D0EAFF;line-height:1.55;pointer-events:all;cursor:pointer;box-shadow:0 12px 40px rgba(0,0,0,.5);}
 #avt-bbl em{font-size:10px;color:rgba(0,212,180,.8);display:block;margin-bottom:3px;font-style:normal;font-weight:800;}
 #avt-fig{font-size:38px;line-height:1;animation:avb 2.5s ease-in-out infinite;pointer-events:all;cursor:pointer;}
 @keyframes avb{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
-#avt-tog{position:fixed;right:14px;bottom:76px;z-index:601;width:34px;height:34px;border-radius:50%;background:rgba(0,212,180,.12);border:1px solid rgba(0,212,180,.25);color:#00D4B4;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+#avt-tog{position:fixed;right:14px;bottom:calc(76px + env(safe-area-inset-bottom, 0px));z-index:9000;width:36px;height:36px;border-radius:50%;background:rgba(0,212,180,.15);border:1px solid rgba(0,212,180,.35);color:#00D4B4;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.4);}
 
 /* SBAR */
 .sbar-wrap{padding:10px 14px;background:#071828;border-bottom:1px solid rgba(255,255,255,.06);}
@@ -1128,10 +1128,12 @@ function openMdl(title,body,foot=''){
   document.getElementById('mOvl').classList.add('on');
 }
 function closeMdl(){document.getElementById('mOvl').classList.remove('on');}
+let _confirmCb=null;
 function confirm2(title,msg,onOk,type='ok'){
+  _confirmCb=onOk;
   openMdl(title,`<p style="font-size:14px;color:#7AA8CC;line-height:1.6;">${msg}</p>`,
-    `<button class="mbt mbt-c" onclick="closeMdl()">Annuler</button>
-     <button class="mbt ${type==='d'?'mbt-d':'mbt-ok'}" onclick="closeMdl();(${onOk.toString()})()">Confirmer</button>`);
+    `<button class="mbt mbt-c" onclick="closeMdl();_confirmCb=null;">Annuler</button>
+     <button class="mbt ${type==='d'?'mbt-d':'mbt-ok'}" onclick="closeMdl();if(_confirmCb){const f=_confirmCb;_confirmCb=null;f();}">Confirmer</button>`);
 }
 
 // AUTH
@@ -1676,7 +1678,7 @@ function loadTasks(){
   });
 }
 async function mvTask(id,st){try{await db.collection('tasks').doc(id).update({status:st,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(er){toast('❌ '+er.message);}}
-async function delTask(id){if(!confirm('Supprimer ?'))return;try{await db.collection('tasks').doc(id).delete();}catch(er){toast('❌ '+er.message);}}
+function delTask(id){confirm2('🗑️ Supprimer la tâche ?','Cette action est irréversible.',async()=>{try{await db.collection('tasks').doc(id).delete();}catch(er){toast('❌ '+er.message);}},'d');}
 function openAddTask(){
   openMdl('➕ Ajouter une tâche',`
     <div class="ff"><label>Titre</label><input class="fi" id="tT" type="text" placeholder="Ex: Préparer rapport…"/></div>
@@ -1758,7 +1760,7 @@ async function doAddNews(){
   try{await db.collection('news').add({title:t,body:b,authorEmail:U.email,authorUid:U.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});closeMdl();toast('✅ Publié !');}
   catch(er){toast('❌ '+er.message);}
 }
-async function delNews(id){if(!confirm('Supprimer ?'))return;try{await db.collection('news').doc(id).delete();toast('🗑️ Supprimé');}catch(er){toast('❌ '+er.message);}}
+function delNews(id){confirm2('🗑️ Supprimer l\'actualité ?','Cette action est irréversible.',async()=>{try{await db.collection('news').doc(id).delete();toast('🗑️ Supprimé');}catch(er){toast('❌ '+er.message);}},'d');}
 
 // DOCUMENTS
 function loadDocs(){
@@ -1789,7 +1791,7 @@ async function doAddDoc(){
   try{await db.collection('docs_links').add({title:t,url,authorEmail:U.email,authorUid:U.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});closeMdl();toast('✅ Partagé !');}
   catch(er){toast('❌ '+er.message);}
 }
-async function delDoc(id){if(!confirm('Supprimer ?'))return;try{await db.collection('docs_links').doc(id).delete();toast('🗑️ Supprimé');}catch(er){toast('❌ '+er.message);}}
+function delDoc(id){confirm2('🗑️ Supprimer le document ?','Cette action est irréversible.',async()=>{try{await db.collection('docs_links').doc(id).delete();toast('🗑️ Supprimé');}catch(er){toast('❌ '+er.message);}},'d');}
 
 // SONDAGES
 function loadPolls(){
@@ -1815,7 +1817,7 @@ function loadPolls(){
     },()=>{const el=document.getElementById('pollsList');if(el)el.innerHTML='<div class="empty"><div class="ei">📊</div><div class="et">Aucun sondage</div></div>';});
 }
 async function votePoll(id,idx){if(!U)return;const key=U.uid.replace(/[^a-zA-Z0-9]/g,'_');try{await db.collection('polls').doc(id).update({[`votes.${key}`]:String(idx)});toast('✅ Vote enregistré !');}catch(er){toast('❌ '+er.message);}}
-async function delPoll(id){if(!confirm('Supprimer ?'))return;try{await db.collection('polls').doc(id).delete();toast('🗑️ Supprimé');}catch(er){toast('❌ '+er.message);}}
+function delPoll(id){confirm2('🗑️ Supprimer le sondage ?','Cette action est irréversible.',async()=>{try{await db.collection('polls').doc(id).delete();toast('🗑️ Supprimé');}catch(er){toast('❌ '+er.message);}},'d');}
 function openCreatePoll(){
   openMdl('📊 Créer un sondage',`
     <div class="ff"><label>Question</label><input class="fi" id="pQ" type="text" placeholder="Ex: Quelle date pour la réunion ?"/></div>
@@ -1968,8 +1970,9 @@ function cleanUp(){
 }
 
 function doLogout(){
-  if(!window.confirm('Se déconnecter ?\nVous serez redirigé vers la page de connexion.'))return;
-  setPresence(false);cleanUp();auth.signOut().catch(e=>toast('❌ '+e.message));
+  confirm2('🚪 Se déconnecter ?','Vous serez redirigé vers la page de connexion.',()=>{
+    setPresence(false);cleanUp();auth.signOut().catch(e=>toast('❌ '+e.message));
+  },'d');
 }
 
 function startCall(media){
@@ -2044,7 +2047,7 @@ function compressImage(file,maxPx,quality){
 
 async function uploadPhoto(input){
   const file=input.files[0];if(!file)return;
-  if(!file.type.startsWith('image/')){toast('❌ Fichier image requis');return;}
+  if(file.type && !file.type.startsWith('image/')){toast('❌ Fichier image requis');return;}
   toast('⏳ Compression en cours…');
   try{
     const compressed=await compressImage(file,200,0.75);
@@ -2125,12 +2128,15 @@ let _vIdx=0;
 
 function togAvt(){
   const el=document.getElementById('avt');
+  if(!el)return;
   const showing=el.style.display==='flex';
   if(showing){el.style.display='none';}
   else{
     el.style.display='flex';
-    const bot=62+10;
-    el.style.bottom=bot+'px';
+    // Positionner au-dessus de la barre de nav (hauteur réelle incluant safe-area iPhone)
+    const navEl=document.getElementById('bnav');
+    const navH=navEl?navEl.getBoundingClientRect().height:72;
+    el.style.bottom=(navH+10)+'px';
     nextVrs();
   }
 }
