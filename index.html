@@ -744,9 +744,32 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
 .ctx { border: 1px solid rgba(0,212,180,.15) !important; }
 .ctxi:hover { background: rgba(0,212,180,.05) !important; }
 
+
+/* ══ SPLASH SCREEN ══ */
+#splash{position:fixed;inset:0;z-index:99999;background:linear-gradient(160deg,#010F1A 0%,#071828 40%,#0D2035 70%,#010F1A 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .5s ease,visibility .5s ease;}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.spl-logo{width:96px;height:96px;border-radius:22px;overflow:hidden;box-shadow:0 0 60px rgba(0,212,180,.4),0 8px 32px rgba(0,0,0,.6);animation:splIn .65s cubic-bezier(.34,1.56,.64,1) both;}
+.spl-logo img{width:100%;height:100%;display:block;}
+.spl-name{font-size:28px;font-weight:900;color:#E8F4FF;letter-spacing:-.5px;animation:splUp .5s ease .15s both;}
+.spl-sub{font-size:13px;color:#7AA8CC;animation:splUp .5s ease .25s both;text-align:center;padding:0 20px;}
+.spl-dots{display:flex;gap:9px;margin-top:28px;animation:splUp .5s ease .3s both;}
+.sdot{width:9px;height:9px;border-radius:50%;background:#00D4B4;animation:sdBounce 1.3s ease-in-out infinite;}
+.sdot:nth-child(2){animation-delay:.22s;opacity:.7;}
+.sdot:nth-child(3){animation-delay:.44s;opacity:.4;}
+@keyframes splIn{from{transform:scale(.45) rotate(-8deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+@keyframes splUp{from{transform:translateY(14px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes sdBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 </style>
 </head>
 <body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="spl-logo"><img src="icons/icon.svg" alt="Stix"/></div>
+  <div class="spl-name">Stix Message</div>
+  <div class="spl-sub">Communication d'entreprise sécurisée</div>
+  <div class="spl-dots"><div class="sdot"></div><div class="sdot"></div><div class="sdot"></div></div>
+</div>
 
 <div id="toasts" role="status" aria-live="polite" aria-atomic="false"></div>
 <div id="lbx" onclick="closeLB()"><button class="lbx-x">✕</button><img id="lbimg" src="" alt=""/></div>
@@ -1155,6 +1178,16 @@ let audioCtx=null;
 let calY=new Date().getFullYear(),calM=new Date().getMonth(),calSel=null,calEvts=[];
 let loaded={};
 
+// SPLASH
+let _splashHidden=false;
+function hideSplash(){
+  if(_splashHidden)return;
+  _splashHidden=true;
+  const s=document.getElementById('splash');
+  if(s){s.classList.add('hide');setTimeout(()=>s.remove(),520);}
+}
+setTimeout(hideSplash,8000); // safety fallback
+
 // UTILS
 const e=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const safeUrl=u=>{try{const p=new URL(u);return['http:','https:'].includes(p.protocol)?u:'';}catch{return '';}};
@@ -1296,13 +1329,13 @@ auth.onAuthStateChanged(async u=>{
     navStack=['pgMsgs'];
     initHome();
     listenCalls();
-    // Bannière si l'email n'est pas encore vérifié
     if(!u.emailVerified) showVerifBanner();
   }else{
     PRO=null;ORG=null;uCache=[];allConvs=[];loaded={};
     cleanUp();
     showScreen('sAuth');
   }
+  hideSplash();
 });
 
 // PROFIL

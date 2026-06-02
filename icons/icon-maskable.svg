@@ -1,18 +1,72 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Background gradient: dark navy top-left to near-black bottom-right -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2035"/>
+      <stop offset="100%" stop-color="#010F1A"/>
+    </linearGradient>
+    <!-- S letter gradient: teal to blue -->
+    <linearGradient id="sGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#00D4B4"/>
       <stop offset="100%" stop-color="#1565C0"/>
     </linearGradient>
+    <!-- Drop shadow filter for S -->
+    <filter id="sShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#00D4B4" flood-opacity="0.35"/>
+    </filter>
   </defs>
-  <!-- Fond plein (maskable = safe zone centrale 80%) -->
-  <rect width="512" height="512" fill="url(#bg)"/>
-  <!-- Bulle de dialogue centrée dans la safe zone -->
-  <path d="M144 170 Q144 134 178 134 L334 134 Q368 134 368 170 L368 278 Q368 314 334 314 L222 314 L178 354 L178 314 Q144 314 144 278 Z"
-        fill="#010F1A" opacity="0.85"/>
-  <circle cx="204" cy="226" r="16" fill="#00D4B4"/>
-  <circle cx="256" cy="226" r="16" fill="#00D4B4" opacity="0.7"/>
-  <circle cx="308" cy="226" r="16" fill="#00D4B4" opacity="0.4"/>
-  <rect x="242" y="374" width="28" height="80" rx="6" fill="#010F1A" opacity="0.4"/>
-  <rect x="212" y="400" width="88" height="28" rx="6" fill="#010F1A" opacity="0.4"/>
+
+  <!-- Full bleed background (maskable icons use full square, any shape applied by OS) -->
+  <rect width="512" height="512" fill="url(#bgGrad)"/>
+
+  <!-- Safe zone is center 80% circle = radius 204, centered at 256,256 -->
+  <!-- All meaningful content placed within that circle -->
+
+  <!-- Subtle inner border hint -->
+  <rect width="512" height="512" fill="none"
+        stroke="#00D4B4" stroke-width="2" opacity="0.10"/>
+
+  <!-- Chat bubble — scaled/positioned to stay well within safe zone -->
+  <path d="M158 162
+           Q158 130 188 130
+           L354 130
+           Q384 130 384 162
+           L384 290
+           Q384 322 354 322
+           L234 322
+           L204 358
+           L204 322
+           L188 322
+           Q158 322 158 290
+           Z"
+        fill="#00D4B4" opacity="0.10"/>
+  <path d="M158 162
+           Q158 130 188 130
+           L354 130
+           Q384 130 384 162
+           L384 290
+           Q384 322 354 322
+           L234 322
+           L204 358
+           L204 322
+           L188 322
+           Q158 322 158 290
+           Z"
+        fill="none" stroke="#00D4B4" stroke-width="3" opacity="0.22"/>
+
+  <!-- Large bold "S" — same design, shifted slightly up to center within safe zone -->
+  <text x="256" y="304"
+        font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+        font-size="290"
+        font-weight="900"
+        text-anchor="middle"
+        fill="url(#sGrad)"
+        filter="url(#sShadow)"
+        letter-spacing="-8">S</text>
+
+  <!-- Cross — within safe zone, bottom area, semi-transparent -->
+  <rect x="247" y="388" width="18" height="54" rx="5" ry="5"
+        fill="#00D4B4" opacity="0.50"/>
+  <rect x="225" y="405" width="62" height="18" rx="5" ry="5"
+        fill="#00D4B4" opacity="0.50"/>
 </svg>
