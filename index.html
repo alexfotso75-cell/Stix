@@ -942,24 +942,94 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
       <div class="sec-title">⚙️ Paramètres</div>
     </div>
     <div class="content">
+
       <div class="psec">
         <div class="pst-t">Mon compte</div>
-        <div class="pit" onclick="openEditProfile()"><div class="piico" style="background:rgba(0,212,180,.1);">✏️</div><div class="pib"><div class="pilbl">Modifier le profil</div><div class="pival">Nom, poste, structure</div></div><span class="pia">›</span></div>
-        <div class="pit" onclick="openPhotoUpload()"><div class="piico" style="background:rgba(21,101,192,.1);">📷</div><div class="pib"><div class="pilbl">Photo de profil</div><div class="pival">Depuis la galerie</div></div><span class="pia">›</span></div>
-        <div class="pit" onclick="openStatusPick()"><div class="piico" style="background:rgba(46,125,50,.1);">🌐</div><div class="pib"><div class="pilbl">Statut</div><div class="pival" id="setStatVal">Disponible</div></div><span class="pia">›</span></div>
-        <div class="pit" onclick="openChangePw()"><div class="piico" style="background:rgba(245,127,23,.1);">🔑</div><div class="pib"><div class="pilbl">Changer le mot de passe</div></div><span class="pia">›</span></div>
+        <div class="pit" onclick="openEditProfile()">
+          <div class="piico" style="background:rgba(0,212,180,.1);">✏️</div>
+          <div class="pib"><div class="pilbl">Modifier le profil</div><div class="pival">Nom, poste, structure</div></div>
+          <span class="pia">›</span>
+        </div>
+        <label for="photoIn" style="display:block;cursor:pointer;">
+          <div class="pit">
+            <div class="piico" style="background:rgba(21,101,192,.1);">📷</div>
+            <div class="pib"><div class="pilbl">Photo de profil</div><div class="pival">Choisir une image</div></div>
+            <span class="pia">›</span>
+          </div>
+        </label>
+        <div class="pit" onclick="openStatusPick()">
+          <div class="piico" style="background:rgba(46,125,50,.1);">🌐</div>
+          <div class="pib"><div class="pilbl">Statut</div><div class="pival" id="setStatVal">Disponible</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="openChangePw()">
+          <div class="piico" style="background:rgba(245,127,23,.1);">🔑</div>
+          <div class="pib"><div class="pilbl">Changer le mot de passe</div></div>
+          <span class="pia">›</span>
+        </div>
       </div>
+
+      <div class="psec">
+        <div class="pst-t">Fonctionnalités</div>
+        <div class="pit" onclick="openEphSettings()">
+          <div class="piico" style="background:rgba(198,40,40,.1);">⏱️</div>
+          <div class="pib"><div class="pilbl">Messages éphémères</div><div class="pival" id="ephVal">Désactivé</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="openFavorites()">
+          <div class="piico" style="background:rgba(245,127,23,.1);">⭐</div>
+          <div class="pib"><div class="pilbl">Messages favoris</div><div class="pival" id="favCount">0 sauvegardé(s)</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="openCallHistory()">
+          <div class="piico" style="background:rgba(46,125,50,.1);">📞</div>
+          <div class="pib"><div class="pilbl">Historique des appels</div><div class="pival" id="callCount">0 appel(s)</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="openDashboard()">
+          <div class="piico" style="background:rgba(21,101,192,.1);">📊</div>
+          <div class="pib"><div class="pilbl">Tableau de bord</div><div class="pival">Statistiques de la structure</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="reqNotif()">
+          <div class="piico" style="background:rgba(245,127,23,.1);">🔔</div>
+          <div class="pib"><div class="pilbl">Notifications push</div><div class="pival">Alertes en temps réel</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="exportData()">
+          <div class="piico" style="background:rgba(21,101,192,.1);">📤</div>
+          <div class="pib"><div class="pilbl">Exporter mes données</div><div class="pival">Télécharger en JSON</div></div>
+          <span class="pia">›</span>
+        </div>
+      </div>
+
       <div class="psec">
         <div class="pst-t">Apparence</div>
-        <div class="pit" onclick="openThemePick()"><div class="piico" style="background:rgba(123,31,162,.1);">🎨</div><div class="pib"><div class="pilbl">Thème</div><div class="pival" id="setThemeVal">Default</div></div><span class="pia">›</span></div>
-        <div class="pit" onclick="togAvt()"><div class="piico" style="background:rgba(0,212,180,.08);">✝️</div><div class="pib"><div class="pilbl">Avatar biblique</div><div class="pival">Versets animés</div></div><span class="pia">›</span></div>
+        <div class="pit" onclick="openThemePick()">
+          <div class="piico" style="background:rgba(123,31,162,.1);">🎨</div>
+          <div class="pib"><div class="pilbl">Thème</div><div class="pival" id="setThemeVal">Default</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="togAvt()">
+          <div class="piico" style="background:rgba(0,212,180,.08);">✝️</div>
+          <div class="pib"><div class="pilbl">Avatar biblique</div><div class="pival">Versets animés</div></div>
+          <span class="pia">›</span>
+        </div>
       </div>
+
       <div class="psec">
         <div class="pst-t">Danger</div>
-        <div class="pit d" onclick="doLogout()"><div class="piico">🚪</div><div class="pib"><div class="pilbl">Se déconnecter</div></div></div>
-        <div class="pit d" onclick="openDeleteAccount()"><div class="piico" style="background:rgba(198,40,40,.12);">🗑️</div><div class="pib"><div class="pilbl">Supprimer mon compte</div><div class="pival">Action irréversible</div></div></div>
+        <div class="pit d" onclick="doLogout()">
+          <div class="piico">🚪</div>
+          <div class="pib"><div class="pilbl">Se déconnecter</div></div>
+        </div>
+        <div class="pit d" onclick="openDeleteAccount()">
+          <div class="piico" style="background:rgba(198,40,40,.12);">🗑️</div>
+          <div class="pib"><div class="pilbl">Supprimer mon compte</div><div class="pival">Action irréversible</div></div>
+        </div>
       </div>
-      <div style="height:20px;"></div>
+
+      <div style="height:30px;"></div>
     </div>
   </div>
 
@@ -972,20 +1042,41 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
     </div>
     <div class="content">
       <div class="phero">
-        <div class="pbig" id="profAv" onclick="openPhotoUpload()"><span id="profIni">?</span><div class="pbig-ov">📷</div></div>
-        <input type="file" id="photoIn" accept="image/*" style="display:none;" onchange="uploadPhoto(this)"/>
+        <label for="photoIn" style="cursor:pointer;display:block;text-align:center;">
+          <div class="pbig" id="profAv"><span id="profIni">?</span><div class="pbig-ov">📷</div></div>
+          <div style="font-size:12px;color:#00D4B4;margin-top:4px;font-weight:600;">Changer la photo</div>
+        </label>
         <div class="pnm" id="profNm">—</div>
         <div class="pem" id="profEm">—</div>
         <div class="pst" id="profSt">🟢 Disponible</div>
       </div>
       <div class="psec">
         <div class="pst-t">Mon compte</div>
-        <div class="pit" onclick="openEditProfile()"><div class="piico" style="background:rgba(0,212,180,.1);">✏️</div><div class="pib"><div class="pilbl">Modifier le profil</div></div><span class="pia">›</span></div>
-        <div class="pit" onclick="openStatusPick()"><div class="piico" style="background:rgba(46,125,50,.1);">🌐</div><div class="pib"><div class="pilbl">Statut</div><div class="pival" id="profStatVal">Disponible</div></div><span class="pia">›</span></div>
-        <div class="pit d" onclick="doLogout()"><div class="piico">🚪</div><div class="pib"><div class="pilbl">Se déconnecter</div></div></div>
-        <div class="pit d" onclick="openDeleteAccount()"><div class="piico" style="background:rgba(198,40,40,.12);">🗑️</div><div class="pib"><div class="pilbl">Supprimer mon compte</div><div class="pival">Action irréversible</div></div></div>
+        <div class="pit" onclick="openEditProfile()">
+          <div class="piico" style="background:rgba(0,212,180,.1);">✏️</div>
+          <div class="pib"><div class="pilbl">Modifier le profil</div><div class="pival">Nom, poste</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="openStatusPick()">
+          <div class="piico" style="background:rgba(46,125,50,.1);">🌐</div>
+          <div class="pib"><div class="pilbl">Statut</div><div class="pival" id="profStatVal">Disponible</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit" onclick="openChangePw()">
+          <div class="piico" style="background:rgba(245,127,23,.1);">🔑</div>
+          <div class="pib"><div class="pilbl">Changer le mot de passe</div></div>
+          <span class="pia">›</span>
+        </div>
+        <div class="pit d" onclick="doLogout()">
+          <div class="piico">🚪</div>
+          <div class="pib"><div class="pilbl">Se déconnecter</div></div>
+        </div>
+        <div class="pit d" onclick="openDeleteAccount()">
+          <div class="piico" style="background:rgba(198,40,40,.12);">🗑️</div>
+          <div class="pib"><div class="pilbl">Supprimer mon compte</div><div class="pival">Action irréversible</div></div>
+        </div>
       </div>
-      <div style="height:20px;"></div>
+      <div style="height:30px;"></div>
     </div>
   </div>
 
@@ -1021,6 +1112,8 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
 <!-- OVERLAYS -->
 <div class="ovl" id="bsOvl" onclick="closeBs()"><div class="bsh" id="bsCnt" onclick="event.stopPropagation()"><div class="bsh-hndl"></div><div id="bsIn"></div></div></div>
 <div class="movl" id="mOvl" onclick="if(event.target===this)closeMdl()"><div class="mbox"><div class="mhdr"><div class="mttl" id="mTtl">—</div><button class="mx" onclick="closeMdl()">✕</button></div><div class="mbody" id="mBody"></div><div class="mfoot" id="mFoot"></div></div></div>
+<!-- Input photo global — en dehors de tout .pg pour fonctionner sur tous les appareils -->
+<input type="file" id="photoIn" accept="image/*" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;" onchange="uploadPhoto(this)"/>
 
 <!-- FIREBASE -->
 
@@ -2022,7 +2115,6 @@ async function doEditProfile(){
   }catch(err){toast('❌ '+err.message);}
 }
 
-function openPhotoUpload(){document.getElementById('photoIn').click();}
 
 // Compression côté navigateur : redimensionne à 200×200 et compresse en JPEG
 // → passe de ~500 KB à ~8 KB → compatible plan gratuit Firebase Spark
@@ -2293,24 +2385,8 @@ async function exportData(){
 window.addEventListener('online',()=>toast('✅ Connexion rétablie'));
 window.addEventListener('offline',()=>toast('⚠️ Hors ligne — certaines fonctions indisponibles'));
 
-// ── INJECTION SECTION PARAMÈTRES ──────────────────────
+// Initialiser les compteurs dans paramètres au chargement
 document.addEventListener('DOMContentLoaded',()=>{
-  const settingsContent=document.querySelector('#pgSettings .content');
-  if(!settingsContent)return;
-  const newSection=document.createElement('div');
-  newSection.className='psec';
-  newSection.innerHTML=`
-    <div class="pst-t">Fonctionnalités</div>
-    <div class="pit" onclick="openEphSettings()"><div class="piico" style="background:rgba(198,40,40,.1);">⏱️</div><div class="pib"><div class="pilbl">Messages éphémères</div><div class="pival" id="ephVal">Désactivé</div></div><span class="pia">›</span></div>
-    <div class="pit" onclick="openFavorites()"><div class="piico" style="background:rgba(245,127,23,.1);">⭐</div><div class="pib"><div class="pilbl">Messages favoris</div><div class="pival" id="favCount">0 sauvegardé(s)</div></div><span class="pia">›</span></div>
-    <div class="pit" onclick="openCallHistory()"><div class="piico" style="background:rgba(46,125,50,.1);">📞</div><div class="pib"><div class="pilbl">Historique des appels</div><div class="pival" id="callCount">0 appel(s)</div></div><span class="pia">›</span></div>
-    <div class="pit" onclick="openDashboard()"><div class="piico" style="background:rgba(21,101,192,.1);">📊</div><div class="pib"><div class="pilbl">Tableau de bord</div><div class="pival">Statistiques de la structure</div></div><span class="pia">›</span></div>
-    <div class="pit" onclick="reqNotif()"><div class="piico" style="background:rgba(245,127,23,.1);">🔔</div><div class="pib"><div class="pilbl">Notifications push</div><div class="pival">Alertes en temps réel</div></div><span class="pia">›</span></div>
-    <div class="pit" onclick="exportData()"><div class="piico" style="background:rgba(21,101,192,.1);">📤</div><div class="pib"><div class="pilbl">Exporter mes données</div><div class="pival">Télécharger en JSON</div></div><span class="pia">›</span></div>
-  `;
-  const dangerSection=Array.from(settingsContent.querySelectorAll('.psec')).find(s=>s.querySelector('.pit.d'));
-  if(dangerSection)settingsContent.insertBefore(newSection,dangerSection);
-  else settingsContent.appendChild(newSection);
   updateEphUI();
   const fc=document.getElementById('favCount');if(fc)fc.textContent=_favorites.length+' sauvegardé(s)';
   const cc=document.getElementById('callCount');if(cc)cc.textContent=_callHistory.length+' appel(s)';
