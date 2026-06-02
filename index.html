@@ -766,7 +766,7 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
 <!-- SPLASH SCREEN -->
 <div id="splash">
   <div class="spl-logo"><img src="icons/icon.svg" alt="Stix"/></div>
-  <div class="spl-name">Stix Message</div>
+  <div class="spl-name">GraceLink</div>
   <div class="spl-sub">Communication d'entreprise sécurisée</div>
   <div class="spl-dots"><div class="sdot"></div><div class="sdot"></div><div class="sdot"></div></div>
 </div>
@@ -783,7 +783,7 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
 <div id="sAuth" class="screen show">
   <div class="aw">
     <div class="alogo">S</div>
-    <div class="atitle">Stix Message</div>
+    <div class="atitle">GraceLink</div>
     <div class="asub">Communication interne sécurisée<br>pour votre structure</div>
     <div class="atabs">
       <button class="atab on" onclick="authTab('login')">Connexion</button>
@@ -815,7 +815,7 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
   <div id="pgMsgs" class="pg on" style="position:relative;">
     <div class="hdr">
       <div class="hav" id="hAv" onclick="goProfile()">S<span class="odot" id="hDot" style="display:none;"></span></div>
-      <div class="htitle"><div class="hn">Stix Message</div><div class="hs" id="hOrg">—</div></div>
+      <div class="htitle"><div class="hn">GraceLink</div><div class="hs" id="hOrg">—</div></div>
       <div style="display:flex;gap:2px;">
         <button class="hbtn" onclick="openNewChat()">✏️</button>
         <button class="hbtn" onclick="openSearch()">🔍</button>
@@ -2319,7 +2319,7 @@ async function checkEphemeralMsgs(convId){
 async function reqNotif(){
   if(!('Notification' in window)){toast('❌ Non supporté sur ce navigateur');return;}
   const p=await Notification.requestPermission();
-  if(p==='granted'){toast('✅ Notifications activées !');new Notification('Stix Message',{body:'Vous recevrez des alertes pour les nouveaux messages !'});}
+  if(p==='granted'){toast('✅ Notifications activées !');new Notification('GraceLink',{body:'Vous recevrez des alertes pour les nouveaux messages !'});}
   else toast('❌ Notifications refusées. Activez-les dans les paramètres.');
 }
 
@@ -2409,7 +2409,7 @@ async function exportData(){
   if(!U)return;
   try{
     const snap=await db.collection('users').doc(U.uid).get();
-    const data={profil:snap.data()||{},favoris:_favorites,appels:_callHistory,dateExport:new Date().toISOString(),app:'Stix Message v3.0'};
+    const data={profil:snap.data()||{},favoris:_favorites,appels:_callHistory,dateExport:new Date().toISOString(),app:'GraceLink v3.0'};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`stix_data_${new Date().toISOString().slice(0,10)}.json`;a.click();
     toast('✅ Données exportées !');
