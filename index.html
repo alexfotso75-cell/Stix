@@ -1027,7 +1027,8 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script>
+<!-- Firebase Storage SDK optionnel (nécessite le plan Blaze payant) -->
+<!-- <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script> -->
 <script>
 // CONFIG FIREBASE
 firebase.initializeApp({
@@ -1038,7 +1039,7 @@ firebase.initializeApp({
   messagingSenderId:"414862835437",
   appId:"1:414862835437:web:0fceefc436dfa1ab6956e4"
 });
-const auth=firebase.auth(), db=firebase.firestore(), storage=firebase.storage();
+const auth=firebase.auth(), db=firebase.firestore();
 
 // ── Service Worker ────────────────────────────────────────────────────────
 if('serviceWorker' in navigator){
@@ -2020,17 +2021,35 @@ async function doEditProfile(){
 
 function openPhotoUpload(){document.getElementById('photoIn').click();}
 
+// Compression côté navigateur : redimensionne à 200×200 et compresse en JPEG
+// → passe de ~500 KB à ~8 KB → compatible plan gratuit Firebase Spark
+function compressImage(file,maxPx,quality){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      URL.revokeObjectURL(url);
+      let w=img.width,h=img.height;
+      if(w>h){if(w>maxPx){h=Math.round(h*maxPx/w);w=maxPx;}}
+      else{if(h>maxPx){w=Math.round(w*maxPx/h);h=maxPx;}}
+      const c=document.createElement('canvas');
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      resolve(c.toDataURL('image/jpeg',quality));
+    };
+    img.onerror=reject;
+    img.src=url;
+  });
+}
+
 async function uploadPhoto(input){
   const file=input.files[0];if(!file)return;
-  if(file.size>2*1024*1024){toast('❌ Max 2 MB');return;}
   if(!file.type.startsWith('image/')){toast('❌ Fichier image requis');return;}
-  toast('⏳ Envoi de la photo…');
+  toast('⏳ Compression en cours…');
   try{
-    const ref=storage.ref().child(`avatars/${U.uid}`);
-    await ref.put(file,{contentType:file.type});
-    const url=await ref.getDownloadURL();
-    await db.collection('users').doc(U.uid).set({photoURL:url},{merge:true});
-    PRO={...PRO,photoURL:url};
+    const compressed=await compressImage(file,200,0.75);
+    await db.collection('users').doc(U.uid).set({photoURL:compressed},{merge:true});
+    PRO={...PRO,photoURL:compressed};
     updateProUI();toast('✅ Photo mise à jour !');
   }catch(err){toast('❌ '+err.message);}
   input.value='';
