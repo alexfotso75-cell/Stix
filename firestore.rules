@@ -1,0 +1,105 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthed()    { return request.auth != null; }
+    function myUid()       { return request.auth.uid; }
+    function myOrg() {
+      return get(/databases/$(database)/documents/users/$(myUid())).data.orgId;
+    }
+    function sameOrg(orgId){ return isAuthed() && orgId == myOrg(); }
+
+    // ── Profils utilisateurs ──────────────────────────────────────────────
+    match /users/{uid} {
+      // Tout utilisateur authentifié peut lire les profils (recherche de contacts)
+      allow read:   if isAuthed();
+      // Création uniquement pour son propre uid
+      allow create: if isAuthed() && myUid() == uid;
+      // Mise à jour uniquement pour son propre uid
+      allow update: if isAuthed() && myUid() == uid;
+      // Suppression uniquement pour son propre uid
+      allow delete: if isAuthed() && myUid() == uid;
+    }
+
+    // ── Conversations 1-à-1 ───────────────────────────────────────────────
+    match /conversations/{convId} {
+      allow read:   if isAuthed() && myUid() in resource.data.users;
+      allow create: if isAuthed()
+                   && myUid() in request.resource.data.users
+                   && request.resource.data.orgId == myOrg();
+      allow update: if isAuthed() && myUid() in resource.data.users;
+      allow delete: if false;
+
+      match /messages/{msgId} {
+        function conv() {
+          return get(/databases/$(database)/documents/conversations/$(convId)).data;
+        }
+        allow read:   if isAuthed() && myUid() in conv().users;
+        allow create: if isAuthed()
+                     && myUid() in conv().users
+                     && request.resource.data.senderId == myUid();
+        allow update: if isAuthed() && (
+          resource.data.senderId == myUid() ||
+          myUid() in conv().users
+        );
+        allow delete: if false;
+      }
+    }
+
+    // ── Groupes ───────────────────────────────────────────────────────────
+    match /groups/{docId} {
+      allow read:   if sameOrg(resource.data.orgId);
+      allow create: if sameOrg(request.resource.data.orgId);
+      allow update: if sameOrg(resource.data.orgId);
+      allow delete: if sameOrg(resource.data.orgId) && resource.data.createdBy == myUid();
+    }
+
+    // ── Événements agenda ─────────────────────────────────────────────────
+    match /calendar_events/{docId} {
+      allow read:   if sameOrg(resource.data.orgId);
+      allow create: if sameOrg(request.resource.data.orgId);
+      allow update: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
+      allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
+    }
+
+    // ── Tâches ────────────────────────────────────────────────────────────
+    match /tasks/{docId} {
+      allow read:   if sameOrg(resource.data.orgId);
+      allow create: if sameOrg(request.resource.data.orgId);
+      allow update: if sameOrg(resource.data.orgId);
+      allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
+    }
+
+    // ── Annuaire employés ─────────────────────────────────────────────────
+    match /employees/{docId} {
+      allow read:   if sameOrg(resource.data.orgId);
+      allow create: if sameOrg(request.resource.data.orgId);
+      allow update: if sameOrg(resource.data.orgId);
+      allow delete: if sameOrg(resource.data.orgId);
+    }
+
+    // ── Actualités ────────────────────────────────────────────────────────
+    match /news/{docId} {
+      allow read:   if sameOrg(resource.data.orgId);
+      allow create: if sameOrg(request.resource.data.orgId);
+      allow update: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
+      allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
+    }
+
+    // ── Documents / liens ─────────────────────────────────────────────────
+    match /docs_links/{docId} {
+      allow read:   if sameOrg(resource.data.orgId);
+      allow create: if sameOrg(request.resource.data.orgId);
+      allow update: if sameOrg(resource.data.orgId);
+      allow delete: if sameOrg(resource.data.orgId);
+    }
+
+    // ── Sondages ──────────────────────────────────────────────────────────
+    match /polls/{docId} {
+      allow read:   if sameOrg(resource.data.orgId);
+      allow create: if sameOrg(request.resource.data.orgId);
+      allow update: if sameOrg(resource.data.orgId);
+      allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
+    }
+  }
+}

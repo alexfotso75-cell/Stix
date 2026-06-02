@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D4B4"/>
+      <stop offset="100%" stop-color="#1565C0"/>
+    </linearGradient>
+  </defs>
+  <!-- Fond plein (maskable = safe zone centrale 80%) -->
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <!-- Bulle de dialogue centrée dans la safe zone -->
+  <path d="M144 170 Q144 134 178 134 L334 134 Q368 134 368 170 L368 278 Q368 314 334 314 L222 314 L178 354 L178 314 Q144 314 144 278 Z"
+        fill="#010F1A" opacity="0.85"/>
+  <circle cx="204" cy="226" r="16" fill="#00D4B4"/>
+  <circle cx="256" cy="226" r="16" fill="#00D4B4" opacity="0.7"/>
+  <circle cx="308" cy="226" r="16" fill="#00D4B4" opacity="0.4"/>
+  <rect x="242" y="374" width="28" height="80" rx="6" fill="#010F1A" opacity="0.4"/>
+  <rect x="212" y="400" width="88" height="28" rx="6" fill="#010F1A" opacity="0.4"/>
+</svg>

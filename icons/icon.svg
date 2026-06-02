@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D4B4"/>
+      <stop offset="100%" stop-color="#1565C0"/>
+    </linearGradient>
+  </defs>
+  <!-- Fond arrondi -->
+  <rect width="512" height="512" rx="115" fill="url(#bg)"/>
+  <!-- Bulle de dialogue -->
+  <path d="M128 160 Q128 120 168 120 L344 120 Q384 120 384 160 L384 280 Q384 320 344 320 L220 320 L168 368 L168 320 Q128 320 128 280 Z"
+        fill="#010F1A" opacity="0.85"/>
+  <!-- Points de frappe -->
+  <circle cx="196" cy="220" r="18" fill="#00D4B4"/>
+  <circle cx="256" cy="220" r="18" fill="#00D4B4" opacity="0.7"/>
+  <circle cx="316" cy="220" r="18" fill="#00D4B4" opacity="0.4"/>
+  <!-- Croix / étoile chrétienne subtile -->
+  <rect x="242" y="380" width="28" height="90" rx="6" fill="#010F1A" opacity="0.5"/>
+  <rect x="210" y="408" width="92" height="28" rx="6" fill="#010F1A" opacity="0.5"/>
+</svg>

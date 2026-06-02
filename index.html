@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="theme-color" content="#010F1A"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="GraceLink"/>
+<meta name="description" content="Messagerie d'entreprise sécurisée — GraceLink"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="icons/icon.svg"/>
 <title>GraceLink</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -680,6 +686,26 @@ button,input,textarea,select{font-family:inherit;outline:none;}
 body.theme-ocean { --bg:#00111F; --bg2:#001A2E; }
 body.theme-ocean .hdr, body.theme-ocean .bnav { background: rgba(0,17,31,.9) !important; }
 
+/* Thème Clair */
+body.theme-light{background:#F5F7FA;color:#1A2233;}
+body.theme-light .screen{background:#F5F7FA;}
+body.theme-light .hdr,body.theme-light .bnav{background:#FFFFFF;border-color:rgba(0,0,0,.1);}
+body.theme-light .nbt{color:rgba(0,0,0,.4);}
+body.theme-light .nbt.on{color:#00897B;}
+body.theme-light .conv{border-color:rgba(0,0,0,.07);}
+body.theme-light .cnm{color:#1A2233;}
+body.theme-light .cpv,body.theme-light .ct,body.theme-light .bt{color:#5C7A9A;}
+body.theme-light .bbl{color:#1A2233;}
+body.theme-light .me .bbl{background:#E0F7F4;border-color:rgba(0,137,123,.2);}
+body.theme-light .them .bbl{background:#FFFFFF;border-color:rgba(0,0,0,.1);}
+body.theme-light .ainp{background:#FFFFFF;border-color:rgba(0,0,0,.15);color:#1A2233;}
+body.theme-light .atabs{background:#E8EAED;}
+body.theme-light .atab.on{background:#FFFFFF;color:#1A2233;}
+body.theme-light .msgs{background-color:#F5F7FA;background-image:radial-gradient(rgba(0,137,123,.04) 1px,transparent 1px);}
+body.theme-light .content{background:#F5F7FA;}
+body.theme-light .psec .pit{background:#FFFFFF;border-color:rgba(0,0,0,.07);}
+body.theme-light .toast{background:#1A2233;color:#fff;}
+
 /* Scroll smooth */
 .content, .sec-content, .msgs { scroll-behavior: smooth !important; }
 
@@ -719,7 +745,7 @@ body.theme-ocean .hdr, body.theme-ocean .bnav { background: rgba(0,17,31,.9) !im
 </head>
 <body>
 
-<div id="toasts"></div>
+<div id="toasts" role="status" aria-live="polite" aria-atomic="false"></div>
 <div id="lbx" onclick="closeLB()"><button class="lbx-x">✕</button><img id="lbimg" src="" alt=""/></div>
 <div id="qr" class="qr"></div>
 <div id="ctx" class="ctx"></div>
@@ -738,18 +764,18 @@ body.theme-ocean .hdr, body.theme-ocean .bnav { background: rgba(0,17,31,.9) !im
       <button class="atab" onclick="authTab('register')">Inscription</button>
     </div>
     <div class="aform" id="fLogin">
-      <div class="af"><label>Email</label><input class="ainp" id="lEmail" type="email" placeholder="alice@entreprise.com" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false"/></div>
-      <div class="af"><label>Mot de passe</label><div class="pw"><input class="ainp" id="lPass" type="password" placeholder="••••••••" autocomplete="current-password"/><button type="button" class="peye" onclick="togPw('lPass',this)">👁️</button></div></div>
+      <div class="af"><label for="lEmail">Email</label><input class="ainp" id="lEmail" type="email" placeholder="alice@entreprise.com" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false" aria-required="true"/></div>
+      <div class="af"><label for="lPass">Mot de passe</label><div class="pw"><input class="ainp" id="lPass" type="password" placeholder="••••••••" autocomplete="current-password" aria-required="true"/><button type="button" class="peye" onclick="togPw('lPass',this)" aria-label="Afficher/masquer le mot de passe">👁️</button></div></div>
       <div class="amsg" id="lMsg"></div>
       <button class="abtn" id="lBtn" type="button" onclick="doLogin2()">Se connecter</button>
       <button type="button" class="alink" onclick="doForgot()">Mot de passe oublié ?</button>
     </div>
     <div class="aform" id="fReg" style="display:none;">
-      <div class="af"><label>Prénom</label><input class="ainp" id="rPrenom" type="text" placeholder="Alice" autocorrect="off" autocapitalize="words"/></div>
-      <div class="af"><label>Nom</label><input class="ainp" id="rNom" type="text" placeholder="Dupont" autocorrect="off" autocapitalize="words"/></div>
-      <div class="af"><label>Email</label><input class="ainp" id="rEmail" type="email" placeholder="alice@stix.com" autocomplete="email" autocorrect="off" autocapitalize="none"/></div>
-      <div class="af"><label>Code structure</label><input class="ainp" id="rCode" type="text" placeholder="Ex: WAGUE-2026" style="text-transform:uppercase;" autocorrect="off" autocapitalize="characters"/></div>
-      <div class="af"><label>Mot de passe</label><div class="pw"><input class="ainp" id="rPass" type="password" placeholder="Min. 6 caractères" autocomplete="new-password"/><button type="button" class="peye" onclick="togPw('rPass',this)">👁️</button></div></div>
+      <div class="af"><label for="rPrenom">Prénom</label><input class="ainp" id="rPrenom" type="text" placeholder="Alice" autocorrect="off" autocapitalize="words" aria-required="true"/></div>
+      <div class="af"><label for="rNom">Nom</label><input class="ainp" id="rNom" type="text" placeholder="Dupont" autocorrect="off" autocapitalize="words" aria-required="true"/></div>
+      <div class="af"><label for="rEmail">Email</label><input class="ainp" id="rEmail" type="email" placeholder="alice@stix.com" autocomplete="email" autocorrect="off" autocapitalize="none" aria-required="true"/></div>
+      <div class="af"><label for="rCode">Code structure</label><input class="ainp" id="rCode" type="text" placeholder="Ex: WAGUE-2026" style="text-transform:uppercase;" autocorrect="off" autocapitalize="characters" aria-required="true"/></div>
+      <div class="af"><label for="rPass">Mot de passe</label><div class="pw"><input class="ainp" id="rPass" type="password" placeholder="Min. 6 caractères" autocomplete="new-password" aria-required="true"/><button type="button" class="peye" onclick="togPw('rPass',this)" aria-label="Afficher/masquer le mot de passe">👁️</button></div></div>
       <div class="amsg" id="rMsg"></div>
       <button class="abtn" id="rBtn" type="button" onclick="doRegister2()">Créer mon compte</button>
     </div>
@@ -930,6 +956,7 @@ body.theme-ocean .hdr, body.theme-ocean .bnav { background: rgba(0,17,31,.9) !im
       <div class="psec">
         <div class="pst-t">Danger</div>
         <div class="pit d" onclick="doLogout()"><div class="piico">🚪</div><div class="pib"><div class="pilbl">Se déconnecter</div></div></div>
+        <div class="pit d" onclick="openDeleteAccount()"><div class="piico" style="background:rgba(198,40,40,.12);">🗑️</div><div class="pib"><div class="pilbl">Supprimer mon compte</div><div class="pival">Action irréversible</div></div></div>
       </div>
       <div style="height:20px;"></div>
     </div>
@@ -955,19 +982,20 @@ body.theme-ocean .hdr, body.theme-ocean .bnav { background: rgba(0,17,31,.9) !im
         <div class="pit" onclick="openEditProfile()"><div class="piico" style="background:rgba(0,212,180,.1);">✏️</div><div class="pib"><div class="pilbl">Modifier le profil</div></div><span class="pia">›</span></div>
         <div class="pit" onclick="openStatusPick()"><div class="piico" style="background:rgba(46,125,50,.1);">🌐</div><div class="pib"><div class="pilbl">Statut</div><div class="pival" id="profStatVal">Disponible</div></div><span class="pia">›</span></div>
         <div class="pit d" onclick="doLogout()"><div class="piico">🚪</div><div class="pib"><div class="pilbl">Se déconnecter</div></div></div>
+        <div class="pit d" onclick="openDeleteAccount()"><div class="piico" style="background:rgba(198,40,40,.12);">🗑️</div><div class="pib"><div class="pilbl">Supprimer mon compte</div><div class="pival">Action irréversible</div></div></div>
       </div>
       <div style="height:20px;"></div>
     </div>
   </div>
 
   <!-- BOTTOM NAV -->
-  <nav class="bnav" id="bnav">
-    <button class="nbt on" data-pg="pgMsgs" onclick="navTo('pgMsgs',this)"><span class="ni">💬</span><span class="nl">Messages</span></button>
-    <button class="nbt" data-pg="pgContacts" onclick="navTo('pgContacts',this)"><span class="ni">👥</span><span class="nl">Contacts</span></button>
-    <button class="nbt" data-pg="pgGroups" onclick="navTo('pgGroups',this)"><span class="ni">🧩</span><span class="nl">Groupes</span></button>
-    <button class="nbt" data-pg="pgCalendar" onclick="navTo('pgCalendar',this)"><span class="ni">📅</span><span class="nl">Agenda</span></button>
-    <button class="nbt" data-pg="pgTasks" onclick="navTo('pgTasks',this)"><span class="ni">✅</span><span class="nl">Tâches</span></button>
-    <button class="nbt" data-pg="pgDirectory" onclick="navTo('pgDirectory',this)"><span class="ni">📋</span><span class="nl">Annuaire</span></button>
+  <nav class="bnav" id="bnav" role="navigation" aria-label="Navigation principale">
+    <button class="nbt on" data-pg="pgMsgs" onclick="navTo('pgMsgs',this)" aria-label="Messages"><span class="ni">💬</span><span class="nl">Messages</span></button>
+    <button class="nbt" data-pg="pgContacts" onclick="navTo('pgContacts',this)" aria-label="Contacts"><span class="ni">👥</span><span class="nl">Contacts</span></button>
+    <button class="nbt" data-pg="pgGroups" onclick="navTo('pgGroups',this)" aria-label="Groupes"><span class="ni">🧩</span><span class="nl">Groupes</span></button>
+    <button class="nbt" data-pg="pgCalendar" onclick="navTo('pgCalendar',this)" aria-label="Agenda"><span class="ni">📅</span><span class="nl">Agenda</span></button>
+    <button class="nbt" data-pg="pgTasks" onclick="navTo('pgTasks',this)" aria-label="Tâches"><span class="ni">✅</span><span class="nl">Tâches</span></button>
+    <button class="nbt" data-pg="pgDirectory" onclick="navTo('pgDirectory',this)" aria-label="Annuaire"><span class="ni">📋</span><span class="nl">Annuaire</span></button>
     <button class="nbt" data-pg="pgNews" onclick="navTo('pgNews',this)"><span class="ni">📢</span><span class="nl">Actualités</span></button>
     <button class="nbt" data-pg="pgDocs" onclick="navTo('pgDocs',this)"><span class="ni">📎</span><span class="nl">Documents</span></button>
     <button class="nbt" data-pg="pgPolls" onclick="navTo('pgPolls',this)"><span class="ni">📊</span><span class="nl">Sondages</span></button>
@@ -998,6 +1026,7 @@ body.theme-ocean .hdr, body.theme-ocean .bnav { background: rgba(0,17,31,.9) !im
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script>
 <script>
 // CONFIG FIREBASE
 firebase.initializeApp({
@@ -1008,7 +1037,12 @@ firebase.initializeApp({
   messagingSenderId:"414862835437",
   appId:"1:414862835437:web:0fceefc436dfa1ab6956e4"
 });
-const auth=firebase.auth(), db=firebase.firestore();
+const auth=firebase.auth(), db=firebase.firestore(), storage=firebase.storage();
+
+// ── Service Worker ────────────────────────────────────────────────────────
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+}
 
 // ÉTAT
 let U=null,PRO=null,ORG=null,CHAT=null;
@@ -1136,7 +1170,8 @@ async function doRegister(ev){
   try{
     const cred=await auth.createUserWithEmailAndPassword(email,pass);
     await db.collection('users').doc(cred.user.uid).set({uid:cred.user.uid,email:email.toLowerCase(),nom,prenom,orgId:code,csp:'',status:'available',online:true,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-    ORG=code;toast('✅ Compte créé avec succès !');
+    await cred.user.sendEmailVerification().catch(()=>{});
+    ORG=code;toast('✅ Compte créé ! Vérifiez votre email.');
   }catch(err){showMsg('rMsg',ERRS[err.code]||err.message);}
   finally{setBtn('rBtn',false);}
 }
@@ -1144,8 +1179,10 @@ async function doRegister(ev){
 async function doForgot(){
   const email=document.getElementById('lEmail').value.trim();
   if(!email){showMsg('lMsg','Entrez votre email.');return;}
-  try{await auth.sendPasswordResetEmail(email);showMsg('lMsg','Email envoyé !','ok');}
-  catch(err){showMsg('lMsg',ERRS[err.code]||err.message);}
+  // On tente toujours l'envoi mais on affiche toujours le même message
+  // pour ne pas révéler si l'email existe (protection contre l'énumération d'utilisateurs)
+  try{await auth.sendPasswordResetEmail(email);}catch(err){}
+  showMsg('lMsg','Si cet email est enregistré, un lien de réinitialisation vous a été envoyé.','ok');
 }
 
 // AUTH STATE — SESSION persistence: user must log in each time the browser/tab is opened
@@ -1160,6 +1197,8 @@ auth.onAuthStateChanged(async u=>{
     navStack=['pgMsgs'];
     initHome();
     listenCalls();
+    // Bannière si l'email n'est pas encore vérifié
+    if(!u.emailVerified) showVerifBanner();
   }else{
     PRO=null;ORG=null;uCache=[];allConvs=[];loaded={};
     cleanUp();
@@ -1177,19 +1216,22 @@ async function loadPro(){
   }catch(err){console.error(err);}
 }
 
+function getPhoto(u){return u&&(u.photoURL||u.photoBase64)||'';}
+
 function updateProUI(){
   if(!PRO)return;
   const n=PRO.nom||'',p=PRO.prenom||'',i=ini(n,p),g=gr(n);
   const email=PRO.email||(U&&U.email)||'';
+  const photo=getPhoto(PRO);
   const hav=document.getElementById('hAv');
   if(hav){
-    if(PRO.photoBase64)hav.innerHTML=`<img src="${PRO.photoBase64}" alt=""/><span class="odot" id="hDot"></span>`;
+    if(photo)hav.innerHTML=`<img src="${photo}" alt="Photo de profil"/><span class="odot" id="hDot"></span>`;
     else{hav.innerHTML=`${i}<span class="odot" id="hDot" style="display:none;"></span>`;hav.style.background=g;}
   }
   document.getElementById('hOrg').textContent=ORG?`Structure : ${ORG}`:'Aucune structure';
   const pa=document.getElementById('profAv');
   if(pa){
-    if(PRO.photoBase64)pa.innerHTML=`<img src="${PRO.photoBase64}" alt=""/><div class="pbig-ov">📷</div>`;
+    if(photo)pa.innerHTML=`<img src="${photo}" alt="Photo de profil"/><div class="pbig-ov">📷</div>`;
     else{document.getElementById('profIni').textContent=i;pa.style.background=g;}
   }
   document.getElementById('profNm').textContent=`${p} ${n}`.trim()||email;
@@ -1244,8 +1286,9 @@ function renderConvs(convs){
     const lm=c.lastMessage||'';
     const lt=c.updatedAt?.toDate?ft(c.updatedAt.toDate()):'';
     const un=(c.unreadCount||{})[U.uid]||0;
+    const oph=getPhoto(o);
     return`<div class="conv" onclick="openChat('${c.id}','${ou||''}')">
-      <div class="cav" style="background:${o.photoBase64?'transparent':g};">${o.photoBase64?`<img src="${o.photoBase64}" alt=""/>`:i}${on?'<span class="od"></span>':''}</div>
+      <div class="cav" style="background:${oph?'transparent':g};">${oph?`<img src="${oph}" alt="${e(n)}"/>`:i}${on?'<span class="od"></span>':''}</div>
       <div class="cbody">
         <div class="cr1"><div class="cnm">${e(n)}</div><div class="ct">${e(lt)}</div></div>
         <div class="cr2"><div class="cpv">${e(lm.slice(0,50))}</div>${un?`<div class="cu">${un}</div>`:''}</div>
@@ -1267,7 +1310,8 @@ async function openChat(convId,otherUid){
   const i=ini(o.nom,o.prenom);const g=gr(o.nom||'');
   const nm=`${o.prenom||''} ${o.nom||''}`.trim()||o.email||'Contact';
   const hav=document.getElementById('chatAv');
-  if(hav){if(o.photoBase64)hav.innerHTML=`<img src="${o.photoBase64}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"/>`;else{hav.textContent=i;hav.style.background=g;}}
+  const oph=getPhoto(o);
+  if(hav){if(oph)hav.innerHTML=`<img src="${oph}" alt="${e(nm)}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"/>`;else{hav.textContent=i;hav.style.background=g;}}
   document.getElementById('chatNm').textContent=nm;
   document.getElementById('chatSt').textContent=o.online?'🟢 En ligne':'Hors ligne';
   goTo('pgChat');
@@ -1455,7 +1499,7 @@ function openChatInfo(){
   const i=ini(CHAT.nom,CHAT.prenom),g=gr(CHAT.nom||''),nm=`${CHAT.prenom||''} ${CHAT.nom||''}`.trim();
   openMdl('Profil',`
     <div style="text-align:center;margin-bottom:14px;">
-      <div style="width:72px;height:72px;border-radius:50%;background:${CHAT.photoBase64?'transparent':g};display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#010F1A;margin:0 auto 10px;border:3px solid #00D4B4;overflow:hidden;">${CHAT.photoBase64?`<img src="${CHAT.photoBase64}" style="width:100%;height:100%;object-fit:cover;" alt=""/>`:i}</div>
+      <div style="width:72px;height:72px;border-radius:50%;background:${getPhoto(CHAT)?'transparent':g};display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#010F1A;margin:0 auto 10px;border:3px solid #00D4B4;overflow:hidden;">${getPhoto(CHAT)?`<img src="${getPhoto(CHAT)}" style="width:100%;height:100%;object-fit:cover;" alt="${e(nm)}"/>`:i}</div>
       <div style="font-size:18px;font-weight:800;">${e(nm)}</div>
       <div style="font-size:13px;color:#7AA8CC;">${e(CHAT.email||'')}</div>
       <div style="font-size:12px;color:${CHAT.online?'#4CAF50':'#3D6080'};margin-top:4px;">${CHAT.online?'🟢 En ligne':'⚫ Hors ligne'}</div>
@@ -1479,7 +1523,7 @@ function renderNCL(users){
   return users.slice(0,20).map(u=>{
     const i=ini(u.nom,u.prenom),g=gr(u.nom||''),nm=`${u.prenom||''} ${u.nom||''}`.trim()||u.email||'?';
     return`<div class="bsh-row" onclick="closeBs();openChat(null,'${u.uid}')">
-      <div class="bsh-ico" style="background:${u.photoBase64?'transparent':g};border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#010F1A;overflow:hidden;">${u.photoBase64?`<img src="${u.photoBase64}" style="width:100%;height:100%;object-fit:cover;" alt=""/>`:i}</div>
+      <div class="bsh-ico" style="background:${getPhoto(u)?'transparent':g};border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#010F1A;overflow:hidden;">${getPhoto(u)?`<img src="${getPhoto(u)}" style="width:100%;height:100%;object-fit:cover;" alt="${e(nm)}"/>`:i}</div>
       <div><div class="bsh-lbl">${e(nm)}</div><div class="bsh-s">${e(u.csp||'')} ${u.online?'• <span style="color:#4CAF50;">En ligne</span>':''}</div></div>
     </div>`;
   }).join('');
@@ -1519,7 +1563,7 @@ function renderContacts(list){
     const nm=`${u.prenom||''} ${u.nom||''}`.trim()||u.email||'?';
     const on=u.online===true;
     return`<div class="row" style="padding:12px 14px;">
-      <div class="rico" style="background:${u.photoBase64?'transparent':g};border-radius:50%;width:48px;height:48px;position:relative;overflow:hidden;">${u.photoBase64?`<img src="${u.photoBase64}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt=""/>`:i}${on?'<span style="position:absolute;bottom:1px;right:1px;width:11px;height:11px;border-radius:50%;background:#4CAF50;border:2px solid #010F1A;"></span>':''}</div>
+      <div class="rico" style="background:${getPhoto(u)?'transparent':g};border-radius:50%;width:48px;height:48px;position:relative;overflow:hidden;">${getPhoto(u)?`<img src="${getPhoto(u)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="${e(nm)}"/>`:i}${on?'<span style="position:absolute;bottom:1px;right:1px;width:11px;height:11px;border-radius:50%;background:#4CAF50;border:2px solid #010F1A;"></span>':''}</div>
       <div class="rbody"><div class="rnm">${e(nm)}</div><div class="rsub">${e(u.csp||'')} ${on?'• <span style="color:#4CAF50;">En ligne</span>':''}</div></div>
       <div style="display:flex;gap:5px;">
         <button onclick="openChat(null,'${u.uid}')" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:transparent;color:#7AA8CC;font-size:16px;cursor:pointer;">💬</button>
@@ -1827,6 +1871,47 @@ function printOrg(){
 
 </script>
 <script>
+// ── BANNIÈRE EMAIL NON VÉRIFIÉ ────────────────────────
+function showVerifBanner(){
+  if(document.getElementById('verifBanner'))return;
+  const b=document.createElement('div');
+  b.id='verifBanner';
+  b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;background:#7B1FA2;color:#fff;font-size:13px;font-weight:600;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;';
+  b.innerHTML=`<span>⚠️ Email non vérifié — vérifiez votre boîte mail</span>
+    <button onclick="resendVerif()" style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:5px 10px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;">Renvoyer</button>
+    <button onclick="this.parentElement.remove()" aria-label="Fermer" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;line-height:1;">×</button>`;
+  document.body.prepend(b);
+}
+async function resendVerif(){
+  try{await auth.currentUser.sendEmailVerification();toast('✅ Email de vérification envoyé !');}
+  catch(e){toast('❌ '+e.message);}
+}
+
+// ── SUPPRESSION DE COMPTE ─────────────────────────────
+function openDeleteAccount(){
+  openMdl('🗑️ Supprimer mon compte',`
+    <p style="color:#EF5350;font-size:14px;line-height:1.6;">Cette action est <strong>irréversible</strong>. Toutes vos données seront supprimées.</p>
+    <div class="ff" style="margin-top:14px;"><label>Confirmez votre mot de passe</label><input class="fi" id="delPass" type="password" placeholder="Mot de passe actuel"/></div>`,
+    `<button class="mbt mbt-c" onclick="closeMdl()">Annuler</button>
+     <button class="mbt" style="background:#C62828;color:#fff;" onclick="doDeleteAccount()">Supprimer définitivement</button>`);
+}
+async function doDeleteAccount(){
+  const pass=document.getElementById('delPass')?.value;
+  if(!pass){toast('❌ Mot de passe requis');return;}
+  try{
+    const cred=firebase.auth.EmailAuthProvider.credential(U.email,pass);
+    await U.reauthenticateWithCredential(cred);
+    // Suppression des données Firestore
+    await db.collection('users').doc(U.uid).delete().catch(()=>{});
+    // Suppression du compte Auth
+    await U.delete();
+    closeMdl();
+  }catch(err){
+    const msgs={'auth/wrong-password':'Mot de passe incorrect.','auth/too-many-requests':'Trop de tentatives.'};
+    toast('❌ '+(msgs[err.code]||err.message));
+  }
+}
+
 // ── AUTH (fonctions boutons) ──────────────────────────
 async function doLogin2(){
   const email=document.getElementById('lEmail').value.trim();
@@ -1857,7 +1942,8 @@ async function doRegister2(){
   try{
     const cred=await auth.createUserWithEmailAndPassword(email,pass);
     await db.collection('users').doc(cred.user.uid).set({uid:cred.user.uid,email:email.toLowerCase(),nom,prenom,orgId:code,csp:'',status:'available',online:true,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-    ORG=code;toast('✅ Compte créé avec succès !');
+    await cred.user.sendEmailVerification().catch(()=>{});
+    ORG=code;toast('✅ Compte créé ! Vérifiez votre email.');
   }catch(err){
     const msgs={'auth/email-already-in-use':'Email déjà utilisé. Connectez-vous.','auth/weak-password':'Mot de passe trop faible (min. 6 car.).','auth/invalid-email':'Email invalide.','auth/network-request-failed':'Pas de connexion internet.','auth/unauthorized-domain':'Domaine non autorisé dans Firebase.'};
     msgEl.className='amsg err';msgEl.textContent='❌ '+(msgs[err.code]||err.message);msgEl.style.display='block';
@@ -1890,7 +1976,8 @@ function startCall(media){
   logCall(nm,media);
   const av=document.getElementById('callAv');
   const i=ini(CHAT.nom,CHAT.prenom);
-  if(CHAT.photoBase64){av.innerHTML=`<img src="${CHAT.photoBase64}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt=""/>`;av.style.background='transparent';}
+  const chatPh=getPhoto(CHAT);
+  if(chatPh){av.innerHTML=`<img src="${chatPh}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt="${e(nm)}"/>`;av.style.background='transparent';}
   else{av.textContent=i;av.style.background=gr(CHAT.nom||'');}
   document.getElementById('callNm').textContent=nm;
   document.getElementById('callSt').textContent=media==='video'?'🎥 Appel vidéo…':'📞 Appel audio…';
@@ -1934,16 +2021,18 @@ function openPhotoUpload(){document.getElementById('photoIn').click();}
 
 async function uploadPhoto(input){
   const file=input.files[0];if(!file)return;
-  if(file.size>1*1024*1024){toast('❌ Max 1 MB');return;}
-  const reader=new FileReader();
-  reader.onload=async()=>{
-    try{
-      await db.collection('users').doc(U.uid).set({photoBase64:reader.result},{merge:true});
-      PRO={...PRO,photoBase64:reader.result};
-      updateProUI();toast('✅ Photo mise à jour !');
-    }catch(err){toast('❌ '+err.message);}
-  };
-  reader.readAsDataURL(file);input.value='';
+  if(file.size>2*1024*1024){toast('❌ Max 2 MB');return;}
+  if(!file.type.startsWith('image/')){toast('❌ Fichier image requis');return;}
+  toast('⏳ Envoi de la photo…');
+  try{
+    const ref=storage.ref().child(`avatars/${U.uid}`);
+    await ref.put(file,{contentType:file.type});
+    const url=await ref.getDownloadURL();
+    await db.collection('users').doc(U.uid).set({photoURL:url},{merge:true});
+    PRO={...PRO,photoURL:url};
+    updateProUI();toast('✅ Photo mise à jour !');
+  }catch(err){toast('❌ '+err.message);}
+  input.value='';
 }
 
 function openStatusPick(){
@@ -1979,7 +2068,7 @@ async function doChangePw(){
 }
 
 function openThemePick(){
-  const themes=[{v:'',l:'🌊 Default (Ocean Dark)'},{v:'theme-ocean',l:'🌃 Ocean Profond'}];
+  const themes=[{v:'',l:'🌊 Default (Ocean Dark)'},{v:'theme-ocean',l:'🌃 Ocean Profond'},{v:'theme-light',l:'☀️ Thème Clair'}];
   openBs(`<div class="bsh-ttl">🎨 Choisir un thème</div>
     ${themes.map(t=>`<div class="bsh-row" onclick="setTheme('${t.v}')">
       <div class="bsh-ico" style="background:rgba(123,31,162,.1);">🎨</div>
@@ -1991,12 +2080,13 @@ function setTheme(v){
   document.body.className=v;
   localStorage.setItem('stix_theme',v);
   const el=document.getElementById('setThemeVal');
-  if(el)el.textContent=v?'Ocean Profond':'Default';
+  const lbl={'':"Default",'theme-ocean':'Ocean Profond','theme-light':'Clair'};
+  if(el)el.textContent=lbl[v]||v;
   closeBs();toast('🎨 Thème appliqué !');
 }
 
 // Appliquer thème sauvegardé
-(()=>{const t=localStorage.getItem('stix_theme')||'';document.body.className=t;const el=document.getElementById('setThemeVal');if(el)el.textContent=t?'Ocean Profond':'Default';})();
+(()=>{const t=localStorage.getItem('stix_theme')||'';document.body.className=t;const el=document.getElementById('setThemeVal');const lbl={'':"Default",'theme-ocean':'Ocean Profond','theme-light':'Clair'};if(el)el.textContent=lbl[t]||t;})();
 
 // ── AVATAR BIBLIQUE ───────────────────────────────────
 const VRSETS=[
