@@ -997,6 +997,7 @@ body.theme-ocean .hdr, body.theme-ocean .bnav { background: rgba(0,17,31,.9) !im
 
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script>
 // CONFIG FIREBASE
 firebase.initializeApp({
@@ -1788,394 +1789,261 @@ function doPrint(html){const b=new Blob([html],{type:'text/html'});const a=docum
 function printEmpList(){
   if(!empCache.length){toast('❌ Aucun employé dans l\'annuaire');return;}
   const dt=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
-  const rows=empCache.map((emp,i)=>`<tr><td>${i+1}</td><td><strong>${(emp.prenom||'')+' '+(emp.nom||'')}</strong></td><td>${emp.matricule||''}</td><td>${emp.poste||''}</td><td>${emp.service||''}</td><td>${emp.telephone||''}</td><td>${emp.email||''}</td></tr>`).join('');
-  doPrint(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Liste employ\u00e9s</title><style>body{font-family:Arial,sans-serif;margin:20px;}h1{color:#00BFA5;border-bottom:2px solid #00BFA5;padding-bottom:8px;}table{width:100%;border-collapse:collapse;}th{background:#00BFA5;color:#000;padding:9px;text-align:left;font-size:12px;}td{padding:8px 9px;border-bottom:1px solid #eee;font-size:12px;}tr:nth-child(even)td{background:#f9f9f9;}@media print{body{margin:10px;}}
-/* ══ AMÉLIORATIONS VISUELLES ══ */
-
-/* Fond dégradé animé pour auth */
-#sAuth {
-  background: linear-gradient(160deg, #010F1A 0%, #071828 40%, #0A1F35 70%, #010F1A 100%) !important;
-}
-#sAuth::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse at 20% 50%, rgba(0,212,180,.08) 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 20%, rgba(21,101,192,.08) 0%, transparent 60%);
-  pointer-events: none;
+  const rows=empCache.map((emp,i)=>`<tr><td>${i+1}</td><td><strong>${e((emp.prenom||'')+' '+(emp.nom||''))}</strong></td><td>${e(emp.matricule||'')}</td><td>${e(emp.poste||'')}</td><td>${e(emp.service||'')}</td><td>${e(emp.telephone||'')}</td><td>${e(emp.email||'')}</td></tr>`).join('');
+  const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Liste employés</title><style>body{font-family:Arial,sans-serif;margin:20px;}h1{color:#00BFA5;border-bottom:2px solid #00BFA5;padding-bottom:8px;}p{color:#666;font-size:12px;margin-bottom:10px;}table{width:100%;border-collapse:collapse;}th{background:#00BFA5;color:#000;padding:9px;text-align:left;font-size:12px;}td{padding:8px 9px;border-bottom:1px solid #eee;font-size:12px;}tr:nth-child(even)td{background:#f9f9f9;}@media print{body{margin:10px;}}</style></head><body><h1>Liste des Employés — ${e(ORG||'Structure')}</h1><p>Généré le ${dt} — ${empCache.length} employé(s)</p><table><thead><tr><th>#</th><th>Nom</th><th>Matricule</th><th>Poste</th><th>Service</th><th>Tél</th><th>Email</th></tr></thead><tbody>${rows}</tbody></table><` + 'script>window.onload=function(){window.print();}<' + '/script></body></html>';
+  doPrint(html);
 }
 
-/* Logo animé */
-.alogo {
-  animation: logoPulse 3s ease-in-out infinite;
-  letter-spacing: -1px;
-}
-@keyframes logoPulse {
-  0%,100% { box-shadow: 0 0 30px rgba(0,212,180,.3); }
-  50% { box-shadow: 0 0 60px rgba(0,212,180,.5), 0 0 100px rgba(0,212,180,.2); }
-}
-
-/* Inputs auth plus beaux */
-.ainp {
-  background: rgba(255,255,255,.04) !important;
-  border-color: rgba(255,255,255,.1) !important;
-  transition: all .25s ease !important;
-}
-.ainp:focus {
-  border-color: #00D4B4 !important;
-  background: rgba(0,212,180,.05) !important;
-  box-shadow: 0 0 0 3px rgba(0,212,180,.12) !important;
+function printAnnual(){
+  if(!empCache.length){toast('❌ Aucun employé dans l\'annuaire');return;}
+  const byService={};
+  empCache.forEach(emp=>{const s=emp.service||'Autre';if(!byService[s])byService[s]=[];byService[s].push(emp);});
+  const dt=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  let body='';
+  Object.entries(byService).forEach(([svc,emps])=>{
+    body+=`<h2 style="color:#00BFA5;margin-top:20px;font-size:14px;border-bottom:1px solid #00BFA5;padding-bottom:4px;">${e(svc)} (${emps.length})</h2>`;
+    body+=`<table><thead><tr><th>Nom</th><th>Poste</th><th>Tél</th><th>Email</th></tr></thead><tbody>`;
+    body+=emps.map(emp=>`<tr><td><strong>${e((emp.prenom||'')+' '+(emp.nom||''))}</strong></td><td>${e(emp.poste||'')}</td><td>${e(emp.telephone||'')}</td><td>${e(emp.email||'')}</td></tr>`).join('');
+    body+='</tbody></table>';
+  });
+  const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Relevé annuel</title><style>body{font-family:Arial,sans-serif;margin:20px;}h1{color:#00BFA5;border-bottom:2px solid #00BFA5;padding-bottom:8px;}h2{color:#00BFA5;}p{color:#666;font-size:12px;}table{width:100%;border-collapse:collapse;margin-bottom:10px;}th{background:#e8f5e9;color:#000;padding:7px;text-align:left;font-size:11px;}td{padding:6px 7px;border-bottom:1px solid #eee;font-size:11px;}@media print{body{margin:10px;}}</style></head><body><h1>Relevé annuel — ${e(ORG||'Structure')}</h1><p>Généré le ${dt}</p>${body}<` + 'script>window.onload=function(){window.print();}<' + '/script></body></html>';
+  doPrint(html);
 }
 
-/* Header glassmorphism */
-.hdr {
-  background: rgba(7,24,40,.85) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(255,255,255,.06) !important;
+function printOrg(){
+  if(!empCache.length){toast('❌ Aucun employé dans l\'annuaire');return;}
+  const dt=new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  const byService={};
+  empCache.forEach(emp=>{const s=emp.service||'Autre';if(!byService[s])byService[s]=[];byService[s].push(emp);});
+  const cards=Object.entries(byService).map(([svc,emps])=>`
+    <div style="border:1px solid #00BFA5;border-radius:8px;padding:12px;margin-bottom:12px;">
+      <div style="font-weight:bold;color:#00BFA5;font-size:13px;margin-bottom:8px;border-bottom:1px solid #e0f2f1;padding-bottom:4px;">${e(svc)}</div>
+      ${emps.map(emp=>`<div style="padding:4px 0;font-size:12px;border-bottom:1px solid #f5f5f5;"><strong>${e((emp.prenom||'')+' '+(emp.nom||''))}</strong> — ${e(emp.poste||'N/A')}</div>`).join('')}
+    </div>`).join('');
+  const html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Organigramme</title><style>body{font-family:Arial,sans-serif;margin:20px;}h1{color:#00BFA5;border-bottom:2px solid #00BFA5;padding-bottom:8px;}p{color:#666;font-size:12px;}</style></head><body><h1>Organigramme — ${e(ORG||'Structure')}</h1><p>Généré le ${dt} — ${empCache.length} employé(s)</p>${cards}<` + 'script>window.onload=function(){window.print();}<' + '/script></body></html>';
+  doPrint(html);
 }
 
-/* Nav glassmorphism */
-.bnav {
-  background: rgba(7,24,40,.9) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-top: 1px solid rgba(255,255,255,.06) !important;
-}
-
-/* Boutons nav améliorés */
-.nbt {
-  transition: all .2s ease !important;
-  border-radius: 12px !important;
-  margin: 4px 2px !important;
-  padding: 4px 10px !important;
-}
-.nbt.on {
-  background: rgba(0,212,180,.12) !important;
-  color: #00D4B4 !important;
-}
-.nbt .ni { transition: transform .2s ease; }
-.nbt.on .ni { transform: scale(1.15); }
-
-/* Conversations plus belles */
-.conv {
-  transition: background .15s ease !important;
-  position: relative;
-}
-.conv::after {
-  content: '';
-  position: absolute;
-  left: 66px; right: 0; bottom: 0;
-  height: 1px;
-  background: rgba(255,255,255,.05);
-}
-.conv:active { background: rgba(0,212,180,.04) !important; }
-
-/* Avatar gradient amélioré */
-.cav {
-  box-shadow: 0 2px 8px rgba(0,0,0,.3) !important;
-}
-
-/* Bulles de chat améliorées */
-.me .bbl {
-  background: linear-gradient(135deg, #0D3320, #0A2818) !important;
-  border: 1px solid rgba(0,212,180,.12) !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,.2) !important;
-}
-.them .bbl {
-  background: linear-gradient(135deg, #122840, #0D2035) !important;
-  border: 1px solid rgba(255,255,255,.08) !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,.2) !important;
-}
-
-/* FAB amélioré */
-.fab {
-  background: linear-gradient(135deg, #00D4B4, #0099CC) !important;
-  box-shadow: 0 8px 25px rgba(0,212,180,.45) !important;
-  transition: all .2s ease !important;
-}
-.fab:active {
-  transform: scale(.92) !important;
-  box-shadow: 0 4px 15px rgba(0,212,180,.3) !important;
-}
-
-/* Cards avec effet verre */
-.card {
-  background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02)) !important;
-  border: 1px solid rgba(255,255,255,.08) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,.2) !important;
-}
-
-/* Rows avec hover */
-.row {
-  transition: background .15s ease !important;
-}
-.row:hover { background: rgba(0,212,180,.03) !important; }
-.row:active { background: rgba(0,212,180,.06) !important; }
-
-/* Bouton envoyer amélioré */
-.csend {
-  background: linear-gradient(135deg, #00D4B4, #0099CC) !important;
-  box-shadow: 0 4px 15px rgba(0,212,180,.35) !important;
-  transition: all .2s ease !important;
-}
-.csend:active { transform: scale(.9) !important; }
-
-/* Sec head amélioré */
-.sec-head {
-  background: rgba(7,24,40,.9) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(255,255,255,.06) !important;
-}
-
-/* Bouton retour style */
-.sec-back {
-  background: rgba(255,255,255,.06) !important;
-  border: 1px solid rgba(255,255,255,.08) !important;
-  border-radius: 50% !important;
-  transition: all .15s ease !important;
-  font-size: 18px !important;
-}
-.sec-back:active { background: rgba(255,255,255,.12) !important; }
-
-/* Bouton ajouter */
-.sec-add {
-  background: rgba(0,212,180,.1) !important;
-  border: 1px solid rgba(0,212,180,.25) !important;
-  color: #00D4B4 !important;
-  font-weight: 700 !important;
-  transition: all .15s ease !important;
-  border-radius: 99px !important;
-  padding: 7px 16px !important;
-  font-size: 13px !important;
-}
-.sec-add:active { background: rgba(0,212,180,.2) !important; }
-
-/* Profile hero amélioré */
-.phero {
-  background: linear-gradient(160deg, #071828, #0D2035, #071828) !important;
-  position: relative;
-  overflow: hidden;
-}
-.phero::before {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(ellipse at center, rgba(0,212,180,.06) 0%, transparent 60%);
-  pointer-events: none;
-}
-.pbig {
-  box-shadow: 0 0 0 4px rgba(0,212,180,.2), 0 8px 30px rgba(0,0,0,.4) !important;
-  transition: all .2s ease !important;
-}
-.pbig:hover { box-shadow: 0 0 0 4px rgba(0,212,180,.4), 0 8px 30px rgba(0,0,0,.4) !important; }
-
-/* Inputs formulaires */
-.fi, .fta {
-  background: rgba(255,255,255,.04) !important;
-  border-color: rgba(255,255,255,.1) !important;
-  transition: all .2s ease !important;
-}
-.fi:focus, .fta:focus {
-  border-color: #00D4B4 !important;
-  background: rgba(0,212,180,.04) !important;
-  box-shadow: 0 0 0 3px rgba(0,212,180,.1) !important;
-}
-
-/* Bouton form */
-.fbtn {
-  background: linear-gradient(135deg, #00D4B4, #0099CC) !important;
-  box-shadow: 0 4px 15px rgba(0,212,180,.3) !important;
-  transition: all .2s ease !important;
-  letter-spacing: .3px !important;
-}
-.fbtn:hover { transform: translateY(-1px) !important; box-shadow: 0 6px 20px rgba(0,212,180,.4) !important; }
-.fbtn:active { transform: translateY(0) !important; }
-
-/* Modal amélioré */
-.mbox {
-  background: linear-gradient(160deg, #0D2035, #0A1828) !important;
-  border: 1px solid rgba(255,255,255,.1) !important;
-  box-shadow: 0 25px 60px rgba(0,0,0,.6) !important;
-}
-.mbt-ok {
-  background: linear-gradient(135deg, #00D4B4, #0099CC) !important;
-  box-shadow: 0 4px 15px rgba(0,212,180,.3) !important;
-}
-
-/* Bottom sheet amélioré */
-.bsh {
-  background: linear-gradient(160deg, #0D2035, #0A1828) !important;
-  box-shadow: 0 -10px 40px rgba(0,0,0,.5) !important;
-}
-.bsh-row {
-  transition: background .15s ease !important;
-}
-.bsh-row:hover { background: rgba(255,255,255,.04) !important; }
-.bsh-row:active { background: rgba(0,212,180,.05) !important; }
-
-/* Kanban amélioré */
-.kcol {
-  box-shadow: 0 4px 15px rgba(0,0,0,.2) !important;
-}
-.tc {
-  transition: all .15s ease !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,.15) !important;
-}
-.tc:hover { transform: translateY(-1px) !important; box-shadow: 0 4px 12px rgba(0,0,0,.25) !important; }
-
-/* Sondages */
-.pollopt {
-  transition: all .15s ease !important;
-}
-.pollopt:hover { border-color: rgba(0,212,180,.3) !important; }
-.pollopt.voted {
-  background: rgba(0,212,180,.07) !important;
-}
-
-/* Calendrier jours */
-.cal-d {
-  transition: all .15s ease !important;
-  cursor: pointer;
-}
-.cal-d:hover:not(.sel):not(.tod) {
-  background: rgba(0,212,180,.08) !important;
-}
-
-/* Toast amélioré */
-.toast {
-  background: rgba(13,32,53,.97) !important;
-  border: 1px solid rgba(0,212,180,.2) !important;
-  box-shadow: 0 8px 30px rgba(0,0,0,.4) !important;
-  font-weight: 600 !important;
-}
-
-/* Loader animé */
-.ldot {
-  animation: ld .8s ease-in-out infinite !important;
-}
-
-/* Sbar amélioré */
-.sbar-in {
-  background: rgba(255,255,255,.05) !important;
-  border: 1.5px solid rgba(255,255,255,.08) !important;
-  transition: border-color .2s ease !important;
-}
-.sbar-in:focus-within {
-  border-color: rgba(0,212,180,.3) !important;
-}
-
-/* Avatar biblique amélioré */
-#avt-bbl {
-  box-shadow: 0 8px 30px rgba(0,0,0,.5), 0 0 0 1px rgba(0,212,180,.1) !important;
-}
-#avt-tog {
-  box-shadow: 0 4px 15px rgba(0,0,0,.3) !important;
-  transition: all .2s ease !important;
-}
-#avt-tog:hover {
-  background: rgba(0,212,180,.2) !important;
-  transform: scale(1.1) !important;
-}
-
-/* Réactions emoji */
-.breact {
-  transition: all .15s ease !important;
-}
-.breact:hover { transform: scale(1.1) !important; }
-
-/* Profil items */
-.pit {
-  transition: all .15s ease !important;
-}
-.pit:hover { background: rgba(255,255,255,.03) !important; padding-left: 2px !important; }
-
-/* Page impression cards */
-.row:has(.rarr) {
-  background: rgba(255,255,255,.03) !important;
-  border-radius: 12px !important;
-  margin-bottom: 8px !important;
-  border: 1px solid rgba(255,255,255,.06) !important;
-  transition: all .15s ease !important;
-}
-
-/* Status online amélioré */
-.od, .odot {
-  box-shadow: 0 0 0 2px #010F1A, 0 0 6px rgba(76,175,80,.6) !important;
-  animation: onlinePulse 2s ease-in-out infinite !important;
-}
-@keyframes onlinePulse {
-  0%,100% { box-shadow: 0 0 0 2px #010F1A, 0 0 6px rgba(76,175,80,.4); }
-  50% { box-shadow: 0 0 0 2px #010F1A, 0 0 12px rgba(76,175,80,.7); }
-}
-
-/* Unread badge amélioré */
-.cu {
-  background: linear-gradient(135deg, #00D4B4, #0099CC) !important;
-  box-shadow: 0 2px 8px rgba(0,212,180,.4) !important;
-  animation: badgePop .3s cubic-bezier(.34,1.56,.64,1) !important;
-}
-@keyframes badgePop { from { transform: scale(0); } to { transform: scale(1); } }
-
-/* Écran appel amélioré */
-.call-av {
-  box-shadow: 0 0 0 8px rgba(0,212,180,.1), 0 0 0 16px rgba(0,212,180,.05) !important;
-}
-
-/* Thème Ocean */
-body.theme-ocean { --bg:#00111F; --bg2:#001A2E; }
-body.theme-ocean .hdr, body.theme-ocean .bnav { background: rgba(0,17,31,.9) !important; }
-
-/* Scroll smooth */
-.content, .sec-content, .msgs { scroll-behavior: smooth !important; }
-
-/* Animations d'entrée pour les pages */
-.pg.on { animation: pgIn .2s ease both; }
-@keyframes pgIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
-
-/* Input chat wrap amélioré */
-.cwrap {
-  background: rgba(255,255,255,.05) !important;
-  border-color: rgba(255,255,255,.1) !important;
-}
-.cwrap:focus-within {
-  border-color: rgba(0,212,180,.35) !important;
-  background: rgba(0,212,180,.03) !important;
-}
-
-/* Barre de recherche style */
-.sbar-wrap {
-  background: rgba(7,24,40,.8) !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-/* Message input style */
-.ctxt { line-height: 1.5 !important; }
-
-/* Emoji sheet style */
-.esheet { border-top: 1px solid rgba(255,255,255,.06) !important; }
-.ecat.on { background: rgba(0,212,180,.15) !important; }
-.ebtn:hover { background: rgba(0,212,180,.1) !important; transform: scale(1.2) !important; }
-
-/* Context menu style */
-.ctx { border: 1px solid rgba(0,212,180,.15) !important; }
-.ctxi:hover { background: rgba(0,212,180,.05) !important; }
-
-</style></head><body><h1>Liste des Employ\u00e9s \u2014 ${ORG||'Structure'}</h1><p style="color:#666;font-size:12px;">G\u00e9n\u00e9r\u00e9 le ${dt} \u2014 ${empCache.length} employ\u00e9(s)</p><table><thead><tr><th>#</th><th>Nom</th><th>Matricule</th><th>Poste</th><th>Service</th><th>T\u00e9l</th><th>Email</th></tr></thead><tbody>${rows}</tbody></table><`+'script>window.onload=function(){window.print();}<'+'/script>
+</script>
 <script>
-// ══════════════════════════════════════════════════════
-// 1. MESSAGES ÉPHÉMÈRES
-// ══════════════════════════════════════════════════════
-let _ephDur = parseInt(localStorage.getItem('stix_eph')||'0');
+// ── AUTH (fonctions boutons) ──────────────────────────
+async function doLogin2(){
+  const email=document.getElementById('lEmail').value.trim();
+  const pass=document.getElementById('lPass').value;
+  const msgEl=document.getElementById('lMsg');
+  const btn=document.getElementById('lBtn');
+  if(!email||!pass){msgEl.className='amsg err';msgEl.textContent='❌ Email et mot de passe requis.';msgEl.style.display='block';return;}
+  btn.disabled=true;btn.textContent='⏳ Connexion…';msgEl.style.display='none';
+  try{await auth.signInWithEmailAndPassword(email,pass);}
+  catch(err){
+    const msgs={'auth/user-not-found':'Aucun compte avec cet email.','auth/wrong-password':'Mot de passe incorrect.','auth/invalid-credential':'Email ou mot de passe incorrect.','auth/invalid-email':'Email invalide.','auth/too-many-requests':'Trop de tentatives. Réessayez plus tard.','auth/network-request-failed':'Pas de connexion internet.','auth/unauthorized-domain':'Domaine non autorisé.'};
+    msgEl.className='amsg err';msgEl.textContent='❌ '+(msgs[err.code]||err.message);msgEl.style.display='block';
+    btn.disabled=false;btn.textContent='Se connecter';
+  }
+}
+
+async function doRegister2(){
+  const prenom=document.getElementById('rPrenom').value.trim();
+  const nom=document.getElementById('rNom').value.trim();
+  const email=document.getElementById('rEmail').value.trim();
+  const code=document.getElementById('rCode').value.trim().toUpperCase();
+  const pass=document.getElementById('rPass').value;
+  const msgEl=document.getElementById('rMsg');
+  const btn=document.getElementById('rBtn');
+  if(!prenom||!nom||!email||!code||!pass){msgEl.className='amsg err';msgEl.textContent='❌ Tous les champs sont obligatoires.';msgEl.style.display='block';return;}
+  if(pass.length<6){msgEl.className='amsg err';msgEl.textContent='❌ Minimum 6 caractères.';msgEl.style.display='block';return;}
+  btn.disabled=true;btn.textContent='⏳ Création…';msgEl.style.display='none';
+  try{
+    const cred=await auth.createUserWithEmailAndPassword(email,pass);
+    await db.collection('users').doc(cred.user.uid).set({uid:cred.user.uid,email:email.toLowerCase(),nom,prenom,orgId:code,csp:'',status:'available',online:true,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    ORG=code;toast('✅ Compte créé avec succès !');
+  }catch(err){
+    const msgs={'auth/email-already-in-use':'Email déjà utilisé. Connectez-vous.','auth/weak-password':'Mot de passe trop faible (min. 6 car.).','auth/invalid-email':'Email invalide.','auth/network-request-failed':'Pas de connexion internet.','auth/unauthorized-domain':'Domaine non autorisé dans Firebase.'};
+    msgEl.className='amsg err';msgEl.textContent='❌ '+(msgs[err.code]||err.message);msgEl.style.display='block';
+    btn.disabled=false;btn.textContent='Créer mon compte';
+  }
+}
+
+// ── FONCTIONS MANQUANTES ─────────────────────────────
+function cleanUp(){
+  if(convUnsub)try{convUnsub();}catch(e){}
+  if(msgsUnsub)try{msgsUnsub();}catch(e){}
+  if(usrUnsub)try{usrUnsub();}catch(e){}
+  if(calUnsub)try{calUnsub();}catch(e){}
+  if(taskUnsub)try{taskUnsub();}catch(e){}
+  if(newsUnsub)try{newsUnsub();}catch(e){}
+  if(docsUnsub)try{docsUnsub();}catch(e){}
+  if(pollsUnsub)try{pollsUnsub();}catch(e){}
+  if(empUnsub)try{empUnsub();}catch(e){}
+  convUnsub=msgsUnsub=usrUnsub=calUnsub=taskUnsub=newsUnsub=docsUnsub=pollsUnsub=empUnsub=null;
+}
+
+function doLogout(){
+  confirm2('Se déconnecter ?','Vous serez redirigé vers la page de connexion.',async()=>{
+    try{setPresence(false);cleanUp();await auth.signOut();}catch(e){toast('❌ '+e.message);}
+  },'d');
+}
+
+function startCall(media){
+  if(!CHAT)return;
+  const nm=`${CHAT.prenom||''} ${CHAT.nom||''}`.trim()||CHAT.email||'?';
+  logCall(nm,media);
+  const av=document.getElementById('callAv');
+  const i=ini(CHAT.nom,CHAT.prenom);
+  if(CHAT.photoBase64){av.innerHTML=`<img src="${CHAT.photoBase64}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt=""/>`;av.style.background='transparent';}
+  else{av.textContent=i;av.style.background=gr(CHAT.nom||'');}
+  document.getElementById('callNm').textContent=nm;
+  document.getElementById('callSt').textContent=media==='video'?'🎥 Appel vidéo…':'📞 Appel audio…';
+  showScreen('sCall');
+  toast(media==='video'?'🎥 Appel vidéo (simulation)':'📞 Appel audio (simulation)');
+}
+
+function togMute(){toast('🔇 Micro coupé/activé');}
+
+function hangup(){
+  showScreen('sApp');
+  document.getElementById('callSt').textContent='Appel en cours…';
+  toast('📵 Appel terminé');
+}
+
+function listenCalls(){}
+
+function openEditProfile(){
+  if(!PRO)return;
+  openMdl('✏️ Modifier le profil',`
+    <div class="ff"><label>Prénom</label><input class="fi" id="epPn" type="text" value="${e(PRO.prenom||'')}"/></div>
+    <div class="ff"><label>Nom</label><input class="fi" id="epNm" type="text" value="${e(PRO.nom||'')}"/></div>
+    <div class="ff"><label>Poste</label><input class="fi" id="epCsp" type="text" value="${e(PRO.csp||'')}" placeholder="Directeur, Comptable…"/></div>`,
+    `<button class="mbt mbt-c" onclick="closeMdl()">Annuler</button>
+     <button class="mbt mbt-ok" onclick="doEditProfile()">Enregistrer</button>`);
+}
+
+async function doEditProfile(){
+  const pn=document.getElementById('epPn')?.value.trim();
+  const nm=document.getElementById('epNm')?.value.trim();
+  const csp=document.getElementById('epCsp')?.value.trim();
+  if(!pn||!nm){toast('❌ Prénom et nom requis');return;}
+  try{
+    await db.collection('users').doc(U.uid).update({prenom:pn,nom:nm,csp:csp||''});
+    PRO={...PRO,prenom:pn,nom:nm,csp:csp||''};
+    updateProUI();closeMdl();toast('✅ Profil mis à jour !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+function openPhotoUpload(){document.getElementById('photoIn').click();}
+
+async function uploadPhoto(input){
+  const file=input.files[0];if(!file)return;
+  if(file.size>1*1024*1024){toast('❌ Max 1 MB');return;}
+  const reader=new FileReader();
+  reader.onload=async()=>{
+    try{
+      await db.collection('users').doc(U.uid).update({photoBase64:reader.result});
+      PRO={...PRO,photoBase64:reader.result};
+      updateProUI();toast('✅ Photo mise à jour !');
+    }catch(err){toast('❌ '+err.message);}
+  };
+  reader.readAsDataURL(file);input.value='';
+}
+
+function openStatusPick(){
+  const opts=[{v:'available',l:'🟢 Disponible'},{v:'busy',l:'🔴 Occupé'},{v:'meeting',l:'🟡 En réunion'},{v:'away',l:'⚫ Absent'}];
+  openBs(`<div class="bsh-ttl">🌐 Changer le statut</div>
+    ${opts.map(o=>`<div class="bsh-row" onclick="setStatus('${o.v}')">
+      <div class="bsh-ico" style="background:rgba(0,212,180,.1);font-size:22px;">${o.l.split(' ')[0]}</div>
+      <div class="bsh-lbl">${o.l}</div>
+      ${(PRO?.status===o.v)?'<span style="color:#00D4B4;font-size:20px;margin-left:auto;">✓</span>':''}
+    </div>`).join('')}`);
+}
+
+async function setStatus(v){
+  try{await db.collection('users').doc(U.uid).update({status:v});PRO={...PRO,status:v};updateProUI();closeBs();toast('✅ Statut mis à jour !');}
+  catch(err){toast('❌ '+err.message);}
+}
+
+function openChangePw(){
+  openMdl('🔑 Changer le mot de passe',`
+    <div class="ff"><label>Nouveau mot de passe</label><input class="fi" id="npw" type="password" placeholder="Min. 6 caractères"/></div>
+    <div class="ff"><label>Confirmer</label><input class="fi" id="npw2" type="password" placeholder="Répétez…"/></div>`,
+    `<button class="mbt mbt-c" onclick="closeMdl()">Annuler</button>
+     <button class="mbt mbt-ok" onclick="doChangePw()">Changer</button>`);
+}
+
+async function doChangePw(){
+  const p1=document.getElementById('npw')?.value;
+  const p2=document.getElementById('npw2')?.value;
+  if(!p1||p1.length<6){toast('❌ Min. 6 caractères');return;}
+  if(p1!==p2){toast('❌ Les mots de passe ne correspondent pas');return;}
+  try{await auth.currentUser.updatePassword(p1);closeMdl();toast('✅ Mot de passe changé !');}
+  catch(err){toast('❌ '+err.message);}
+}
+
+function openThemePick(){
+  const themes=[{v:'',l:'🌊 Default (Ocean Dark)'},{v:'theme-ocean',l:'🌃 Ocean Profond'}];
+  openBs(`<div class="bsh-ttl">🎨 Choisir un thème</div>
+    ${themes.map(t=>`<div class="bsh-row" onclick="setTheme('${t.v}')">
+      <div class="bsh-ico" style="background:rgba(123,31,162,.1);">🎨</div>
+      <div class="bsh-lbl">${t.l}</div>
+    </div>`).join('')}`);
+}
+
+function setTheme(v){
+  document.body.className=v;
+  localStorage.setItem('stix_theme',v);
+  const el=document.getElementById('setThemeVal');
+  if(el)el.textContent=v?'Ocean Profond':'Default';
+  closeBs();toast('🎨 Thème appliqué !');
+}
+
+// Appliquer thème sauvegardé
+(()=>{const t=localStorage.getItem('stix_theme')||'';document.body.className=t;const el=document.getElementById('setThemeVal');if(el)el.textContent=t?'Ocean Profond':'Default';})();
+
+// ── AVATAR BIBLIQUE ───────────────────────────────────
+const VRSETS=[
+  {ref:'Jean 3:16',txt:'Car Dieu a tant aimé le monde qu'il a donné son Fils unique.'},
+  {ref:'Phil 4:13',txt:'Je puis tout par Christ qui me fortifie.'},
+  {ref:'Ps 23:1',txt:'L'Éternel est mon berger, je ne manquerai de rien.'},
+  {ref:'Prov 3:5',txt:'Confie-toi en l'Éternel de tout ton cœur.'},
+  {ref:'Rom 8:28',txt:'Toutes choses concourent au bien de ceux qui aiment Dieu.'},
+  {ref:'És 40:31',txt:'Ceux qui espèrent en l'Éternel renouvellent leurs forces.'},
+  {ref:'Matt 6:33',txt:'Cherchez premièrement le Royaume de Dieu et sa justice.'},
+  {ref:'Ps 46:1',txt:'Dieu est pour nous un refuge et un appui, un secours dans la détresse.'},
+  {ref:'Jér 29:11',txt:'Je connais les projets que j'ai formés sur vous, dit l'Éternel, projets de paix.'},
+  {ref:'1 Cor 13:4',txt:'L'amour est patient, l'amour est plein de bonté.'}
+];
+let _vIdx=0;
+
+function togAvt(){
+  const el=document.getElementById('avt');
+  const showing=el.style.display==='flex';
+  if(showing){el.style.display='none';}
+  else{
+    el.style.display='flex';
+    const bot=62+10;
+    el.style.bottom=bot+'px';
+    nextVrs();
+  }
+}
+
+function nextVrs(){
+  _vIdx=(_vIdx+1)%VRSETS.length;
+  const v=VRSETS[_vIdx];
+  const ref=document.getElementById('avt-ref');
+  const txt=document.getElementById('avt-txt');
+  if(ref)ref.textContent=v.ref;
+  if(txt)txt.textContent=v.txt;
+}
+
+// Init avatar
+nextVrs();
+
+// ── MESSAGES ÉPHÉMÈRES ────────────────────────────────
+let _ephDur=parseInt(localStorage.getItem('stix_eph')||'0');
 
 function openEphSettings(){
   const opts=[{v:0,l:'🔕 Désactivé'},{v:30,l:'⏱️ 30 secondes'},{v:300,l:'⏱️ 5 minutes'},{v:3600,l:'⏱️ 1 heure'},{v:86400,l:'⏱️ 24 heures'},{v:604800,l:'⏱️ 7 jours'}];
   openBs(`<div class="bsh-ttl">⏱️ Messages éphémères</div>
-    ${opts.map(o=>`<div class="bsh-row${_ephDur===o.v?' on':''}" onclick="setEph(${o.v})">
+    ${opts.map(o=>`<div class="bsh-row" onclick="setEph(${o.v})">
       <div class="bsh-ico" style="background:rgba(0,212,180,.1);">${o.v===0?'🔕':'⏱️'}</div>
       <div class="bsh-lbl">${o.l}</div>
       ${_ephDur===o.v?'<span style="color:#00D4B4;font-size:20px;margin-left:auto;">✓</span>':''}
@@ -2183,91 +2051,53 @@ function openEphSettings(){
 }
 
 function setEph(v){
-  _ephDur=v;
-  localStorage.setItem('stix_eph',v);
+  _ephDur=v;localStorage.setItem('stix_eph',v);
   const labs={0:'Désactivé',30:'30 secondes',300:'5 minutes',3600:'1 heure',86400:'24 heures',604800:'7 jours'};
-  closeBs();
-  toast('⏱️ Messages éphémères : '+(labs[v]||'Désactivé'));
+  closeBs();toast('⏱️ Messages éphémères : '+(labs[v]||'Désactivé'));
   updateEphUI();
 }
 
 function updateEphUI(){
   const labs={0:'Désactivé',30:'30 secondes',300:'5 minutes',3600:'1 heure',86400:'24 heures',604800:'7 jours'};
-  const el=document.getElementById('ephVal');
-  if(el) el.textContent=labs[_ephDur]||'Désactivé';
+  const el=document.getElementById('ephVal');if(el)el.textContent=labs[_ephDur]||'Désactivé';
 }
 
-// Auto-supprimer les messages éphémères
 async function checkEphemeralMsgs(convId){
-  if(!_ephDur||!U||!convId) return;
+  if(!_ephDur||!U||!convId)return;
   const now=Date.now();
-  const snap=await db.collection('conversations').doc(convId).collection('messages')
-    .where('senderId','==',U.uid).where('deleted','==',false).get();
+  const snap=await db.collection('conversations').doc(convId).collection('messages').where('senderId','==',U.uid).where('deleted','==',false).get();
   snap.forEach(async doc=>{
-    const m=doc.data();
-    const created=m.createdAt?.toMillis?.()||0;
-    if(now-created > _ephDur*1000){
-      await doc.ref.update({deleted:true,text:'',editedAt:firebase.firestore.FieldValue.serverTimestamp()});
-    }
+    const m=doc.data();const created=m.createdAt?.toMillis?.()||0;
+    if(now-created>_ephDur*1000){await doc.ref.update({deleted:true,text:'',editedAt:firebase.firestore.FieldValue.serverTimestamp()});}
   });
 }
 
-// ══════════════════════════════════════════════════════
-// 2. NOTIFICATIONS PUSH
-// ══════════════════════════════════════════════════════
+// ── NOTIFICATIONS PUSH ────────────────────────────────
 async function reqNotif(){
   if(!('Notification' in window)){toast('❌ Non supporté sur ce navigateur');return;}
   const p=await Notification.requestPermission();
-  if(p==='granted'){
-    toast('✅ Notifications activées !');
-    new Notification('Stix Message',{body:'Vous recevrez des alertes pour les nouveaux messages !',icon:''});
-  } else {
-    toast('❌ Notifications refusées. Activez-les dans les paramètres du navigateur.');
-  }
+  if(p==='granted'){toast('✅ Notifications activées !');new Notification('Stix Message',{body:'Vous recevrez des alertes pour les nouveaux messages !'});}
+  else toast('❌ Notifications refusées. Activez-les dans les paramètres.');
 }
 
 function sendPushNotif(title,body){
-  if(Notification.permission==='granted'&&document.visibilityState!=='visible'){
-    new Notification(title,{body,tag:'stix-msg'});
-  }
+  if(Notification.permission==='granted'&&document.visibilityState!=='visible'){new Notification(title,{body,tag:'stix-msg'});}
 }
 
-// Patcher renderMsgs pour envoyer notif push
-const _origRenderMsgs=window.renderMessages||window.renderMsgs;
-
-// ══════════════════════════════════════════════════════
-// 3. TABLEAU DE BORD
-// ══════════════════════════════════════════════════════
+// ── TABLEAU DE BORD ───────────────────────────────────
 function openDashboard(){
   const online=uCache.filter(u=>u.online===true).length;
   openMdl('📊 Tableau de bord',`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      ${[
-        {i:'👥',v:uCache.length,l:'Contacts',c:'#00D4B4'},
-        {i:'🟢',v:online,l:'En ligne',c:'#4CAF50'},
-        {i:'🏢',v:empCache.length,l:'Employés',c:'#42A5F5'},
-        {i:'💬',v:allConvs.length,l:'Conversations',c:'#00D4B4'},
-        {i:'🏆',v:ORG||'—',l:'Structure',c:'#F57F17',s:true},
-        {i:'📅',v:new Date().toLocaleDateString('fr-FR'),l:'Date',c:'#7AA8CC',s:true}
-      ].map(s=>`<div style="padding:14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);text-align:center;">
-        <div style="font-size:24px;">${s.i}</div>
-        <div style="font-size:${s.s?'14px':'26px'};font-weight:800;color:${s.c};margin:5px 0;">${s.v}</div>
-        <div style="font-size:11px;color:#7AA8CC;">${s.l}</div>
-      </div>`).join('')}
+      ${[{i:'👥',v:uCache.length,l:'Contacts',c:'#00D4B4'},{i:'🟢',v:online,l:'En ligne',c:'#4CAF50'},{i:'🏢',v:empCache.length,l:'Employés',c:'#42A5F5'},{i:'💬',v:allConvs.length,l:'Conversations',c:'#00D4B4'},{i:'🏆',v:ORG||'—',l:'Structure',c:'#F57F17',s:true},{i:'📅',v:new Date().toLocaleDateString('fr-FR'),l:'Date',c:'#7AA8CC',s:true}].map(s=>`<div style="padding:14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);text-align:center;"><div style="font-size:24px;">${s.i}</div><div style="font-size:${s.s?'14px':'26px'};font-weight:800;color:${s.c};margin:5px 0;">${s.v}</div><div style="font-size:11px;color:#7AA8CC;">${s.l}</div></div>`).join('')}
     </div>
     <div style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(0,212,180,.06);border:1px solid rgba(0,212,180,.15);">
-      <div style="font-size:12px;color:#7AA8CC;line-height:1.7;">
-        📧 <strong style="color:#E8F4FF;">${U?.email||'—'}</strong><br/>
-        🆔 <strong style="color:#E8F4FF;">${U?.uid?.slice(0,12)||'—'}…</strong><br/>
-        🕐 Connecté depuis : <strong style="color:#E8F4FF;">${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</strong>
-      </div>
+      <div style="font-size:12px;color:#7AA8CC;line-height:1.7;">📧 <strong style="color:#E8F4FF;">${U?.email||'—'}</strong><br/>🆔 <strong style="color:#E8F4FF;">${U?.uid?.slice(0,12)||'—'}…</strong><br/>🕐 <strong style="color:#E8F4FF;">${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</strong></div>
     </div>`,
     `<button class="mbt mbt-ok" onclick="closeMdl()">Fermer</button>`);
 }
 
-// ══════════════════════════════════════════════════════
-// 4. MESSAGES FAVORIS
-// ══════════════════════════════════════════════════════
+// ── MESSAGES FAVORIS ──────────────────────────────────
 let _favorites=JSON.parse(localStorage.getItem('stix_fav')||'[]');
 
 function toggleFavorite(msgId,text){
@@ -2278,23 +2108,13 @@ function toggleFavorite(msgId,text){
 }
 
 function openFavorites(){
-  if(!_favorites.length){
-    openMdl('⭐ Favoris','<div class="empty"><div class="ei">⭐</div><div class="et">Aucun favori</div><div class="es">Appui long sur un message → Favori</div></div>',
-      `<button class="mbt mbt-ok" onclick="closeMdl()">Fermer</button>`);
-    return;
-  }
+  if(!_favorites.length){openMdl('⭐ Favoris','<div class="empty"><div class="ei">⭐</div><div class="et">Aucun favori</div><div class="es">Appui long sur un message → Favori</div></div>',`<button class="mbt mbt-ok" onclick="closeMdl()">Fermer</button>`);return;}
   openMdl('⭐ Messages favoris',
-    _favorites.map(f=>`<div style="padding:10px;border-radius:9px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.08);margin-bottom:7px;">
-      <div style="font-size:13px;color:#E8F4FF;">${e(f.text)}</div>
-      <div style="font-size:10px;color:#3D6080;margin-top:4px;">${new Date(f.time).toLocaleDateString('fr-FR')}</div>
-    </div>`).join(''),
-    `<button class="mbt mbt-c" onclick="_favorites=[];localStorage.removeItem('stix_fav');closeMdl();toast('🗑️ Favoris effacés');">Tout effacer</button>
-     <button class="mbt mbt-ok" onclick="closeMdl()">Fermer</button>`);
+    _favorites.map(f=>`<div style="padding:10px;border-radius:9px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.08);margin-bottom:7px;"><div style="font-size:13px;color:#E8F4FF;">${e(f.text)}</div><div style="font-size:10px;color:#3D6080;margin-top:4px;">${new Date(f.time).toLocaleDateString('fr-FR')}</div></div>`).join(''),
+    `<button class="mbt mbt-c" onclick="_favorites=[];localStorage.removeItem('stix_fav');closeMdl();toast('🗑️ Favoris effacés');">Tout effacer</button><button class="mbt mbt-ok" onclick="closeMdl()">Fermer</button>`);
 }
 
-// ══════════════════════════════════════════════════════
-// 5. HISTORIQUE DES APPELS
-// ══════════════════════════════════════════════════════
+// ── HISTORIQUE APPELS ─────────────────────────────────
 let _callHistory=JSON.parse(localStorage.getItem('stix_calls')||'[]');
 
 function logCall(name,type){
@@ -2304,80 +2124,32 @@ function logCall(name,type){
 }
 
 function openCallHistory(){
-  if(!_callHistory.length){
-    openMdl('📞 Appels récents','<div class="empty"><div class="ei">📞</div><div class="et">Aucun appel</div></div>',
-      `<button class="mbt mbt-ok" onclick="closeMdl()">Fermer</button>`);
-    return;
-  }
+  if(!_callHistory.length){openMdl('📞 Appels récents','<div class="empty"><div class="ei">📞</div><div class="et">Aucun appel</div></div>',`<button class="mbt mbt-ok" onclick="closeMdl()">Fermer</button>`);return;}
   openMdl('📞 Appels récents',
-    _callHistory.slice(0,20).map(c=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-      <div style="font-size:22px;">${c.type==='video'?'🎥':'📞'}</div>
-      <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#E8F4FF;">${e(c.name||'?')}</div>
-      <div style="font-size:11px;color:#3D6080;">${new Date(c.time).toLocaleDateString('fr-FR')} ${new Date(c.time).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div></div>
-    </div>`).join(''),
+    _callHistory.slice(0,20).map(c=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);"><div style="font-size:22px;">${c.type==='video'?'🎥':'📞'}</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#E8F4FF;">${e(c.name||'?')}</div><div style="font-size:11px;color:#3D6080;">${new Date(c.time).toLocaleDateString('fr-FR')} ${new Date(c.time).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div></div></div>`).join(''),
     `<button class="mbt mbt-ok" onclick="closeMdl()">Fermer</button>`);
 }
 
-// ══════════════════════════════════════════════════════
-// 6. METTRE À JOUR LA PAGE PARAMÈTRES
-// ══════════════════════════════════════════════════════
-// Ajouter les nouveaux items dans les paramètres
-setTimeout(()=>{
-  const settingsContent=document.querySelector('#pgSettings .content');
-  if(!settingsContent) return;
+// ── TYPING INDICATOR ──────────────────────────────────
+let _typingTimer=null;
 
-  // Ajouter section Fonctionnalités
-  const newSection=document.createElement('div');
-  newSection.className='psec';
-  newSection.innerHTML=`
-    <div class="pst-t">Fonctionnalités</div>
-    <div class="pit" onclick="openEphSettings()">
-      <div class="piico" style="background:rgba(198,40,40,.1);">⏱️</div>
-      <div class="pib"><div class="pilbl">Messages éphémères</div><div class="pival" id="ephVal">Désactivé</div></div>
-      <span class="pia">›</span>
-    </div>
-    <div class="pit" onclick="openFavorites()">
-      <div class="piico" style="background:rgba(245,127,23,.1);">⭐</div>
-      <div class="pib"><div class="pilbl">Messages favoris</div><div class="pival">${_favorites.length} sauvegardé(s)</div></div>
-      <span class="pia">›</span>
-    </div>
-    <div class="pit" onclick="openCallHistory()">
-      <div class="piico" style="background:rgba(46,125,50,.1);">📞</div>
-      <div class="pib"><div class="pilbl">Historique des appels</div><div class="pival">${_callHistory.length} appel(s)</div></div>
-      <span class="pia">›</span>
-    </div>
-    <div class="pit" onclick="openDashboard()">
-      <div class="piico" style="background:rgba(21,101,192,.1);">📊</div>
-      <div class="pib"><div class="pilbl">Tableau de bord</div><div class="pival">Statistiques de la structure</div></div>
-      <span class="pia">›</span>
-    </div>
-    <div class="pit" onclick="reqNotif()">
-      <div class="piico" style="background:rgba(245,127,23,.1);">🔔</div>
-      <div class="pib"><div class="pilbl">Notifications push</div><div class="pival">Alertes même app fermée</div></div>
-      <span class="pia">›</span>
-    </div>
-    <div class="pit" onclick="exportData()">
-      <div class="piico" style="background:rgba(21,101,192,.1);">📤</div>
-      <div class="pib"><div class="pilbl">Exporter mes données</div><div class="pival">Télécharger en JSON</div></div>
-      <span class="pia">›</span>
-    </div>
-  `;
+async function sendTypingSignal(){
+  if(!U||!CHAT||!CHAT._cid)return;
+  try{
+    await db.collection('conversations').doc(CHAT._cid).set({[`typing.${U.uid}`]:true,[`typingAt.${U.uid}`]:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    clearTimeout(_typingTimer);
+    _typingTimer=setTimeout(async()=>{try{await db.collection('conversations').doc(CHAT._cid).set({[`typing.${U.uid}`]:false},{merge:true});}catch(e){}},2000);
+  }catch(e){}
+}
 
-  // Insérer avant la section Danger
-  const dangerSection=settingsContent.querySelector('.pit.d')?.closest('.psec');
-  if(dangerSection) settingsContent.insertBefore(newSection,dangerSection);
-  else settingsContent.appendChild(newSection);
+// Patcher onMsgIn pour typing
+const _origOnMsgIn=window.onMsgIn;
+window.onMsgIn=function(el){if(_origOnMsgIn)_origOnMsgIn(el);sendTypingSignal();};
 
-  updateEphUI();
-}, 500);
-
-// ══════════════════════════════════════════════════════
-// 7. AJOUTER FAVORIS AU CONTEXT MENU
-// ══════════════════════════════════════════════════════
+// ── FAVORIS DANS CONTEXT MENU ─────────────────────────
 const _origOnLongPress=window.onLongPress;
 window.onLongPress=function(ev,id,convId,mine,del,txt){
   _origOnLongPress(ev,id,convId,mine,del,txt);
-  // Ajouter bouton favori
   const ctx=document.getElementById('ctx');
   if(ctx&&!del){
     const isFav=_favorites.some(f=>f.id===id);
@@ -2389,232 +2161,56 @@ window.onLongPress=function(ev,id,convId,mine,del,txt){
   }
 };
 
-// ══════════════════════════════════════════════════════
-// 8. EXPORT DES DONNÉES
-// ══════════════════════════════════════════════════════
+// ── EXPORT DONNÉES ────────────────────────────────────
 async function exportData(){
-  if(!U) return;
+  if(!U)return;
   try{
     const snap=await db.collection('users').doc(U.uid).get();
-    const data={
-      profil:snap.data()||{},
-      favoris:_favorites,
-      appels:_callHistory,
-      dateExport:new Date().toISOString(),
-      app:'Stix Message v3.0'
-    };
+    const data={profil:snap.data()||{},favoris:_favorites,appels:_callHistory,dateExport:new Date().toISOString(),app:'Stix Message v3.0'};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);
-    a.download=`stix_data_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`stix_data_${new Date().toISOString().slice(0,10)}.json`;a.click();
     toast('✅ Données exportées !');
   }catch(err){toast('❌ '+err.message);}
 }
 
-// ══════════════════════════════════════════════════════
-// 9. INDICATEUR "EN TRAIN D'ÉCRIRE"
-// ══════════════════════════════════════════════════════
-let _typingTimer=null;
-
-async function sendTypingSignal(){
-  if(!U||!CHAT||!CHAT._cid) return;
-  try{
-    await db.collection('conversations').doc(CHAT._cid).set({
-      [`typing.${U.uid}`]:true,
-      [`typingAt.${U.uid}`]:firebase.firestore.FieldValue.serverTimestamp()
-    },{merge:true});
-    clearTimeout(_typingTimer);
-    _typingTimer=setTimeout(async()=>{
-      try{await db.collection('conversations').doc(CHAT._cid).set({[`typing.${U.uid}`]:false},{merge:true});}catch(e){}
-    },2000);
-  }catch(e){}
-}
-
-// Patcher onMsgIn pour envoyer signal typing
-const _origOnMsgIn=window.onMsgIn;
-window.onMsgIn=function(el){
-  if(_origOnMsgIn) _origOnMsgIn(el);
-  sendTypingSignal();
-};
-
-// ══════════════════════════════════════════════════════
-// 10. LOGGER LES APPELS
-// ══════════════════════════════════════════════════════
-const _origStartCall=window.startCall;
-window.startCall=function(media,tgt){
-  const recip=tgt?uCache.find(u=>u.uid===tgt):CHAT;
-  if(recip){
-    const nm=`${recip.prenom||''} ${recip.nom||''}`.trim()||recip.email||'?';
-    logCall(nm,media);
-  }
-  return _origStartCall(media,tgt);
-};
-
-// ══════════════════════════════════════════════════════
-// 11. AJOUTER DASHBOARD AU MENU PLUS
-// ══════════════════════════════════════════════════════
-setTimeout(()=>{
-  // Ajouter dans pgMore si existe
-  const pgMore=document.getElementById('pgMore');
-  if(!pgMore) return;
-  
-  // Chercher le bouton déconnexion pour insérer avant
-  const rows=pgMore.querySelectorAll('.bsh-row');
-  if(rows.length>0){
-    const lastRow=rows[rows.length-1];
-    const newRows=document.createElement('div');
-    newRows.innerHTML=`
-      <div class="bsh-row" onclick="openDashboard()">
-        <div class="bsh-ico" style="background:rgba(21,101,192,.1);">📊</div>
-        <div><div class="bsh-lbl">Tableau de bord</div><div class="bsh-s">Statistiques de la structure</div></div>
-      </div>
-      <div class="bsh-row" onclick="openFavorites()">
-        <div class="bsh-ico" style="background:rgba(245,127,23,.1);">⭐</div>
-        <div><div class="bsh-lbl">Messages favoris</div></div>
-      </div>
-      <div class="bsh-row" onclick="openCallHistory()">
-        <div class="bsh-ico" style="background:rgba(46,125,50,.1);">📞</div>
-        <div><div class="bsh-lbl">Historique des appels</div></div>
-      </div>
-    `;
-    lastRow.parentNode.insertBefore(newRows,lastRow);
-  }
-},600);
-
-// ══════════════════════════════════════════════════════
-// 12. INDICATEUR CONNEXION
-// ══════════════════════════════════════════════════════
+// ── INDICATEURS CONNEXION ─────────────────────────────
 window.addEventListener('online',()=>toast('✅ Connexion rétablie'));
 window.addEventListener('offline',()=>toast('⚠️ Hors ligne — certaines fonctions indisponibles'));
 
-// ══════════════════════════════════════════════════════
-// 13. AJOUTER DANS LA NAV — bouton Dashboard
-// ══════════════════════════════════════════════════════
-// Ajouter dans le menu paramètres un accès rapide
-setTimeout(()=>{
+// ── INJECTION SECTION PARAMÈTRES ──────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  const settingsContent=document.querySelector('#pgSettings .content');
+  if(!settingsContent)return;
+  const newSection=document.createElement('div');
+  newSection.className='psec';
+  newSection.innerHTML=`
+    <div class="pst-t">Fonctionnalités</div>
+    <div class="pit" onclick="openEphSettings()"><div class="piico" style="background:rgba(198,40,40,.1);">⏱️</div><div class="pib"><div class="pilbl">Messages éphémères</div><div class="pival" id="ephVal">Désactivé</div></div><span class="pia">›</span></div>
+    <div class="pit" onclick="openFavorites()"><div class="piico" style="background:rgba(245,127,23,.1);">⭐</div><div class="pib"><div class="pilbl">Messages favoris</div><div class="pival" id="favCount">0 sauvegardé(s)</div></div><span class="pia">›</span></div>
+    <div class="pit" onclick="openCallHistory()"><div class="piico" style="background:rgba(46,125,50,.1);">📞</div><div class="pib"><div class="pilbl">Historique des appels</div><div class="pival" id="callCount">0 appel(s)</div></div><span class="pia">›</span></div>
+    <div class="pit" onclick="openDashboard()"><div class="piico" style="background:rgba(21,101,192,.1);">📊</div><div class="pib"><div class="pilbl">Tableau de bord</div><div class="pival">Statistiques de la structure</div></div><span class="pia">›</span></div>
+    <div class="pit" onclick="reqNotif()"><div class="piico" style="background:rgba(245,127,23,.1);">🔔</div><div class="pib"><div class="pilbl">Notifications push</div><div class="pival">Alertes en temps réel</div></div><span class="pia">›</span></div>
+    <div class="pit" onclick="exportData()"><div class="piico" style="background:rgba(21,101,192,.1);">📤</div><div class="pib"><div class="pilbl">Exporter mes données</div><div class="pival">Télécharger en JSON</div></div><span class="pia">›</span></div>
+  `;
+  const dangerSection=Array.from(settingsContent.querySelectorAll('.psec')).find(s=>s.querySelector('.pit.d'));
+  if(dangerSection)settingsContent.insertBefore(newSection,dangerSection);
+  else settingsContent.appendChild(newSection);
+  updateEphUI();
+  const fc=document.getElementById('favCount');if(fc)fc.textContent=_favorites.length+' sauvegardé(s)';
+  const cc=document.getElementById('callCount');if(cc)cc.textContent=_callHistory.length+' appel(s)';
+});
+
+// ── DASHBOARD DANS NAV ────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
   const bnav=document.getElementById('bnav');
   if(bnav){
-    // Ajouter bouton dashboard dans la nav
     const dashBtn=document.createElement('button');
     dashBtn.className='nbt';
-    dashBtn.setAttribute('data-pg','pgDashboard');
     dashBtn.innerHTML='<span class="ni">📊</span><span class="nl">Dashboard</span>';
     dashBtn.onclick=()=>openDashboard();
     bnav.insertBefore(dashBtn,bnav.lastElementChild);
   }
-},400);
-
-console.log('✅ Nouvelles fonctionnalités chargées : Éphémères, Notifs, Dashboard, Favoris, Appels, Typing !');
-</script>
-<script>
-// Nouvelles fonctions auth sans form submit
-async function doLogin2(){
-  const email = document.getElementById('lEmail').value.trim();
-  const pass = document.getElementById('lPass').value;
-  const msgEl = document.getElementById('lMsg');
-  const btn = document.getElementById('lBtn');
-  
-  if(!email || !pass){
-    msgEl.className='amsg err';
-    msgEl.textContent='❌ Email et mot de passe requis.';
-    msgEl.style.display='block';
-    return;
-  }
-  
-  btn.disabled = true;
-  btn.textContent = '⏳ Connexion…';
-  msgEl.style.display='none';
-  
-  try {
-    await auth.signInWithEmailAndPassword(email, pass);
-  } catch(err) {
-    const msgs = {
-      'auth/user-not-found': 'Aucun compte avec cet email.',
-      'auth/wrong-password': 'Mot de passe incorrect.',
-      'auth/invalid-credential': 'Email ou mot de passe incorrect.',
-      'auth/invalid-email': 'Email invalide.',
-      'auth/too-many-requests': 'Trop de tentatives. Réessayez plus tard.',
-      'auth/network-request-failed': 'Pas de connexion internet.',
-      'auth/unauthorized-domain': 'Domaine non autorisé.'
-    };
-    msgEl.className='amsg err';
-    msgEl.textContent='❌ ' + (msgs[err.code] || err.message);
-    msgEl.style.display='block';
-    btn.disabled = false;
-    btn.textContent = 'Se connecter';
-  }
-}
-
-async function doRegister2(){
-  const prenom = document.getElementById('rPrenom').value.trim();
-  const nom = document.getElementById('rNom').value.trim();
-  const email = document.getElementById('rEmail').value.trim();
-  const code = document.getElementById('rCode').value.trim().toUpperCase();
-  const pass = document.getElementById('rPass').value;
-  const msgEl = document.getElementById('rMsg');
-  const btn = document.getElementById('rBtn');
-  
-  if(!prenom||!nom||!email||!code||!pass){
-    msgEl.className='amsg err';
-    msgEl.textContent='❌ Tous les champs sont obligatoires.';
-    msgEl.style.display='block';
-    return;
-  }
-  if(pass.length < 6){
-    msgEl.className='amsg err';
-    msgEl.textContent='❌ Minimum 6 caractères.';
-    msgEl.style.display='block';
-    return;
-  }
-  
-  btn.disabled = true;
-  btn.textContent = '⏳ Création…';
-  msgEl.style.display='none';
-  
-  try {
-    const cred = await auth.createUserWithEmailAndPassword(email, pass);
-    await db.collection('users').doc(cred.user.uid).set({
-      uid: cred.user.uid,
-      email: email.toLowerCase(),
-      nom, prenom,
-      orgId: code,
-      csp: '',
-      status: 'available',
-      online: true,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    ORG = code;
-    toast('✅ Compte créé avec succès !');
-  } catch(err) {
-    const msgs = {
-      'auth/email-already-in-use': 'Email déjà utilisé. Connectez-vous.',
-      'auth/weak-password': 'Mot de passe trop faible (min. 6 car.).',
-      'auth/invalid-email': 'Email invalide.',
-      'auth/network-request-failed': 'Pas de connexion internet.',
-      'auth/unauthorized-domain': 'Domaine non autorisé dans Firebase.'
-    };
-    msgEl.className='amsg err';
-    msgEl.textContent='❌ ' + (msgs[err.code] || err.message);
-    msgEl.style.display='block';
-    btn.disabled = false;
-    btn.textContent = 'Créer mon compte';
-  }
-}
-
-// Corriger authTab pour afficher/cacher les divs
-const _origAuthTab = window.authTab;
-window.authTab = function(t){
-  document.querySelectorAll('.atab').forEach((b,i)=>b.classList.toggle('on',i===(t==='login'?0:1)));
-  document.getElementById('fLogin').style.display = t==='login' ? 'flex' : 'none';
-  document.getElementById('fReg').style.display = t==='register' ? 'flex' : 'none';
-  const lMsg = document.getElementById('lMsg');
-  const rMsg = document.getElementById('rMsg');
-  if(lMsg){lMsg.className='amsg';lMsg.style.display='none';}
-  if(rMsg){rMsg.className='amsg';rMsg.style.display='none';}
-};
-
-console.log('✅ Auth fix chargé !');
+});
 </script>
 </body>
 </html>
