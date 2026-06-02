@@ -66,7 +66,7 @@ button,input,textarea,select{font-family:inherit;outline:none;}
 .hbtn{width:40px;height:40px;border-radius:50%;border:0;background:transparent;color:#7AA8CC;font-size:19px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
 
 /* CONTENT AREA */
-.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
 
 /* BOTTOM NAV */
 .bnav{height:62px;flex:0 0 auto;display:flex;background:#071828;border-top:1px solid rgba(255,255,255,.08);overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:env(safe-area-inset-bottom);}
@@ -181,8 +181,8 @@ button,input,textarea,select{font-family:inherit;outline:none;}
 .pst{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:99px;font-size:12px;font-weight:700;margin-top:9px;background:rgba(0,212,180,.1);border:1px solid rgba(0,212,180,.2);color:#00D4B4;}
 .psec{padding:0 14px;margin-top:4px;}
 .pst-t{font-size:11px;font-weight:800;color:#00D4B4;letter-spacing:1px;text-transform:uppercase;padding:14px 0 5px;}
-.pit{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;}
-.pit:last-child{border:none;}
+.pit{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;width:100%;text-align:left;background:none;border-left:none;border-right:none;border-top:none;color:inherit;font-family:inherit;font-size:inherit;}
+.pit:last-child{border:none;border-bottom:none;}
 .piico{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto;}
 .pib{flex:1;min-width:0;}
 .pilbl{font-size:14px;font-weight:700;}
@@ -270,7 +270,7 @@ button,input,textarea,select{font-family:inherit;outline:none;}
 @keyframes shup{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .bsh-hndl{width:38px;height:4px;border-radius:99px;background:rgba(255,255,255,.15);margin:10px auto 14px;}
 .bsh-ttl{font-size:16px;font-weight:800;padding:0 18px 12px;border-bottom:1px solid rgba(255,255,255,.08);}
-.bsh-row{display:flex;align-items:center;gap:13px;padding:15px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);}
+.bsh-row{display:flex;align-items:center;gap:13px;padding:15px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);touch-action:manipulation;user-select:none;-webkit-user-select:none;}
 .bsh-row:last-child{border:none;}
 .bsh-row:active{background:rgba(255,255,255,.03);}
 .bsh-ico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto;}
@@ -647,9 +647,11 @@ button,input,textarea,select{font-family:inherit;outline:none;}
 
 /* Profil items */
 .pit {
-  transition: all .15s ease !important;
+  transition: background .15s ease, padding-left .15s ease !important;
+  -webkit-tap-highlight-color: rgba(0,212,180,.12) !important;
 }
-.pit:hover { background: rgba(255,255,255,.03) !important; padding-left: 2px !important; }
+.pit:hover, .pit:active { background: rgba(255,255,255,.05) !important; }
+.pit:active { background: rgba(0,212,180,.1) !important; transform: scale(0.99); }
 
 /* Page impression cards */
 .row:has(.rarr) {
@@ -945,88 +947,88 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
 
       <div class="psec">
         <div class="pst-t">Mon compte</div>
-        <div class="pit" onclick="openEditProfile()">
+        <button type="button" class="pit" onclick="openEditProfile()">
           <div class="piico" style="background:rgba(0,212,180,.1);">✏️</div>
           <div class="pib"><div class="pilbl">Modifier le profil</div><div class="pival">Nom, poste, structure</div></div>
           <span class="pia">›</span>
-        </div>
-        <label for="photoIn" style="display:block;cursor:pointer;">
-          <div class="pit">
+        </button>
+        <label for="photoIn" style="display:block;cursor:pointer;touch-action:manipulation;">
+          <div class="pit" style="pointer-events:none;">
             <div class="piico" style="background:rgba(21,101,192,.1);">📷</div>
             <div class="pib"><div class="pilbl">Photo de profil</div><div class="pival">Choisir une image</div></div>
             <span class="pia">›</span>
           </div>
         </label>
-        <div class="pit" onclick="openStatusPick()">
+        <button type="button" class="pit" onclick="openStatusPick()">
           <div class="piico" style="background:rgba(46,125,50,.1);">🌐</div>
           <div class="pib"><div class="pilbl">Statut</div><div class="pival" id="setStatVal">Disponible</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="openChangePw()">
+        </button>
+        <button type="button" class="pit" onclick="openChangePw()">
           <div class="piico" style="background:rgba(245,127,23,.1);">🔑</div>
           <div class="pib"><div class="pilbl">Changer le mot de passe</div></div>
           <span class="pia">›</span>
-        </div>
+        </button>
       </div>
 
       <div class="psec">
         <div class="pst-t">Fonctionnalités</div>
-        <div class="pit" onclick="openEphSettings()">
+        <button type="button" class="pit" onclick="openEphSettings()">
           <div class="piico" style="background:rgba(198,40,40,.1);">⏱️</div>
           <div class="pib"><div class="pilbl">Messages éphémères</div><div class="pival" id="ephVal">Désactivé</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="openFavorites()">
+        </button>
+        <button type="button" class="pit" onclick="openFavorites()">
           <div class="piico" style="background:rgba(245,127,23,.1);">⭐</div>
           <div class="pib"><div class="pilbl">Messages favoris</div><div class="pival" id="favCount">0 sauvegardé(s)</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="openCallHistory()">
+        </button>
+        <button type="button" class="pit" onclick="openCallHistory()">
           <div class="piico" style="background:rgba(46,125,50,.1);">📞</div>
           <div class="pib"><div class="pilbl">Historique des appels</div><div class="pival" id="callCount">0 appel(s)</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="openDashboard()">
+        </button>
+        <button type="button" class="pit" onclick="openDashboard()">
           <div class="piico" style="background:rgba(21,101,192,.1);">📊</div>
           <div class="pib"><div class="pilbl">Tableau de bord</div><div class="pival">Statistiques de la structure</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="reqNotif()">
+        </button>
+        <button type="button" class="pit" onclick="reqNotif()">
           <div class="piico" style="background:rgba(245,127,23,.1);">🔔</div>
           <div class="pib"><div class="pilbl">Notifications push</div><div class="pival">Alertes en temps réel</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="exportData()">
+        </button>
+        <button type="button" class="pit" onclick="exportData()">
           <div class="piico" style="background:rgba(21,101,192,.1);">📤</div>
           <div class="pib"><div class="pilbl">Exporter mes données</div><div class="pival">Télécharger en JSON</div></div>
           <span class="pia">›</span>
-        </div>
+        </button>
       </div>
 
       <div class="psec">
         <div class="pst-t">Apparence</div>
-        <div class="pit" onclick="openThemePick()">
+        <button type="button" class="pit" onclick="openThemePick()">
           <div class="piico" style="background:rgba(123,31,162,.1);">🎨</div>
           <div class="pib"><div class="pilbl">Thème</div><div class="pival" id="setThemeVal">Default</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="togAvt()">
+        </button>
+        <button type="button" class="pit" onclick="togAvt()">
           <div class="piico" style="background:rgba(0,212,180,.08);">✝️</div>
           <div class="pib"><div class="pilbl">Avatar biblique</div><div class="pival">Versets animés</div></div>
           <span class="pia">›</span>
-        </div>
+        </button>
       </div>
 
       <div class="psec">
         <div class="pst-t">Danger</div>
-        <div class="pit d" onclick="doLogout()">
+        <button type="button" class="pit d" onclick="doLogout()">
           <div class="piico">🚪</div>
           <div class="pib"><div class="pilbl">Se déconnecter</div></div>
-        </div>
-        <div class="pit d" onclick="openDeleteAccount()">
+        </button>
+        <button type="button" class="pit d" onclick="openDeleteAccount()">
           <div class="piico" style="background:rgba(198,40,40,.12);">🗑️</div>
           <div class="pib"><div class="pilbl">Supprimer mon compte</div><div class="pival">Action irréversible</div></div>
-        </div>
+        </button>
       </div>
 
       <div style="height:30px;"></div>
@@ -1052,29 +1054,29 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
       </div>
       <div class="psec">
         <div class="pst-t">Mon compte</div>
-        <div class="pit" onclick="openEditProfile()">
+        <button type="button" class="pit" onclick="openEditProfile()">
           <div class="piico" style="background:rgba(0,212,180,.1);">✏️</div>
           <div class="pib"><div class="pilbl">Modifier le profil</div><div class="pival">Nom, poste</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="openStatusPick()">
+        </button>
+        <button type="button" class="pit" onclick="openStatusPick()">
           <div class="piico" style="background:rgba(46,125,50,.1);">🌐</div>
           <div class="pib"><div class="pilbl">Statut</div><div class="pival" id="profStatVal">Disponible</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit" onclick="openChangePw()">
+        </button>
+        <button type="button" class="pit" onclick="openChangePw()">
           <div class="piico" style="background:rgba(245,127,23,.1);">🔑</div>
           <div class="pib"><div class="pilbl">Changer le mot de passe</div></div>
           <span class="pia">›</span>
-        </div>
-        <div class="pit d" onclick="doLogout()">
+        </button>
+        <button type="button" class="pit d" onclick="doLogout()">
           <div class="piico">🚪</div>
           <div class="pib"><div class="pilbl">Se déconnecter</div></div>
-        </div>
-        <div class="pit d" onclick="openDeleteAccount()">
+        </button>
+        <button type="button" class="pit d" onclick="openDeleteAccount()">
           <div class="piico" style="background:rgba(198,40,40,.12);">🗑️</div>
           <div class="pib"><div class="pilbl">Supprimer mon compte</div><div class="pival">Action irréversible</div></div>
-        </div>
+        </button>
       </div>
       <div style="height:30px;"></div>
     </div>
@@ -2094,7 +2096,7 @@ function hangup(){
 function listenCalls(){}
 
 function openEditProfile(){
-  if(!PRO)return;
+  if(!PRO){toast('⏳ Chargement du profil…');loadPro().then(()=>{if(PRO)openEditProfile();});return;}
   openMdl('✏️ Modifier le profil',`
     <div class="ff"><label>Prénom</label><input class="fi" id="epPn" type="text" value="${e(PRO.prenom||'')}"/></div>
     <div class="ff"><label>Nom</label><input class="fi" id="epNm" type="text" value="${e(PRO.nom||'')}"/></div>
