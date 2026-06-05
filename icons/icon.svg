@@ -1,80 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <!-- Background gradient: dark navy top-left to near-black bottom-right -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0D2035"/>
-      <stop offset="100%" stop-color="#010F1A"/>
+      <stop offset="0%" stop-color="#0D1628"/>
+      <stop offset="100%" stop-color="#050912"/>
     </linearGradient>
-    <!-- S letter gradient: teal to blue -->
-    <linearGradient id="sGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00D4B4"/>
-      <stop offset="100%" stop-color="#1565C0"/>
+    <linearGradient id="gGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#EC4899"/>
     </linearGradient>
-    <!-- Bubble glow gradient -->
-    <radialGradient id="bubbleGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#00D4B4" stop-opacity="0.18"/>
-      <stop offset="100%" stop-color="#00D4B4" stop-opacity="0"/>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
     </radialGradient>
-    <!-- Drop shadow filter for S -->
-    <filter id="sShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#00D4B4" flood-opacity="0.35"/>
+    <filter id="gShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#8B5CF6" flood-opacity="0.45"/>
     </filter>
   </defs>
 
-  <!-- Rounded square background -->
+  <!-- Background -->
   <rect width="512" height="512" rx="112" ry="112" fill="url(#bgGrad)"/>
+  <!-- Subtle border -->
+  <rect width="512" height="512" rx="112" ry="112" fill="none" stroke="#8B5CF6" stroke-width="2" opacity="0.15"/>
+  <!-- Glow -->
+  <circle cx="256" cy="240" r="200" fill="url(#glow)"/>
 
-  <!-- Subtle inner vignette ring -->
-  <rect width="512" height="512" rx="112" ry="112" fill="none"
-        stroke="#00D4B4" stroke-width="2" opacity="0.12"/>
-
-  <!-- Chat bubble shape — sits behind/under the S, semi-transparent -->
-  <!-- Large rounded rectangle bubble, tail pointing bottom-left -->
-  <path d="M136 148
-           Q136 112 172 112
-           L376 112
-           Q412 112 412 148
-           L412 292
-           Q412 328 376 328
-           L224 328
-           L188 372
-           L188 328
-           L172 328
-           Q136 328 136 292
-           Z"
-        fill="#00D4B4" opacity="0.10"/>
-
-  <!-- Bubble border stroke for definition -->
-  <path d="M136 148
-           Q136 112 172 112
-           L376 112
-           Q412 112 412 148
-           L412 292
-           Q412 328 376 328
-           L224 328
-           L188 372
-           L188 328
-           L172 328
-           Q136 328 136 292
-           Z"
-        fill="none" stroke="#00D4B4" stroke-width="3" opacity="0.22"/>
-
-  <!-- Large bold "S" — drawn as SVG path centered in viewBox -->
-  <!-- Designed as a thick, modern S centered at ~256,230 -->
-  <text x="256" y="308"
+  <!-- Bold "G" centered -->
+  <text x="256" y="320"
         font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
-        font-size="300"
+        font-size="310"
         font-weight="900"
         text-anchor="middle"
-        fill="url(#sGrad)"
-        filter="url(#sShadow)"
-        letter-spacing="-8">S</text>
+        fill="url(#gGrad)"
+        filter="url(#gShadow)"
+        letter-spacing="-6">G</text>
 
-  <!-- Small tasteful cross at bottom-center -->
-  <!-- Vertical bar -->
-  <rect x="247" y="392" width="18" height="58" rx="5" ry="5"
-        fill="#00D4B4" opacity="0.55"/>
-  <!-- Horizontal bar -->
-  <rect x="224" y="410" width="64" height="18" rx="5" ry="5"
-        fill="#00D4B4" opacity="0.55"/>
+  <!-- Subtle cross bottom-center -->
+  <rect x="247" y="392" width="18" height="56" rx="5" ry="5" fill="#8B5CF6" opacity="0.45"/>
+  <rect x="224" y="410" width="64" height="18" rx="5" ry="5" fill="#8B5CF6" opacity="0.45"/>
 </svg>
