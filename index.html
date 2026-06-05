@@ -713,8 +713,8 @@ body.theme-light .toast{background:#1A2233;color:#fff;}
 .content, .sec-content, .msgs { scroll-behavior: smooth !important; }
 
 /* Animations d'entrée pour les pages */
-.pg.on { animation: pgIn .2s ease both; }
-@keyframes pgIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+.pg.on { animation: pgIn .18s ease both; }
+@keyframes pgIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* Input chat wrap amélioré */
 .cwrap {
@@ -1214,6 +1214,11 @@ function showScreen(id){
 }
 
 function goTo(pgId){
+  // Fermer tous les overlays qui pourraient bloquer les taps
+  const ctxov=document.getElementById('ctxov');if(ctxov)ctxov.style.display='none';
+  const ctx=document.getElementById('ctx');if(ctx)ctx.style.display='none';
+  const qr=document.getElementById('qr');if(qr)qr.style.display='none';
+  document.getElementById('bsOvl')?.classList.remove('on');
   document.querySelectorAll('#sApp .pg').forEach(p=>p.classList.remove('on'));
   document.getElementById(pgId)?.classList.add('on');
   navStack.push(pgId);
@@ -2437,6 +2442,24 @@ document.addEventListener('DOMContentLoaded',()=>{
     dashBtn.onclick=()=>openDashboard();
     bnav.insertBefore(dashBtn,bnav.lastElementChild);
   }
+
+  // ── TOUCH FIX ANDROID — écouteurs touchend sur tous les boutons .pit ────
+  // Sur Android Chrome, touchend est plus fiable que click dans les conteneurs scrollables
+  let _tStartY=0, _tStartX=0;
+  document.addEventListener('touchstart',e=>{
+    _tStartY=e.touches[0]?.clientY||0;
+    _tStartX=e.touches[0]?.clientX||0;
+  },{passive:true});
+
+  document.addEventListener('touchend',e=>{
+    const dy=Math.abs((e.changedTouches[0]?.clientY||0)-_tStartY);
+    const dx=Math.abs((e.changedTouches[0]?.clientX||0)-_tStartX);
+    if(dy>12||dx>12)return; // scroll, pas un tap
+    const btn=e.target.closest('button.pit');
+    if(!btn||btn.disabled)return;
+    e.preventDefault(); // empêche le double-fire click+touchend
+    btn.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+  },{passive:false});
 });
 </script>
 </body>
