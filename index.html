@@ -382,6 +382,50 @@ img{display:block;max-width:100%;}
 /* ─── THEMES ─── */
 body.theme-ocean{--bg:#020c1a;--bg2:#041222;--surface:#08203a;--surface2:#0c2c4d;--primary:#06B6D4;--accent:#3B82F6;--grad:linear-gradient(135deg,#06B6D4,#3B82F6);}
 body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC;--glass:rgba(255,255,255,.8);--border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.14);--text:#0F172A;--text2:#475569;--text3:#94A3B8;}
+
+/* ─── LANDING / PAYWALL ─── */
+#sLanding{background:var(--bg);overflow-y:auto;align-items:flex-start;justify-content:flex-start;padding-bottom:40px;}
+.land-hero{width:100%;padding:56px 24px 32px;text-align:center;background:linear-gradient(180deg,rgba(139,92,246,.14),transparent);position:relative;overflow:hidden;}
+.land-hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.28),transparent 70%);pointer-events:none;}
+.land-logo{width:80px;height:80px;border-radius:24px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#fff;margin:0 auto 16px;box-shadow:0 16px 48px rgba(139,92,246,.4);position:relative;z-index:1;}
+.land-title{font-size:30px;font-weight:900;letter-spacing:-0.5px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1;margin-bottom:8px;}
+.land-sub{font-size:15px;color:var(--text2);line-height:1.6;position:relative;z-index:1;max-width:320px;margin:0 auto 24px;}
+.land-feats{display:grid;gap:10px;padding:0 20px;margin-bottom:20px;}
+.land-feat{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--border);font-size:13px;text-align:left;}
+.land-feat-ico{font-size:20px;flex-shrink:0;}
+.land-feat-lbl{color:var(--text2);flex:1;}
+.land-feat-lbl strong{color:var(--text);display:block;font-size:14px;font-weight:700;margin-bottom:1px;}
+.price-wrap{padding:0 20px 20px;}
+.price-badge{display:inline-block;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);color:var(--primary);font-size:11px;font-weight:700;letter-spacing:0.5px;padding:5px 14px;border-radius:99px;text-transform:uppercase;margin-bottom:14px;}
+.price-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:20px;padding:22px 20px;margin-bottom:16px;position:relative;overflow:hidden;}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);}
+.price-val{font-size:40px;font-weight:900;letter-spacing:-1px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.price-info{font-size:13px;color:var(--text2);margin-bottom:16px;margin-top:4px;}
+.price-calc-box{background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.14);border-radius:12px;padding:14px;margin-bottom:18px;}
+.price-calc-box label{font-size:11px;color:var(--text2);font-weight:700;display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.4px;}
+.price-row{display:flex;align-items:center;gap:12px;}
+.price-row input{width:80px;padding:10px 12px;border-radius:10px;background:var(--bg2);border:1.5px solid var(--border2);color:var(--text);font-size:18px;font-weight:800;text-align:center;}
+.price-total-val{flex:1;text-align:right;font-size:21px;font-weight:900;color:var(--primary);}
+.price-total-val small{font-size:11px;color:var(--text3);font-weight:500;display:block;}
+.land-cta{width:100%;padding:16px;border-radius:14px;border:none;background:var(--grad);color:#fff;font-size:16px;font-weight:700;cursor:pointer;touch-action:manipulation;box-shadow:0 8px 24px rgba(139,92,246,.35);display:block;margin-bottom:10px;transition:transform .15s;}
+.land-cta:active{transform:scale(.97);}
+.land-login-btn{width:100%;padding:14px;border-radius:14px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:14px;font-weight:600;cursor:pointer;touch-action:manipulation;}
+.pay-sect{padding:0 20px 20px;}
+.pay-ttl{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;text-align:center;margin-bottom:12px;}
+.pay-card-row{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--border);cursor:pointer;touch-action:manipulation;text-decoration:none;margin-bottom:10px;}
+.pay-card-row:active{background:var(--surface2);}
+.pay-ico-box{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.pay-info-col{flex:1;}
+.pay-nm{font-size:14px;font-weight:700;margin-bottom:2px;}
+.pay-nb{font-size:13px;color:var(--primary);font-weight:700;letter-spacing:1px;}
+/* ─── SUBSCRIPTION EXPIRED ─── */
+#sSub{background:var(--bg);align-items:center;justify-content:center;padding:24px;}
+.sub-box{width:100%;max-width:340px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;}
+.sub-ico{font-size:60px;}
+.sub-ttl{font-size:22px;font-weight:800;}
+.sub-msg{font-size:14px;color:var(--text2);line-height:1.6;}
+.sub-btn{width:100%;padding:15px;border-radius:14px;border:none;background:var(--grad);color:#fff;font-size:15px;font-weight:700;cursor:pointer;touch-action:manipulation;box-shadow:0 8px 24px rgba(139,92,246,.3);}
+.sub-out{color:var(--text3);font-size:13px;cursor:pointer;background:none;border:none;touch-action:manipulation;margin-top:4px;}
 </style>
 </head>
 <body>
@@ -395,6 +439,69 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
   <div class="spl-name">GraceLink</div>
   <div class="spl-sub">Communication d'entreprise sécurisée</div>
   <div class="spl-dots"><span></span><span></span><span></span></div>
+</div>
+
+<!-- LANDING -->
+<div id="sLanding" class="screen show">
+  <div style="overflow-y:auto;height:100%;-webkit-overflow-scrolling:touch;">
+    <div class="land-hero">
+      <div class="land-logo">G</div>
+      <div class="land-title">GraceLink</div>
+      <div class="land-sub">La plateforme de communication sécurisée pour votre entreprise</div>
+    </div>
+    <div class="land-feats">
+      <div class="land-feat"><div class="land-feat-ico">💬</div><div class="land-feat-lbl"><strong>Messagerie sécurisée</strong>Messages privés et groupes d'équipe</div></div>
+      <div class="land-feat"><div class="land-feat-ico">📋</div><div class="land-feat-lbl"><strong>Annuaire d'entreprise</strong>Tous vos contacts en un seul endroit</div></div>
+      <div class="land-feat"><div class="land-feat-ico">📅</div><div class="land-feat-lbl"><strong>Agenda & Tâches</strong>Planification et suivi de vos projets</div></div>
+      <div class="land-feat"><div class="land-feat-ico">📢</div><div class="land-feat-lbl"><strong>Actualités & Documents</strong>Partagez l'information en temps réel</div></div>
+    </div>
+    <div class="price-wrap">
+      <div style="text-align:center;"><span class="price-badge">Abonnement mensuel</span></div>
+      <div class="price-card">
+        <div class="price-val">1 750 FCFA</div>
+        <div class="price-info">par utilisateur / mois · Sans engagement</div>
+        <div class="price-calc-box">
+          <label>Calculez votre budget</label>
+          <div class="price-row">
+            <input type="number" id="calcUsers" value="5" min="1" max="500" oninput="calcPrice()" style="touch-action:manipulation;"/>
+            <div class="price-total-val"><span id="calcTotal">8 750</span> FCFA<small>/ mois</small></div>
+          </div>
+        </div>
+        <button type="button" class="land-cta" onclick="showScreen('sAuth')">Créer mon compte</button>
+        <button type="button" class="land-login-btn" onclick="showScreen('sAuth')">J'ai déjà un compte</button>
+      </div>
+    </div>
+    <div class="pay-sect">
+      <div class="pay-ttl">Comment payer ?</div>
+      <a class="pay-card-row" href="tel:688663609" onclick="event.preventDefault();openPayment('orange')">
+        <div class="pay-ico-box" style="background:rgba(255,140,0,.15);">🟠</div>
+        <div class="pay-info-col"><div class="pay-nm">Orange Money</div><div class="pay-nb">688 663 609</div></div>
+        <span style="color:var(--text3);">›</span>
+      </a>
+      <a class="pay-card-row" href="tel:688663609" onclick="event.preventDefault();openPayment('mtn')">
+        <div class="pay-ico-box" style="background:rgba(255,204,0,.15);">🟡</div>
+        <div class="pay-info-col"><div class="pay-nm">MTN MoMo</div><div class="pay-nb">688 663 609</div></div>
+        <span style="color:var(--text3);">›</span>
+      </a>
+      <a class="pay-card-row" href="https://wa.me/237688663609" target="_blank" rel="noopener">
+        <div class="pay-ico-box" style="background:rgba(37,211,102,.15);">💬</div>
+        <div class="pay-info-col"><div class="pay-nm">WhatsApp — Confirmation</div><div class="pay-nb">Envoyez votre preuve de paiement</div></div>
+        <span style="color:var(--text3);">›</span>
+      </a>
+      <div style="text-align:center;padding:10px 0 20px;font-size:12px;color:var(--text3);">Après confirmation, vous recevrez votre code de structure par WhatsApp</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBSCRIPTION EXPIRED -->
+<div id="sSub" class="screen">
+  <div class="sub-box">
+    <div class="sub-ico">⏳</div>
+    <div class="sub-ttl">Abonnement expiré</div>
+    <div class="sub-msg">L'abonnement de votre structure est arrivé à expiration. Contactez votre administrateur ou renouvelez directement.</div>
+    <a href="https://wa.me/237688663609" target="_blank" rel="noopener" class="sub-btn" style="display:block;text-decoration:none;text-align:center;line-height:1.4;padding:15px;">💬 Renouveler via WhatsApp</a>
+    <button type="button" class="sub-out" onclick="doLogout()">Se déconnecter</button>
+  </div>
 </div>
 
 <!-- AUTH -->
@@ -663,6 +770,14 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
           <span class="pia">›</span>
         </button>
       </div>
+      <div class="psec" id="adminSec" style="display:none;">
+        <div class="pst-t">Administration</div>
+        <button type="button" class="pit" onclick="openAdminPanel()">
+          <div class="piico" style="background:rgba(139,92,246,.15);">🏢</div>
+          <div class="pib"><div class="pilbl">Gérer les structures</div><div class="pival">Codes, abonnements, utilisateurs</div></div>
+          <span class="pia">›</span>
+        </button>
+      </div>
       <div class="psec">
         <div class="pst-t">Zone de danger</div>
         <button type="button" class="pit d" onclick="doLogout()">
@@ -889,6 +1004,146 @@ async function doForgot(){
   msgEl.className='amsg ok';msgEl.textContent='✅ Si cet email est enregistré, un lien de réinitialisation a été envoyé.';
 }
 
+// ─── SUBSCRIPTION SYSTEM ───
+const ADMIN_EMAIL='alexfotso75@gmail.com';
+const PRICE_PER_USER=1750;
+const CONTACT_PHONE='688663609';
+
+function calcPrice(){
+  const n=parseInt(document.getElementById('calcUsers')?.value)||1;
+  const tot=(n*PRICE_PER_USER).toLocaleString('fr-FR');
+  const el=document.getElementById('calcTotal');
+  if(el)el.textContent=tot;
+}
+
+function openPayment(type){
+  const n=parseInt(document.getElementById('calcUsers')?.value)||1;
+  const total=n*PRICE_PER_USER;
+  const msg=encodeURIComponent(`Bonjour, je souhaite m'abonner à GraceLink.\nNombre d'utilisateurs: ${n}\nMontant: ${total.toLocaleString('fr-FR')} FCFA/mois\nMode de paiement: ${type==='orange'?'Orange Money':'MTN MoMo'} au 688663609.`);
+  window.open(`https://wa.me/237${CONTACT_PHONE}?text=${msg}`,'_blank');
+}
+
+async function validateOrgCode(code){
+  if(!code)return{valid:false,msg:'Code structure requis.'};
+  try{
+    const snap=await db.collection('organizations').doc(code).get();
+    if(!snap.exists)return{valid:false,msg:'Code structure invalide. Contactez votre administrateur.'};
+    const org=snap.data();
+    if(!org.active)return{valid:false,msg:'Cette structure est désactivée. Contactez l\'administrateur.'};
+    return{valid:true,org};
+  }catch(e){
+    // network error → allow with warning
+    console.warn('validateOrgCode error',e);
+    return{valid:true,org:{maxUsers:0,currentUsers:0}};
+  }
+}
+
+async function checkSubscription(orgId){
+  if(!orgId)return true; // legacy: no org = allow
+  if(U&&U.email===ADMIN_EMAIL)return true;
+  try{
+    const snap=await db.collection('organizations').doc(orgId).get();
+    if(!snap.exists)return true; // legacy org not in DB = allow
+    const org=snap.data();
+    if(!org.active)return false;
+    if(org.validUntil&&org.validUntil.toDate()<new Date())return false;
+    return true;
+  }catch(e){
+    return true; // network error → allow
+  }
+}
+
+// ─── ADMIN PANEL ───
+async function openAdminPanel(){
+  const rows=await loadOrgCodes();
+  const html=`<div style="padding:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-size:18px;font-weight:800;">Structures</div>
+      <button type="button" onclick="openCreateOrg()" style="padding:8px 14px;border-radius:10px;border:none;background:var(--grad);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">+ Nouvelle</button>
+    </div>
+    <div id="orgList">${rows}</div>
+  </div>`;
+  openMdl('Administration GraceLink',html);
+}
+
+async function loadOrgCodes(){
+  try{
+    const snap=await db.collection('organizations').orderBy('createdAt','desc').get();
+    if(snap.empty)return '<div style="color:var(--text3);text-align:center;padding:30px;">Aucune structure enregistrée</div>';
+    return snap.docs.map(d=>{
+      const o=d.data();
+      const exp=o.validUntil?o.validUntil.toDate().toLocaleDateString('fr-FR'):'N/A';
+      const st=o.active?'✅':'❌';
+      return `<div style="padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--border);margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div style="font-size:15px;font-weight:800;color:var(--primary);">${d.id}</div>
+          <div style="font-size:12px;color:var(--text3);">${st} ${o.active?'Actif':'Inactif'}</div>
+        </div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:4px;">${o.name||'—'}</div>
+        <div style="font-size:12px;color:var(--text3);">👥 ${o.currentUsers||0}/${o.maxUsers||'∞'} · Exp: ${exp}</div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button type="button" onclick="renewOrg('${d.id}')" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--border2);background:none;color:var(--text);font-size:12px;font-weight:600;cursor:pointer;touch-action:manipulation;">🔄 Renouveler</button>
+          <button type="button" onclick="toggleOrgActive('${d.id}',${!o.active})" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--border2);background:none;color:var(--text);font-size:12px;font-weight:600;cursor:pointer;touch-action:manipulation;">${o.active?'⛔ Désactiver':'✅ Activer'}</button>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){return '<div style="color:var(--text3);text-align:center;padding:20px;">Erreur de chargement</div>';}
+}
+
+function openCreateOrg(){
+  const html=`<div style="padding:16px;display:flex;flex-direction:column;gap:12px;">
+    <input id="newOrgCode" class="ainp" placeholder="Code (ex: STIX)" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()"/>
+    <input id="newOrgName" class="ainp" placeholder="Nom de la structure"/>
+    <input id="newOrgMax" class="ainp" type="number" placeholder="Nb max utilisateurs (0=illimité)" value="10"/>
+    <input id="newOrgMonths" class="ainp" type="number" placeholder="Durée abonnement (mois)" value="1"/>
+    <div id="newOrgMsg" class="amsg"></div>
+    <button type="button" class="abtn" onclick="doCreateOrg()">Créer la structure</button>
+  </div>`;
+  openMdl('Nouvelle structure',html);
+}
+
+async function doCreateOrg(){
+  const code=document.getElementById('newOrgCode')?.value.trim().toUpperCase();
+  const name=document.getElementById('newOrgName')?.value.trim();
+  const max=parseInt(document.getElementById('newOrgMax')?.value)||0;
+  const months=parseInt(document.getElementById('newOrgMonths')?.value)||1;
+  const msgEl=document.getElementById('newOrgMsg');
+  if(!code||!name){if(msgEl){msgEl.className='amsg err';msgEl.textContent='❌ Code et nom requis.';}return;}
+  const exp=new Date();exp.setMonth(exp.getMonth()+months);
+  try{
+    await db.collection('organizations').doc(code).set({
+      name,active:true,maxUsers:max,currentUsers:0,
+      validUntil:firebase.firestore.Timestamp.fromDate(exp),
+      createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+      createdBy:U.uid
+    });
+    closeMdl();
+    toast('✅ Structure '+code+' créée ! Valide jusqu\'au '+exp.toLocaleDateString('fr-FR'));
+  }catch(e){if(msgEl){msgEl.className='amsg err';msgEl.textContent='❌ '+e.message;}}
+}
+
+async function renewOrg(code){
+  const months=parseInt(prompt('Prolonger de combien de mois ?','1'))||0;
+  if(!months)return;
+  try{
+    const snap=await db.collection('organizations').doc(code).get();
+    const cur=snap.data()?.validUntil?.toDate()||new Date();
+    const base=cur>new Date()?cur:new Date();
+    base.setMonth(base.getMonth()+months);
+    await db.collection('organizations').doc(code).update({validUntil:firebase.firestore.Timestamp.fromDate(base),active:true});
+    toast('✅ '+code+' renouvelé jusqu\'au '+base.toLocaleDateString('fr-FR'));
+    openAdminPanel();
+  }catch(e){toast('❌ '+e.message);}
+}
+
+async function toggleOrgActive(code,active){
+  try{
+    await db.collection('organizations').doc(code).update({active});
+    toast((active?'✅ Structure activée : ':'⛔ Structure désactivée : ')+code);
+    openAdminPanel();
+  }catch(e){toast('❌ '+e.message);}
+}
+
 // AUTH STATE — SESSION persistence: user must log in each time
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
 auth.onAuthStateChanged(async u=>{
@@ -896,16 +1151,21 @@ auth.onAuthStateChanged(async u=>{
   if(u){
     setPresence(true);
     await loadPro();
+    // check subscription
+    const subOk=await checkSubscription(PRO?.orgId||ORG);
+    if(!subOk){showScreen('sSub');hideSplash();return;}
     showScreen('sApp');
     goTo('pgMsgs');
     navStack=['pgMsgs'];
     initHome();
     listenCalls();
     if(!u.emailVerified) showVerifBanner();
+    // show admin section if admin
+    if(u.email===ADMIN_EMAIL){const as=document.getElementById('adminSec');if(as)as.style.display='';}
   }else{
     PRO=null;ORG=null;uCache=[];allConvs=[];loaded={};
     cleanUp();
-    showScreen('sAuth');
+    showScreen('sLanding');
   }
   hideSplash();
 });
@@ -1640,10 +1900,16 @@ async function doRegister2(){
   const btn=document.getElementById('rBtn');
   if(!prenom||!nom||!email||!code||!pass){msgEl.className='amsg err';msgEl.textContent='❌ Tous les champs sont obligatoires.';return;}
   if(pass.length<6){msgEl.className='amsg err';msgEl.textContent='❌ Minimum 6 caractères.';return;}
-  btn.disabled=true;btn.textContent='⏳ Création…';msgEl.className='amsg';
+  btn.disabled=true;btn.textContent='⏳ Vérification du code…';msgEl.className='amsg';
+  // validate org code
+  const v=await validateOrgCode(code);
+  if(!v.valid){msgEl.className='amsg err';msgEl.textContent='❌ '+v.msg;btn.disabled=false;btn.textContent='Créer mon compte';return;}
+  if(v.org.maxUsers>0&&(v.org.currentUsers||0)>=v.org.maxUsers){msgEl.className='amsg err';msgEl.textContent='❌ Cette structure a atteint son nombre maximum d\'utilisateurs.';btn.disabled=false;btn.textContent='Créer mon compte';return;}
+  btn.textContent='⏳ Création…';
   try{
     const cred=await auth.createUserWithEmailAndPassword(email,pass);
     await db.collection('users').doc(cred.user.uid).set({uid:cred.user.uid,email:email.toLowerCase(),nom,prenom,orgId:code,csp:'',status:'available',online:true,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    await db.collection('organizations').doc(code).update({currentUsers:firebase.firestore.FieldValue.increment(1)}).catch(()=>{});
     await cred.user.sendEmailVerification().catch(()=>{});
     ORG=code;toast('✅ Compte créé ! Vérifiez votre email.');
   }catch(err){
