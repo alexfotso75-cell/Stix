@@ -1121,7 +1121,7 @@ if('serviceWorker' in navigator){
 // ÉTAT
 let U=null,PRO=null,ORG=null,CHAT=null;
 let uCache=[],empCache=[],allConvs=[];
-let convUnsub=null,msgsUnsub=null,usrUnsub=null;
+let convUnsub=null,msgsUnsub=null,usrUnsub=null,proUnsub=null;
 let calUnsub=null,taskUnsub=null,newsUnsub=null,docsUnsub=null,pollsUnsub=null,empUnsub=null;
 let replyTo=null,editId=null;
 let vrRec=null,vrChunks=[],vrTimer=null,vrSecs=0,vrBlob=null;
@@ -1412,13 +1412,20 @@ auth.onAuthStateChanged(async u=>{
   hideSplash();
 });
 
-async function loadPro(){
-  if(!U)return;
-  try{
-    const snap=await db.collection('users').doc(U.uid).get();
-    if(snap.exists){PRO=snap.data();ORG=PRO.orgId||null;}
-    updateProUI();
-  }catch(err){console.error(err);}
+function loadPro(){
+  if(!U)return Promise.resolve();
+  if(proUnsub)try{proUnsub();}catch(e){}
+  return new Promise(resolve=>{
+    let resolved=false;
+    proUnsub=db.collection('users').doc(U.uid).onSnapshot(snap=>{
+      if(snap.exists){PRO=snap.data();ORG=PRO.orgId||null;}
+      updateProUI();
+      if(!resolved){resolved=true;resolve();}
+    },err=>{
+      console.error('Profile listener:',err);
+      if(!resolved){resolved=true;resolve();}
+    });
+  });
 }
 
 function getPhoto(u){return u&&(u.photoURL||u.photoBase64)||'';}
@@ -2172,7 +2179,8 @@ function cleanUp(){
   if(docsUnsub)try{docsUnsub();}catch(e){}
   if(pollsUnsub)try{pollsUnsub();}catch(e){}
   if(empUnsub)try{empUnsub();}catch(e){}
-  convUnsub=msgsUnsub=usrUnsub=calUnsub=taskUnsub=newsUnsub=docsUnsub=pollsUnsub=empUnsub=null;
+  if(proUnsub)try{proUnsub();}catch(e){}
+  convUnsub=msgsUnsub=usrUnsub=calUnsub=taskUnsub=newsUnsub=docsUnsub=pollsUnsub=empUnsub=proUnsub=null;
 }
 
 function doLogout(){
@@ -2206,7 +2214,7 @@ function listenCalls(){}
 
 // PROFILE EDIT
 function openEditProfile(){
-  if(!PRO){toast('⏳ Chargement du profil…');loadPro().then(()=>{if(PRO)openEditProfile();});return;}
+  if(!PRO){toast('⏳ Chargement du profil…');setTimeout(()=>{if(PRO)openEditProfile();},1500);return;}
   openMdl('✏️ Modifier le profil',`
     <div class="ff"><label>Prénom</label><input class="fi" id="epPn" type="text" value="${e(PRO.prenom||'')}"/></div>
     <div class="ff"><label>Nom</label><input class="fi" id="epNm" type="text" value="${e(PRO.nom||'')}"/></div>

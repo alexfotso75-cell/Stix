@@ -1,5 +1,5 @@
 /* GraceLink Service Worker — cache-first pour l'app shell, offline support */
-const CACHE = 'gracelink-v3.1';
+const CACHE = 'gracelink-v3.2';
 const SHELL  = ['/', '/index.html'];
 
 // ── Installation : mise en cache de l'app shell ───────────────────────────
