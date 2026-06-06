@@ -627,6 +627,56 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 .stk-low{color:var(--red);}
 .stk-ok{color:var(--green);}
 .stk-alert-banner{margin:0 16px 12px;padding:12px 14px;border-radius:13px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:13px;font-weight:700;}
+
+/* ─── SIDEBAR DESKTOP ─── */
+#sidebar{display:none;flex-direction:column;width:240px;min-width:240px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;position:relative;z-index:10;}
+.sb-top{padding:18px 16px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.sb-logo-ico{width:36px;height:36px;border-radius:11px;background:#0D0D1F;border:1.5px solid rgba(255,215,0,.4);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;flex-shrink:0;box-shadow:0 0 14px rgba(255,215,0,.18);}
+.sb-logo-name{font-size:15px;font-weight:900;letter-spacing:-.3px;}
+.sb-nav{padding:8px;flex:1;overflow-y:auto;}
+.sb-cat{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;padding:12px 8px 4px;}
+.sb-btn{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border-radius:11px;border:none;background:transparent;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;touch-action:manipulation;margin-bottom:1px;text-align:left;font-family:inherit;transition:.12s;}
+.sb-btn:hover{background:rgba(255,255,255,.04);color:var(--text);}
+.sb-btn.on{background:rgba(139,92,246,.15);color:var(--primary);}
+.sb-ico{font-size:16px;width:20px;flex-shrink:0;text-align:center;}
+.sb-profile{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;transition:.12s;}
+.sb-profile:hover{background:rgba(255,255,255,.03);}
+.sb-pav{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;overflow:hidden;}
+.sb-pav img{width:100%;height:100%;object-fit:cover;border-radius:10px;}
+.sb-pnm{font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sb-porg{font-size:11px;color:var(--text3);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#mainWrap{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;}
+@media (min-width:768px){
+  #sApp.show{flex-direction:row!important;}
+  #sidebar{display:flex;}
+  .bnav{display:none!important;}
+  .fab{bottom:20px;}
+  #toasts{bottom:20px;}
+  #avt-tog{bottom:20px;}
+  #avt{bottom:80px;}
+  .movl{padding:60px 40px;}
+  .mbox{max-width:540px;}
+  .task-board{min-height:calc(100vh - 130px);}
+}
+/* ─── SETUP WIZARD ─── */
+#sSetup{background:var(--bg);overflow-y:auto;align-items:center;justify-content:flex-start;padding-top:0;}
+.setup-wrap{width:100%;max-width:460px;padding:40px 24px 80px;margin:0 auto;}
+.setup-prog{display:flex;gap:6px;margin-bottom:32px;}
+.setup-prog-bar{flex:1;height:4px;border-radius:99px;background:var(--border2);transition:background .3s;}
+.setup-prog-bar.done{background:var(--primary);}
+.setup-step{display:none;flex-direction:column;gap:14px;animation:pgIn .2s ease both;}
+.setup-step.on{display:flex;}
+.setup-step-ico{font-size:48px;text-align:center;margin-bottom:4px;}
+.setup-step-ttl{font-size:24px;font-weight:900;text-align:center;letter-spacing:-.4px;}
+.setup-step-sub{font-size:14px;color:var(--text2);text-align:center;line-height:1.6;margin-bottom:4px;}
+.setup-btn{width:100%;padding:16px;border-radius:14px;border:none;background:var(--grad);color:#fff;font-size:15px;font-weight:700;cursor:pointer;touch-action:manipulation;box-shadow:0 8px 24px rgba(139,92,246,.3);margin-top:8px;}
+.setup-btn:active{transform:scale(.98);}
+.setup-skip{text-align:center;font-size:13px;color:var(--text3);background:none;border:none;cursor:pointer;touch-action:manipulation;padding:8px;width:100%;font-family:inherit;}
+.setup-photo-ring{width:90px;height:90px;border-radius:24px;margin:0 auto;position:relative;cursor:pointer;box-shadow:0 0 0 3px var(--primary);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.setup-photo-ov{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);font-size:12px;padding:3px 0;text-align:center;color:#fff;}
+.setup-code-box{background:var(--surface);border:1.5px solid var(--primary);border-radius:16px;padding:20px;text-align:center;}
+.setup-code-lbl{font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.setup-code-val{font-size:32px;font-weight:900;letter-spacing:4px;color:var(--primary);}
 </style>
 </head>
 <body>
@@ -706,6 +756,79 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
   </div>
 </div>
 
+<!-- SETUP WIZARD -->
+<div id="sSetup" class="screen">
+  <div class="setup-wrap">
+    <div class="setup-prog">
+      <div class="setup-prog-bar done" id="spb1"></div>
+      <div class="setup-prog-bar" id="spb2"></div>
+      <div class="setup-prog-bar" id="spb3"></div>
+    </div>
+    <!-- Étape 1 : Structure -->
+    <div class="setup-step on" id="ss1">
+      <div class="setup-step-ico">🏛️</div>
+      <div class="setup-step-ttl">Bienvenue sur GraceLink !</div>
+      <div class="setup-step-sub">Configurez votre structure en quelques secondes pour profiter pleinement de l'application.</div>
+      <div class="ff"><label>Nom de la structure *</label><input class="fi" id="ssOrgName" type="text" placeholder="Ex : Acme Cameroun SARL"/></div>
+      <div class="ff"><label>Secteur d'activité</label>
+        <select class="fi" id="ssOrgSector">
+          <option value="">-- Sélectionner --</option>
+          <option>Commerce &amp; Distribution</option>
+          <option>BTP &amp; Immobilier</option>
+          <option>Informatique &amp; Tech</option>
+          <option>Santé &amp; Pharmacie</option>
+          <option>Éducation &amp; Formation</option>
+          <option>Agriculture &amp; Agroalimentaire</option>
+          <option>Transport &amp; Logistique</option>
+          <option>Finance &amp; Assurance</option>
+          <option>ONG &amp; Associations</option>
+          <option>Hôtellerie &amp; Restauration</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="ff"><label>Taille de l'équipe</label>
+        <select class="fi" id="ssOrgSize">
+          <option value="1-5">1 – 5 personnes</option>
+          <option value="6-20">6 – 20 personnes</option>
+          <option value="21-50" selected>21 – 50 personnes</option>
+          <option value="51-100">51 – 100 personnes</option>
+          <option value="100+">Plus de 100 personnes</option>
+        </select>
+      </div>
+      <button type="button" class="setup-btn" onclick="setupNext(1)">Continuer →</button>
+    </div>
+    <!-- Étape 2 : Profil -->
+    <div class="setup-step" id="ss2">
+      <div class="setup-step-ico">👤</div>
+      <div class="setup-step-ttl">Votre profil</div>
+      <div class="setup-step-sub">Ajoutez une photo et votre poste pour que vos collègues vous reconnaissent.</div>
+      <div style="text-align:center;">
+        <div class="setup-photo-ring" id="ssPhotoRing" onclick="document.getElementById('ssPhotoInput').click()">
+          <div id="ssPhotoIni" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;color:#fff;">?</div>
+          <div class="setup-photo-ov">📷 Ajouter</div>
+          <input type="file" id="ssPhotoInput" accept="image/*" style="display:none;" onchange="ssUploadPhoto(this)"/>
+        </div>
+      </div>
+      <div class="ff"><label>Poste / Titre</label><input class="fi" id="ssPoste" type="text" placeholder="Directeur Général, Responsable RH…"/></div>
+      <button type="button" class="setup-btn" onclick="setupNext(2)">Continuer →</button>
+      <button type="button" class="setup-skip" onclick="setupNext(2)">Passer cette étape</button>
+    </div>
+    <!-- Étape 3 : Inviter -->
+    <div class="setup-step" id="ss3">
+      <div class="setup-step-ico">🎉</div>
+      <div class="setup-step-ttl">C'est prêt !</div>
+      <div class="setup-step-sub">Partagez ce code à vos collègues pour qu'ils rejoignent votre structure sur GraceLink.</div>
+      <div class="setup-code-box">
+        <div class="setup-code-lbl">Code structure</div>
+        <div class="setup-code-val" id="ssOrgCode">—</div>
+        <button type="button" onclick="copyOrgCode()" style="margin-top:12px;padding:8px 20px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text);font-size:13px;font-weight:700;cursor:pointer;touch-action:manipulation;font-family:inherit;">📋 Copier le code</button>
+      </div>
+      <div style="font-size:12px;color:var(--text3);text-align:center;line-height:1.6;">Chaque collègue entre ce code lors de son inscription sur GraceLink.</div>
+      <button type="button" class="setup-btn" onclick="finishSetup()">🚀 Commencer à utiliser GraceLink</button>
+    </div>
+  </div>
+</div>
+
 <!-- AUTH -->
 <div id="sAuth" class="screen">
   <div class="acard">
@@ -732,7 +855,8 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
         <input class="ainp" id="rNom" type="text" placeholder="Nom"/>
       </div>
       <input class="ainp" id="rEmail" type="email" placeholder="Adresse email" autocomplete="email"/>
-      <input class="ainp" id="rCode" type="text" placeholder="Code structure (ex: STIX)" style="text-transform:uppercase;"/>
+      <input class="ainp" id="rCode" type="text" placeholder="Code structure (laisser vide pour créer)" style="text-transform:uppercase;"/>
+      <div style="font-size:11px;color:var(--text3);margin-top:-8px;padding:0 2px;">Vous avez déjà un code → rejoignez la structure. Sinon → créez la vôtre.</div>
       <div class="ainp-wrap">
         <input class="ainp" id="rPass" type="password" placeholder="Mot de passe (min. 6)" autocomplete="new-password"/>
         <button type="button" class="pwtog" onclick="togPw('rPass',this)">👁️</button>
@@ -745,6 +869,22 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 
 <!-- APP -->
 <div id="sApp" class="screen">
+
+  <!-- SIDEBAR DESKTOP -->
+  <div id="sidebar">
+    <div class="sb-top">
+      <div class="sb-logo-ico"><span style="font-size:9px;line-height:1;margin-bottom:1px;">👑</span><span style="font-size:17px;font-weight:900;background:linear-gradient(135deg,#FFF,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">G</span></div>
+      <span class="sb-logo-name">GraceLink</span>
+    </div>
+    <nav class="sb-nav"></nav>
+    <div class="sb-profile" onclick="goTo('pgProfile')">
+      <div class="sb-pav" id="sbPav">?</div>
+      <div style="min-width:0;"><div class="sb-pnm" id="sbPnm">Profil</div><div class="sb-porg" id="sbPorg">Structure</div></div>
+    </div>
+  </div>
+
+  <!-- MAIN WRAP -->
+  <div id="mainWrap">
 
   <!-- pgMsgs -->
   <div id="pgMsgs" class="pg on">
@@ -1211,6 +1351,8 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
     <button class="nbt" data-pg="pgPrint" onclick="navTo('pgPrint',this)"><span class="ni">🖨️</span><span class="nl">Impression</span></button>
     <button class="nbt" data-pg="pgSettings" onclick="navTo('pgSettings',this)"><span class="ni">⚙️</span><span class="nl">Paramètres</span></button>
   </nav>
+
+  </div><!-- /mainWrap -->
 </div>
 
 <!-- CALL SCREEN -->
@@ -1318,6 +1460,134 @@ let audioCtx=null;
 let calY=new Date().getFullYear(),calM=new Date().getMonth(),calSel=null,calEvts=[];
 let loaded={};
 
+// ─── SIDEBAR ───────────────────────────────────────────────────────────────
+const SB_NAV=[
+  {cat:'Communication'},
+  {ico:'💬',lbl:'Messages',pg:'pgMsgs'},
+  {ico:'👥',lbl:'Contacts',pg:'pgContacts'},
+  {ico:'🧩',lbl:'Groupes',pg:'pgGroups'},
+  {cat:'Ressources Humaines'},
+  {ico:'⏰',lbl:'Pointage',pg:'pgPointage'},
+  {ico:'🌴',lbl:'Congés',pg:'pgConges'},
+  {ico:'👔',lbl:'Annuaire RH',pg:'pgRH'},
+  {ico:'📆',lbl:'Planning',pg:'pgPlanning'},
+  {cat:'Collaboration'},
+  {ico:'📅',lbl:'Agenda',pg:'pgCalendar'},
+  {ico:'✅',lbl:'Tâches',pg:'pgTasks'},
+  {ico:'📋',lbl:'Annuaire',pg:'pgDirectory'},
+  {ico:'📢',lbl:'Actualités',pg:'pgNews'},
+  {ico:'📎',lbl:'Documents',pg:'pgDocs'},
+  {ico:'📊',lbl:'Sondages',pg:'pgPolls'},
+  {cat:'ERP'},
+  {ico:'🤝',lbl:'CRM',pg:'pgCRM'},
+  {ico:'🏗️',lbl:'Projets',pg:'pgProjects'},
+  {ico:'💸',lbl:'Dépenses',pg:'pgExpenses'},
+  {ico:'📈',lbl:'Analytics',pg:'pgAnalytics'},
+  {ico:'🎯',lbl:'Recrutement',pg:'pgRecruit'},
+  {ico:'⭐',lbl:'Évaluations',pg:'pgEval'},
+  {ico:'📦',lbl:'Inventaire',pg:'pgStock'},
+  {cat:''},
+  {ico:'🖨️',lbl:'Impression',pg:'pgPrint'},
+  {ico:'⚙️',lbl:'Paramètres',pg:'pgSettings'},
+];
+
+function buildSidebar(){
+  const nav=document.querySelector('#sidebar .sb-nav');
+  if(!nav)return;
+  nav.innerHTML=SB_NAV.map(item=>{
+    if(item.cat!==undefined)return item.cat?`<div class="sb-cat">${item.cat}</div>`:'<div style="height:8px;"></div>';
+    return `<button class="sb-btn" data-pg="${item.pg}" onclick="navTo('${item.pg}')"><span class="sb-ico">${item.ico}</span>${item.lbl}</button>`;
+  }).join('');
+}
+
+function updateSidebarActive(pgId){
+  document.querySelectorAll('#sidebar .sb-btn').forEach(b=>b.classList.toggle('on',b.dataset.pg===pgId));
+}
+
+// ─── SETUP WIZARD ──────────────────────────────────────────────────────────
+let _ssPhotoBase64='';
+
+function initSetup(){
+  _ssPhotoBase64='';
+  if(PRO){
+    const n=PRO.nom||'',p=PRO.prenom||'',i=ini(n,p),g=gr(n);
+    const ssIni=document.getElementById('ssPhotoIni');
+    if(ssIni){ssIni.textContent=i;ssIni.style.background=g;ssIni.style.borderRadius='24px';}
+    const ssPoste=document.getElementById('ssPoste');
+    if(ssPoste&&PRO.poste)ssPoste.value=PRO.poste;
+  }
+  ['ss1','ss2','ss3'].forEach((id,i)=>{
+    const el=document.getElementById(id);if(el)el.classList.toggle('on',i===0);
+  });
+  document.getElementById('spb1')?.classList.add('done');
+  document.getElementById('spb2')?.classList.remove('done');
+  document.getElementById('spb3')?.classList.remove('done');
+}
+
+async function setupNext(step){
+  if(step===1){
+    const orgName=(document.getElementById('ssOrgName').value||'').trim();
+    if(!orgName){toast('Veuillez saisir le nom de votre structure');return;}
+    const btn=document.querySelector('#ss1 .setup-btn');
+    if(btn){btn.disabled=true;btn.textContent='Création…';}
+    const orgId='ORG_'+Date.now()+'_'+Math.random().toString(36).slice(2,7).toUpperCase();
+    const sector=document.getElementById('ssOrgSector').value;
+    const size=document.getElementById('ssOrgSize').value;
+    try{
+      await db.collection('organizations').doc(orgId).set({
+        name:orgName,sector,size,createdBy:U.uid,
+        createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+        plan:'trial',seats:50,
+        expiresAt:new Date(Date.now()+30*24*60*60*1000)
+      });
+      await db.collection('users').doc(U.uid).set({orgId,role:'admin'},{merge:true});
+      ORG=orgId;
+      document.getElementById('ssOrgCode').textContent=orgId.replace('ORG_','').replace(/_/g,'-');
+    }catch(err){toast('Erreur : '+err.message);if(btn){btn.disabled=false;btn.textContent='Continuer →';}return;}
+    document.getElementById('ss1').classList.remove('on');
+    document.getElementById('ss2').classList.add('on');
+    document.getElementById('spb2').classList.add('done');
+  } else if(step===2){
+    const poste=(document.getElementById('ssPoste').value||'').trim();
+    const updates={};
+    if(poste)updates.poste=poste;
+    if(_ssPhotoBase64)updates.photoBase64=_ssPhotoBase64;
+    try{if(Object.keys(updates).length)await db.collection('users').doc(U.uid).set(updates,{merge:true});}catch(e){}
+    document.getElementById('ss2').classList.remove('on');
+    document.getElementById('ss3').classList.add('on');
+    document.getElementById('spb3').classList.add('done');
+  }
+}
+
+function ssUploadPhoto(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    _ssPhotoBase64=ev.target.result;
+    const ring=document.getElementById('ssPhotoRing');
+    if(ring)ring.innerHTML=`<img src="${_ssPhotoBase64}" style="width:100%;height:100%;object-fit:cover;border-radius:22px;"/><div class="setup-photo-ov">📷 Changer</div><input type="file" id="ssPhotoInput" accept="image/*" style="display:none;" onchange="ssUploadPhoto(this)"/>`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function copyOrgCode(){
+  const code=document.getElementById('ssOrgCode').textContent;
+  navigator.clipboard?.writeText(code).then(()=>toast('Code copié !')).catch(()=>toast('Code : '+code));
+}
+
+async function finishSetup(){
+  try{await db.collection('users').doc(U.uid).set({setupDone:true},{merge:true});}catch(e){}
+  showScreen('sApp');
+  buildSidebar();
+  goTo('pgMsgs');
+  navStack=['pgMsgs'];
+  updateProUI();
+  initHome();
+  listenCalls();
+  if(U&&!U.emailVerified)showVerifBanner();
+  if(U&&U.email===ADMIN_EMAIL){const as=document.getElementById('adminSec');if(as)as.style.display='';}
+}
+
 // SPLASH
 let _splashHidden=false;
 function hideSplash(){
@@ -1383,6 +1653,7 @@ function goTo(pgId){
   if(pgId==='pgRecruit'){initRecruit();}
   if(pgId==='pgEval'){initEval();}
   if(pgId==='pgStock'){initStock();}
+  updateSidebarActive(pgId);
 }
 
 function navTo(pgId,btn){
@@ -1477,10 +1748,17 @@ async function checkSubscription(orgId){
   if(U&&U.email===ADMIN_EMAIL)return true;
   try{
     const snap=await db.collection('organizations').doc(orgId).get();
-    if(!snap.exists)return true; // legacy org not in DB = allow
+    if(!snap.exists)return true; // org not in DB = allow
     const org=snap.data();
-    if(!org.active)return false;
-    if(org.validUntil&&org.validUntil.toDate()<new Date())return false;
+    // active field: if explicitly false, block
+    if(org.active===false)return false;
+    // expiresAt check (trial period)
+    if(org.expiresAt){
+      const exp=org.expiresAt.toDate?org.expiresAt.toDate():new Date(org.expiresAt);
+      if(exp<new Date())return false;
+    }
+    // validUntil check (admin-set)
+    if(org.validUntil&&org.validUntil.toDate&&org.validUntil.toDate()<new Date())return false;
     return true;
   }catch(e){
     return true; // network error → allow
@@ -1585,10 +1863,18 @@ auth.onAuthStateChanged(async u=>{
   if(u){
     setPresence(true);
     await loadPro();
+    // First-time setup: user has no org and never completed setup
+    if(!PRO?.setupDone && !PRO?.orgId){
+      initSetup();
+      showScreen('sSetup');
+      hideSplash();
+      return;
+    }
     // check subscription
     const subOk=await checkSubscription(PRO?.orgId||ORG);
     if(!subOk){showScreen('sSub');hideSplash();return;}
     showScreen('sApp');
+    buildSidebar();
     goTo('pgMsgs');
     navStack=['pgMsgs'];
     updateProUI();
@@ -1646,6 +1932,11 @@ function updateProUI(){
   document.getElementById('profSt').textContent=stl;
   ['profStatVal','setStatVal'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=stl;});
   document.querySelectorAll('.odot').forEach(d=>d.style.display='block');
+  // sidebar profile sync
+  const sbPav=document.getElementById('sbPav');
+  if(sbPav){if(photo)sbPav.innerHTML=`<img src="${photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>`;else{sbPav.textContent=i;sbPav.style.background=g;}}
+  const sbPnm=document.getElementById('sbPnm');if(sbPnm)sbPnm.textContent=`${p} ${n}`.trim()||email;
+  const sbPorg=document.getElementById('sbPorg');if(sbPorg)sbPorg.textContent=ORG||'Aucune structure';
 }
 
 async function setPresence(on){if(!U)return;try{await db.collection('users').doc(U.uid).set({online:!!on,lastSeen:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});}catch(e){}}
@@ -2340,20 +2631,28 @@ async function doRegister2(){
   const pass=document.getElementById('rPass').value;
   const msgEl=document.getElementById('rMsg');
   const btn=document.getElementById('rBtn');
-  if(!prenom||!nom||!email||!code||!pass){msgEl.className='amsg err';msgEl.textContent='❌ Tous les champs sont obligatoires.';return;}
+  if(!prenom||!nom||!email||!pass){msgEl.className='amsg err';msgEl.textContent='❌ Prénom, nom, email et mot de passe obligatoires.';return;}
   if(pass.length<6){msgEl.className='amsg err';msgEl.textContent='❌ Minimum 6 caractères.';return;}
-  btn.disabled=true;btn.textContent='⏳ Vérification du code…';msgEl.className='amsg';
-  // validate org code
-  const v=await validateOrgCode(code);
-  if(!v.valid){msgEl.className='amsg err';msgEl.textContent='❌ '+v.msg;btn.disabled=false;btn.textContent='Créer mon compte';return;}
-  if(v.org.maxUsers>0&&(v.org.currentUsers||0)>=v.org.maxUsers){msgEl.className='amsg err';msgEl.textContent='❌ Cette structure a atteint son nombre maximum d\'utilisateurs.';btn.disabled=false;btn.textContent='Créer mon compte';return;}
+  btn.disabled=true;msgEl.className='amsg';
+  // If code provided → join existing org
+  if(code){
+    btn.textContent='⏳ Vérification du code…';
+    const v=await validateOrgCode(code);
+    if(!v.valid){msgEl.className='amsg err';msgEl.textContent='❌ '+v.msg;btn.disabled=false;btn.textContent='Créer mon compte';return;}
+    if(v.org.maxUsers>0&&(v.org.currentUsers||0)>=v.org.maxUsers){msgEl.className='amsg err';msgEl.textContent='❌ Cette structure a atteint son nombre maximum d\'utilisateurs.';btn.disabled=false;btn.textContent='Créer mon compte';return;}
+  }
   btn.textContent='⏳ Création…';
   try{
     const cred=await auth.createUserWithEmailAndPassword(email,pass);
-    await db.collection('users').doc(cred.user.uid).set({uid:cred.user.uid,email:email.toLowerCase(),nom,prenom,orgId:code,csp:'',status:'available',online:true,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-    await db.collection('organizations').doc(code).update({currentUsers:firebase.firestore.FieldValue.increment(1)}).catch(()=>{});
+    const userData={uid:cred.user.uid,email:email.toLowerCase(),nom,prenom,csp:'',status:'available',online:true,createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+    if(code){userData.orgId=code;userData.setupDone=true;}
+    await db.collection('users').doc(cred.user.uid).set(userData);
+    if(code){
+      await db.collection('organizations').doc(code).update({currentUsers:firebase.firestore.FieldValue.increment(1)}).catch(()=>{});
+      ORG=code;
+    }
     await cred.user.sendEmailVerification().catch(()=>{});
-    ORG=code;toast('✅ Compte créé ! Vérifiez votre email.');
+    toast('✅ Compte créé ! Vérifiez votre email.');
   }catch(err){
     const msgs={'auth/email-already-in-use':'Email déjà utilisé. Connectez-vous.','auth/weak-password':'Mot de passe trop faible (min. 6 car.).','auth/invalid-email':'Email invalide.','auth/network-request-failed':'Pas de connexion internet.','auth/unauthorized-domain':'Domaine non autorisé dans Firebase.'};
     msgEl.className='amsg err';msgEl.textContent='❌ '+(msgs[err.code]||err.message);
