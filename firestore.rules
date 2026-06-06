@@ -104,10 +104,35 @@ service cloud.firestore {
 
     // ── Structures / abonnements ──────────────────────────────────────────
     match /organizations/{orgId} {
-      // Tout utilisateur authentifié peut lire (validation du code à l'inscription)
       allow read:  if isAuthed();
-      // Seul l'admin peut créer / modifier / supprimer
       allow write: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
+    }
+
+    // ── Pointage ──────────────────────────────────────────────────────────
+    match /pointages/{docId} {
+      allow read:  if isAuthed() && (resource.data.uid == myUid() || sameOrg(resource.data.orgId));
+      allow create: if isAuthed() && request.resource.data.uid == myUid();
+      allow update: if isAuthed() && resource.data.uid == myUid();
+      allow delete: if false;
+    }
+
+    // ── Congés ────────────────────────────────────────────────────────────
+    match /leaves/{docId} {
+      allow read:  if isAuthed() && (resource.data.uid == myUid() || sameOrg(resource.data.orgId));
+      allow create: if isAuthed() && request.resource.data.uid == myUid();
+      allow update: if isAuthed() && (
+        resource.data.uid == myUid() ||
+        request.auth.token.email == 'alexfotso75@gmail.com'
+      );
+      allow delete: if isAuthed() && resource.data.uid == myUid() && resource.data.status == 'pending';
+    }
+
+    // ── Planning ──────────────────────────────────────────────────────────
+    match /schedules/{docId} {
+      allow read:  if sameOrg(resource.data.orgId);
+      allow create: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
+      allow update: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
+      allow delete: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
     }
   }
 }

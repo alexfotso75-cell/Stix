@@ -426,6 +426,90 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 .sub-msg{font-size:14px;color:var(--text2);line-height:1.6;}
 .sub-btn{width:100%;padding:15px;border-radius:14px;border:none;background:var(--grad);color:#fff;font-size:15px;font-weight:700;cursor:pointer;touch-action:manipulation;box-shadow:0 8px 24px rgba(139,92,246,.3);}
 .sub-out{color:var(--text3);font-size:13px;cursor:pointer;background:none;border:none;touch-action:manipulation;margin-top:4px;}
+/* ─── POINTAGE ─── */
+.ptg-clock{text-align:center;padding:28px 20px 16px;}
+.ptg-time{font-size:52px;font-weight:900;letter-spacing:-2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.ptg-date{font-size:13px;color:var(--text2);margin-top:4px;text-transform:capitalize;}
+.ptg-status-card{margin:0 16px 16px;padding:16px;border-radius:18px;background:var(--surface);border:1px solid var(--border2);display:flex;gap:14px;align-items:center;}
+.ptg-status-ico{width:50px;height:50px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.ptg-status-info{flex:1;}
+.ptg-status-lbl{font-size:12px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.ptg-status-val{font-size:16px;font-weight:800;color:var(--text);margin-top:2px;}
+.ptg-btn{margin:0 16px 14px;width:calc(100% - 32px);padding:18px;border-radius:18px;border:none;font-size:17px;font-weight:800;cursor:pointer;touch-action:manipulation;transition:transform .15s;}
+.ptg-btn.in{background:var(--grad);color:#fff;box-shadow:0 8px 28px rgba(139,92,246,.35);}
+.ptg-btn.out{background:linear-gradient(135deg,#EC4899,#F43F5E);color:#fff;box-shadow:0 8px 28px rgba(236,72,153,.35);}
+.ptg-btn:active{transform:scale(.97);}
+.ptg-btn:disabled{opacity:.5;transform:none;}
+.ptg-hist-ttl{font-size:12px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:0 16px 10px;}
+.ptg-row{display:flex;align-items:center;gap:10px;padding:13px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--border);margin:0 16px 8px;}
+.ptg-row-date{font-size:13px;font-weight:700;color:var(--text);min-width:76px;}
+.ptg-row-times{flex:1;font-size:12px;color:var(--text2);line-height:1.5;}
+.ptg-row-total{font-size:13px;font-weight:800;color:var(--primary);}
+.ptg-badge{display:inline-block;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:800;text-transform:uppercase;margin-left:6px;}
+.ptg-badge.present{background:rgba(16,185,129,.15);color:#10B981;}
+.ptg-badge.late{background:rgba(245,158,11,.15);color:#F59E0B;}
+.ptg-badge.absent{background:rgba(239,68,68,.15);color:#EF4444;}
+.ptg-tabs{display:flex;gap:8px;padding:0 16px 12px;}
+.ptg-tab{flex:1;padding:9px;border-radius:11px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;touch-action:manipulation;}
+.ptg-tab.on{background:var(--primary);color:#fff;border-color:transparent;}
+/* ─── CONGÉS ─── */
+.cng-balance{margin:16px;padding:18px;border-radius:18px;background:var(--surface);border:1.5px solid var(--border2);position:relative;overflow:hidden;}
+.cng-balance::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);}
+.cng-balance-row{display:flex;gap:10px;margin-top:12px;}
+.cng-bal-item{flex:1;text-align:center;padding:12px 8px;border-radius:12px;background:var(--bg2);}
+.cng-bal-val{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cng-bal-lbl{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+.cng-req{padding:0 16px;}
+.cng-req-item{padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border);margin-bottom:10px;}
+.cng-req-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.cng-req-type{font-size:14px;font-weight:800;}
+.cng-req-nm{font-size:12px;color:var(--primary);font-weight:700;margin-bottom:4px;}
+.cng-req-dates{font-size:12px;color:var(--text2);margin-bottom:4px;}
+.cng-req-reason{font-size:12px;color:var(--text3);}
+.cng-stat{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+.cng-stat.pending{background:rgba(245,158,11,.15);color:#F59E0B;}
+.cng-stat.approved{background:rgba(16,185,129,.15);color:#10B981;}
+.cng-stat.rejected{background:rgba(239,68,68,.15);color:#EF4444;}
+.cng-admin-row{display:flex;gap:8px;margin-top:10px;}
+.cng-admin-row button{flex:1;padding:8px;border-radius:10px;border:none;font-size:12px;font-weight:700;cursor:pointer;touch-action:manipulation;}
+.cng-approve{background:rgba(16,185,129,.15);color:#10B981;}
+.cng-reject{background:rgba(239,68,68,.15);color:#EF4444;}
+/* ─── RH DASHBOARD ─── */
+.rh-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px;}
+.rh-kpi{padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);text-align:center;}
+.rh-kpi-val{font-size:34px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.rh-kpi-lbl{font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:4px;}
+.rh-sect{padding:0 16px 16px;}
+.rh-sect-ttl{font-size:12px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+.rh-emp-row{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:13px;background:var(--surface);border:1px solid var(--border);margin-bottom:8px;}
+.rh-emp-av{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;flex-shrink:0;}
+.rh-emp-info{flex:1;}
+.rh-emp-nm{font-size:14px;font-weight:700;}
+.rh-emp-sub{font-size:12px;color:var(--text2);}
+.rh-emp-time{font-size:12px;font-weight:700;color:var(--primary);}
+.rh-alert{padding:12px 14px;border-radius:13px;border:1px solid;margin-bottom:8px;font-size:13px;}
+.rh-alert.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2);color:#F59E0B;}
+.rh-alert.info{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.2);color:var(--primary);}
+.rh-alert.danger{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.2);color:#EF4444;}
+/* ─── PLANNING ─── */
+.pln-week-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;}
+.pln-week-lbl{font-size:15px;font-weight:800;}
+.pln-nav-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text);font-size:18px;cursor:pointer;touch-action:manipulation;}
+.pln-days{display:flex;gap:6px;padding:0 16px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.pln-day-col{min-width:88px;border-radius:13px;background:var(--surface);border:1px solid var(--border);padding:9px 8px;}
+.pln-day-col.today{border-color:var(--primary);background:rgba(139,92,246,.07);}
+.pln-day-name{font-size:10px;font-weight:700;color:var(--text3);text-align:center;text-transform:uppercase;}
+.pln-day-num{font-size:20px;font-weight:900;text-align:center;margin:2px 0 6px;}
+.pln-mini-shift{font-size:10px;padding:3px 5px;border-radius:5px;margin-bottom:3px;font-weight:700;text-align:center;background:rgba(139,92,246,.15);color:var(--primary);}
+.pln-grid{padding:0 16px 20px;}
+.pln-emp-block{margin-bottom:12px;border-radius:14px;background:var(--surface);border:1px solid var(--border);overflow:hidden;}
+.pln-emp-hdr{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border);}
+.pln-emp-av{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;}
+.pln-emp-name{font-size:13px;font-weight:700;flex:1;}
+.pln-slots{display:flex;gap:6px;padding:10px 12px;flex-wrap:wrap;}
+.pln-slot{padding:5px 10px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(139,92,246,.12);color:var(--primary);}
+.pln-slot.off{background:rgba(239,68,68,.1);color:#EF4444;}
+.pln-slot.remote{background:rgba(6,182,212,.12);color:#06B6D4;}
 </style>
 </head>
 <body>
@@ -793,9 +877,115 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
     </div>
   </div>
 
+  <!-- pgPointage -->
+  <div id="pgPointage" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">⏰ Pointage</div></div>
+      <button type="button" class="hbtn" onclick="exportPointage()">📤</button>
+    </div>
+    <div class="content">
+      <div class="ptg-clock">
+        <div class="ptg-time" id="ptgClock">--:--:--</div>
+        <div class="ptg-date" id="ptgDate"></div>
+      </div>
+      <div class="ptg-status-card" id="ptgStatusCard">
+        <div class="ptg-status-ico" style="background:rgba(139,92,246,.15);">📍</div>
+        <div class="ptg-status-info">
+          <div class="ptg-status-lbl">Statut aujourd'hui</div>
+          <div class="ptg-status-val" id="ptgStatusVal">Chargement…</div>
+        </div>
+      </div>
+      <button type="button" class="ptg-btn in" id="ptgInBtn" onclick="clockIn()">▶ Pointer l'arrivée</button>
+      <button type="button" class="ptg-btn out" id="ptgOutBtn" onclick="clockOut()" style="display:none;">⏹ Pointer le départ</button>
+      <div class="ptg-tabs" id="ptgTabs" style="display:none;">
+        <button type="button" class="ptg-tab on" id="ptgTabMe" onclick="ptgSwitchTab('me')">Mes pointages</button>
+        <button type="button" class="ptg-tab" id="ptgTabAll" onclick="ptgSwitchTab('all')">Équipe (admin)</button>
+      </div>
+      <div class="ptg-hist-ttl">Historique</div>
+      <div id="ptgList"></div>
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
+  <!-- pgConges -->
+  <div id="pgConges" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">🌴 Congés</div></div>
+      <button type="button" class="hbtn" onclick="openNewLeave()">➕</button>
+    </div>
+    <div class="content">
+      <div class="cng-balance" id="cngBalance">
+        <div style="font-size:15px;font-weight:800;">Mon solde de congés</div>
+        <div class="cng-balance-row">
+          <div class="cng-bal-item"><div class="cng-bal-val" id="cngTotal">25</div><div class="cng-bal-lbl">Total annuel</div></div>
+          <div class="cng-bal-item"><div class="cng-bal-val" id="cngUsed">0</div><div class="cng-bal-lbl">Pris</div></div>
+          <div class="cng-bal-item"><div class="cng-bal-val" id="cngLeft">25</div><div class="cng-bal-lbl">Restants</div></div>
+        </div>
+      </div>
+      <div style="padding:0 16px 10px;display:flex;gap:8px;">
+        <button type="button" class="ptg-tab on" id="cngTabMe" onclick="cngSwitchTab('me')" style="flex:1;padding:9px;border-radius:11px;border:1px solid var(--border2);background:var(--primary);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Mes demandes</button>
+        <button type="button" class="ptg-tab" id="cngTabAll" onclick="cngSwitchTab('all')" style="flex:1;padding:9px;border-radius:11px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;">Équipe (admin)</button>
+      </div>
+      <div class="cng-req" id="cngList"></div>
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
+  <!-- pgRH -->
+  <div id="pgRH" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">👔 Tableau RH</div></div>
+      <button type="button" class="hbtn" onclick="initRH()">↻</button>
+    </div>
+    <div class="content">
+      <div class="rh-kpis" id="rhKpis">
+        <div class="rh-kpi"><div class="rh-kpi-val" id="rhTotal">—</div><div class="rh-kpi-lbl">Employés total</div></div>
+        <div class="rh-kpi"><div class="rh-kpi-val" id="rhPresent">—</div><div class="rh-kpi-lbl">Présents auj.</div></div>
+        <div class="rh-kpi"><div class="rh-kpi-val" id="rhLeave">—</div><div class="rh-kpi-lbl">En congé</div></div>
+        <div class="rh-kpi"><div class="rh-kpi-val" id="rhLate">—</div><div class="rh-kpi-lbl">Retards</div></div>
+      </div>
+      <div class="rh-sect" id="rhAlerts"></div>
+      <div class="rh-sect">
+        <div class="rh-sect-ttl">Présents aujourd'hui</div>
+        <div id="rhPresentList"></div>
+      </div>
+      <div class="rh-sect">
+        <div class="rh-sect-ttl">En congé</div>
+        <div id="rhLeaveList"></div>
+      </div>
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
+  <!-- pgPlanning -->
+  <div id="pgPlanning" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">📆 Planning</div></div>
+      <button type="button" class="hbtn" onclick="openAddShift()">➕</button>
+    </div>
+    <div class="content">
+      <div class="pln-week-nav">
+        <button type="button" class="pln-nav-btn" onclick="plnNav(-1)">‹</button>
+        <div class="pln-week-lbl" id="plnWeekLbl"></div>
+        <button type="button" class="pln-nav-btn" onclick="plnNav(1)">›</button>
+      </div>
+      <div class="pln-days" id="plnDays"></div>
+      <div class="pln-grid" id="plnGrid"></div>
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
   <!-- BOTTOM NAV -->
   <nav class="bnav" id="bnav">
     <button class="nbt on" data-pg="pgMsgs" onclick="navTo('pgMsgs',this)"><span class="ni">💬</span><span class="nl">Messages</span></button>
+    <button class="nbt" data-pg="pgPointage" onclick="navTo('pgPointage',this)"><span class="ni">⏰</span><span class="nl">Pointage</span></button>
+    <button class="nbt" data-pg="pgConges" onclick="navTo('pgConges',this)"><span class="ni">🌴</span><span class="nl">Congés</span></button>
+    <button class="nbt" data-pg="pgRH" onclick="navTo('pgRH',this)"><span class="ni">👔</span><span class="nl">RH</span></button>
+    <button class="nbt" data-pg="pgPlanning" onclick="navTo('pgPlanning',this)"><span class="ni">📆</span><span class="nl">Planning</span></button>
     <button class="nbt" data-pg="pgContacts" onclick="navTo('pgContacts',this)"><span class="ni">👥</span><span class="nl">Contacts</span></button>
     <button class="nbt" data-pg="pgGroups" onclick="navTo('pgGroups',this)"><span class="ni">🧩</span><span class="nl">Groupes</span></button>
     <button class="nbt" data-pg="pgCalendar" onclick="navTo('pgCalendar',this)"><span class="ni">📅</span><span class="nl">Agenda</span></button>
@@ -949,6 +1139,10 @@ function goTo(pgId){
   if(pgId==='pgNews'&&!loaded.news){loaded.news=true;loadNews();}
   if(pgId==='pgDocs'&&!loaded.docs){loaded.docs=true;loadDocs();}
   if(pgId==='pgPolls'&&!loaded.polls){loaded.polls=true;loadPolls();}
+  if(pgId==='pgPointage'){initPointage();}
+  if(pgId==='pgConges'){initConges();}
+  if(pgId==='pgRH'){initRH();}
+  if(pgId==='pgPlanning'){initPlanning();}
 }
 
 function navTo(pgId,btn){
@@ -2218,6 +2412,523 @@ async function exportData(){
 // CONNEXION
 window.addEventListener('online',()=>toast('✅ Connexion rétablie'));
 window.addEventListener('offline',()=>toast('⚠️ Hors ligne — certaines fonctions indisponibles'));
+
+// ═══════════════════════════════════════════════════════
+// ──── MODULE POINTAGE (TIME TRACKING) ────
+// ═══════════════════════════════════════════════════════
+let _ptgTimer=null, _ptgTab='me', _ptgToday=null;
+const LATE_THRESHOLD=9; // heure après laquelle c'est considéré retard
+
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function fmtHM(ts){if(!ts)return '--:--';const d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
+function diffMin(a,b){if(!a||!b)return 0;const da=a.toDate?a.toDate():new Date(a),db=b.toDate?b.toDate():new Date(b);return Math.round((db-da)/60000);}
+function fmtDur(min){const h=Math.floor(min/60),m=min%60;return h>0?`${h}h${m>0?m+'min':''}`:`${m}min`;}
+
+async function initPointage(){
+  if(!U||!PRO)return;
+  // live clock
+  clearInterval(_ptgTimer);
+  _ptgTimer=setInterval(()=>{
+    const now=new Date();
+    const el=document.getElementById('ptgClock');
+    if(el)el.textContent=now.toLocaleTimeString('fr-FR');
+    const dl=document.getElementById('ptgDate');
+    if(dl)dl.textContent=now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  },1000);
+  if(U.email===ADMIN_EMAIL){
+    const t=document.getElementById('ptgTabs');if(t)t.style.display='flex';
+  }
+  await ptgLoadToday();
+  await ptgLoadHistory();
+}
+
+async function ptgLoadToday(){
+  const date=todayStr();
+  try{
+    const snap=await db.collection('pointages').where('uid','==',U.uid).where('date','==',date).limit(1).get();
+    _ptgToday=snap.empty?null:{id:snap.docs[0].id,...snap.docs[0].data()};
+  }catch(e){_ptgToday=null;}
+  ptgUpdateUI();
+}
+
+function ptgUpdateUI(){
+  const inBtn=document.getElementById('ptgInBtn');
+  const outBtn=document.getElementById('ptgOutBtn');
+  const sv=document.getElementById('ptgStatusVal');
+  const sc=document.getElementById('ptgStatusCard');
+  if(!_ptgToday){
+    if(inBtn)inBtn.style.display='';
+    if(outBtn)outBtn.style.display='none';
+    if(sv)sv.textContent='Non pointé';
+    if(sc)sc.querySelector('.ptg-status-ico').style.background='rgba(239,68,68,.15)';
+  } else if(_ptgToday.arrivedAt && !_ptgToday.departedAt){
+    if(inBtn)inBtn.style.display='none';
+    if(outBtn)outBtn.style.display='';
+    const arr=fmtHM(_ptgToday.arrivedAt);
+    if(sv)sv.textContent=`Arrivé à ${arr} — en service`;
+    if(sc)sc.querySelector('.ptg-status-ico').style.background='rgba(16,185,129,.15)';
+  } else if(_ptgToday.arrivedAt && _ptgToday.departedAt){
+    if(inBtn){inBtn.style.display='';inBtn.disabled=true;inBtn.textContent='✅ Journée terminée';}
+    if(outBtn)outBtn.style.display='none';
+    const dur=fmtDur(_ptgToday.totalMinutes||0);
+    if(sv)sv.textContent=`${fmtHM(_ptgToday.arrivedAt)} → ${fmtHM(_ptgToday.departedAt)} · ${dur}`;
+    if(sc)sc.querySelector('.ptg-status-ico').style.background='rgba(139,92,246,.15)';
+  }
+}
+
+async function clockIn(){
+  if(!U||!PRO)return;
+  const btn=document.getElementById('ptgInBtn');
+  if(btn){btn.disabled=true;btn.textContent='⏳ Enregistrement…';}
+  const now=firebase.firestore.Timestamp.now();
+  const date=todayStr();
+  const h=new Date().getHours();
+  const status=h>=LATE_THRESHOLD?'late':'present';
+  try{
+    const ref=await db.collection('pointages').add({
+      orgId:ORG||PRO.orgId||'',
+      uid:U.uid,
+      prenom:PRO.prenom||'',
+      nom:PRO.nom||'',
+      date,
+      arrivedAt:now,
+      departedAt:null,
+      totalMinutes:0,
+      status
+    });
+    _ptgToday={id:ref.id,orgId:ORG||PRO.orgId||'',uid:U.uid,prenom:PRO.prenom,nom:PRO.nom,date,arrivedAt:now,departedAt:null,totalMinutes:0,status};
+    ptgUpdateUI();
+    toast(h>=LATE_THRESHOLD?'⚠️ Arrivée enregistrée (retard)':'✅ Arrivée enregistrée !');
+    await ptgLoadHistory();
+  }catch(err){toast('❌ '+err.message);if(btn){btn.disabled=false;btn.textContent='▶ Pointer l\'arrivée';}}
+}
+
+async function clockOut(){
+  if(!_ptgToday)return;
+  const btn=document.getElementById('ptgOutBtn');
+  if(btn){btn.disabled=true;btn.textContent='⏳ Enregistrement…';}
+  const now=firebase.firestore.Timestamp.now();
+  const mins=diffMin(_ptgToday.arrivedAt,now);
+  try{
+    await db.collection('pointages').doc(_ptgToday.id).update({departedAt:now,totalMinutes:mins});
+    _ptgToday={..._ptgToday,departedAt:now,totalMinutes:mins};
+    ptgUpdateUI();
+    toast(`✅ Départ enregistré · ${fmtDur(mins)} travaillé(s)`);
+    await ptgLoadHistory();
+  }catch(err){toast('❌ '+err.message);if(btn){btn.disabled=false;btn.textContent='⏹ Pointer le départ';}}
+}
+
+async function ptgLoadHistory(){
+  const list=document.getElementById('ptgList');
+  if(!list)return;
+  if(_ptgTab==='me') await ptgLoadMyHistory(list);
+  else await ptgLoadAllHistory(list);
+}
+
+async function ptgLoadMyHistory(list){
+  try{
+    const snap=await db.collection('pointages').where('uid','==',U.uid).orderBy('date','desc').limit(14).get();
+    if(snap.empty){list.innerHTML='<div style="text-align:center;color:var(--text3);padding:30px;">Aucun pointage</div>';return;}
+    list.innerHTML=snap.docs.map(d=>{
+      const p=d.data();
+      const badge=p.status==='late'?'<span class="ptg-badge late">Retard</span>':p.status==='present'?'<span class="ptg-badge present">Présent</span>':'';
+      const dur=p.totalMinutes?fmtDur(p.totalMinutes):'en cours';
+      return `<div class="ptg-row">
+        <div class="ptg-row-date">${p.date?.slice(5)||p.date}</div>
+        <div class="ptg-row-times">↗ ${fmtHM(p.arrivedAt)}${p.departedAt?` &nbsp;↙ ${fmtHM(p.departedAt)}`:''}${badge}</div>
+        <div class="ptg-row-total">${dur}</div>
+      </div>`;
+    }).join('');
+  }catch(e){list.innerHTML='<div style="text-align:center;color:var(--text3);padding:20px;">Erreur de chargement</div>';}
+}
+
+async function ptgLoadAllHistory(list){
+  try{
+    const date=todayStr();
+    const snap=await db.collection('pointages').where('orgId','==',ORG||PRO?.orgId||'').where('date','==',date).get();
+    if(snap.empty){list.innerHTML='<div style="text-align:center;color:var(--text3);padding:30px;">Aucun pointage aujourd\'hui</div>';return;}
+    list.innerHTML=snap.docs.map(d=>{
+      const p=d.data();
+      const nm=`${p.prenom||''} ${p.nom||''}`.trim();
+      const badge=p.status==='late'?'<span class="ptg-badge late">Retard</span>':p.status==='present'?'<span class="ptg-badge present">Présent</span>':'';
+      const dur=p.totalMinutes?fmtDur(p.totalMinutes):(p.departedAt?'—':'en cours');
+      return `<div class="ptg-row">
+        <div class="ptg-row-date" style="font-size:12px;">${nm}</div>
+        <div class="ptg-row-times">↗ ${fmtHM(p.arrivedAt)}${p.departedAt?` ↙ ${fmtHM(p.departedAt)}`:''}${badge}</div>
+        <div class="ptg-row-total">${dur}</div>
+      </div>`;
+    }).join('');
+  }catch(e){list.innerHTML='<div style="text-align:center;color:var(--text3);padding:20px;">Erreur</div>';}
+}
+
+function ptgSwitchTab(tab){
+  _ptgTab=tab;
+  document.getElementById('ptgTabMe')?.classList.toggle('on',tab==='me');
+  document.getElementById('ptgTabAll')?.classList.toggle('on',tab==='all');
+  ptgLoadHistory();
+}
+
+function exportPointage(){
+  toast('📤 Export CSV en cours…');
+  db.collection('pointages').where('orgId','==',ORG||PRO?.orgId||'').orderBy('date','desc').limit(100).get().then(snap=>{
+    if(snap.empty){toast('Aucune donnée');return;}
+    let csv='Nom,Prénom,Date,Arrivée,Départ,Durée(min),Statut\n';
+    snap.docs.forEach(d=>{
+      const p=d.data();
+      const arr=p.arrivedAt?fmtHM(p.arrivedAt):'';
+      const dep=p.departedAt?fmtHM(p.departedAt):'';
+      csv+=`"${p.nom||''}","${p.prenom||''}","${p.date||''}","${arr}","${dep}","${p.totalMinutes||0}","${p.status||''}"\n`;
+    });
+    const blob=new Blob([csv],{type:'text/csv'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=`pointages_${todayStr()}.csv`;
+    a.click();
+    toast('✅ Export CSV téléchargé');
+  }).catch(()=>toast('❌ Erreur export'));
+}
+
+// ═══════════════════════════════════════════════════════
+// ──── MODULE CONGÉS (LEAVE MANAGEMENT) ────
+// ═══════════════════════════════════════════════════════
+let _cngTab='me';
+
+async function initConges(){
+  if(!U||!PRO)return;
+  await cngLoadBalance();
+  await cngLoadRequests();
+}
+
+async function cngLoadBalance(){
+  const year=new Date().getFullYear();
+  try{
+    const snap=await db.collection('leaves')
+      .where('uid','==',U.uid)
+      .where('status','==','approved')
+      .get();
+    let used=0;
+    snap.docs.forEach(d=>{
+      const lv=d.data();
+      if(lv.startDate&&lv.startDate.startsWith(''+year)) used+=lv.days||0;
+    });
+    const total=25;
+    const left=Math.max(0,total-used);
+    const u=document.getElementById('cngUsed');if(u)u.textContent=used;
+    const l=document.getElementById('cngLeft');if(l)l.textContent=left;
+  }catch(e){}
+}
+
+async function cngLoadRequests(){
+  const list=document.getElementById('cngList');
+  if(!list)return;
+  if(_cngTab==='me') await cngLoadMine(list);
+  else await cngLoadAll(list);
+}
+
+async function cngLoadMine(list){
+  try{
+    const snap=await db.collection('leaves').where('uid','==',U.uid).orderBy('createdAt','desc').limit(20).get();
+    if(snap.empty){list.innerHTML='<div style="text-align:center;color:var(--text3);padding:30px;">Aucune demande</div>';return;}
+    list.innerHTML=snap.docs.map(d=>cngItemHTML(d.id,d.data(),false)).join('');
+  }catch(e){list.innerHTML='<div style="text-align:center;color:var(--text3);padding:20px;">Erreur</div>';}
+}
+
+async function cngLoadAll(list){
+  try{
+    const snap=await db.collection('leaves').where('orgId','==',ORG||PRO?.orgId||'').orderBy('createdAt','desc').limit(30).get();
+    if(snap.empty){list.innerHTML='<div style="text-align:center;color:var(--text3);padding:30px;">Aucune demande</div>';return;}
+    list.innerHTML=snap.docs.map(d=>cngItemHTML(d.id,d.data(),true)).join('');
+  }catch(e){list.innerHTML='<div style="text-align:center;color:var(--text3);padding:20px;">Erreur</div>';}
+}
+
+function cngItemHTML(id,lv,showAdmin){
+  const types={'conge_paye':'🌴 Congé payé','maladie':'🏥 Maladie','sans_solde':'🚫 Sans solde','maternite':'👶 Maternité/Paternité','autre':'📌 Autre'};
+  const statLbl={'pending':'En attente','approved':'Approuvé','rejected':'Refusé'};
+  const isAdmin=U.email===ADMIN_EMAIL;
+  const nm=`${lv.prenom||''} ${lv.nom||''}`.trim();
+  return `<div class="cng-req-item">
+    <div class="cng-req-head">
+      <div class="cng-req-type">${types[lv.type]||lv.type}</div>
+      <span class="cng-stat ${lv.status}">${statLbl[lv.status]||lv.status}</span>
+    </div>
+    ${showAdmin?`<div class="cng-req-nm">👤 ${nm}</div>`:''}
+    <div class="cng-req-dates">📅 ${lv.startDate||'—'} → ${lv.endDate||'—'} · <strong>${lv.days||0} jour(s)</strong></div>
+    ${lv.reason?`<div class="cng-req-reason">💬 ${e(lv.reason)}</div>`:''}
+    ${lv.comment?`<div class="cng-req-reason" style="color:var(--accent);">📝 ${e(lv.comment)}</div>`:''}
+    ${isAdmin&&lv.status==='pending'?`<div class="cng-admin-row">
+      <button type="button" class="cng-approve" onclick="approveLeave('${id}')">✅ Approuver</button>
+      <button type="button" class="cng-reject" onclick="rejectLeave('${id}')">❌ Refuser</button>
+    </div>`:''}
+  </div>`;
+}
+
+function cngSwitchTab(tab){
+  _cngTab=tab;
+  const me=document.getElementById('cngTabMe'),all=document.getElementById('cngTabAll');
+  if(me){me.style.background=tab==='me'?'var(--primary)':'none';me.style.color=tab==='me'?'#fff':'var(--text2)';}
+  if(all){all.style.background=tab==='all'?'var(--primary)':'none';all.style.color=tab==='all'?'#fff':'var(--text2)';}
+  cngLoadRequests();
+}
+
+function openNewLeave(){
+  if(!PRO)return;
+  const today=todayStr();
+  openMdl('🌴 Nouvelle demande de congé',`
+    <div class="ff"><label>Type de congé</label>
+      <select class="fi" id="lvType">
+        <option value="conge_paye">🌴 Congé payé</option>
+        <option value="maladie">🏥 Maladie</option>
+        <option value="sans_solde">🚫 Sans solde</option>
+        <option value="maternite">👶 Maternité / Paternité</option>
+        <option value="autre">📌 Autre</option>
+      </select></div>
+    <div class="g2">
+      <div class="ff"><label>Date début</label><input class="fi" id="lvStart" type="date" value="${today}"/></div>
+      <div class="ff"><label>Date fin</label><input class="fi" id="lvEnd" type="date" value="${today}"/></div>
+    </div>
+    <div class="ff"><label>Motif (optionnel)</label><textarea class="fi" id="lvReason" rows="2" placeholder="Précisez si nécessaire…" style="resize:none;"></textarea></div>
+    <div id="lvMsg" class="amsg"></div>`,
+    `<button class="mbt mbt-c" onclick="closeMdl()">Annuler</button>
+     <button class="mbt mbt-ok" onclick="doNewLeave()">Envoyer la demande</button>`);
+}
+
+async function doNewLeave(){
+  const type=document.getElementById('lvType')?.value;
+  const start=document.getElementById('lvStart')?.value;
+  const end=document.getElementById('lvEnd')?.value;
+  const reason=document.getElementById('lvReason')?.value.trim();
+  const msgEl=document.getElementById('lvMsg');
+  if(!start||!end||new Date(end)<new Date(start)){if(msgEl){msgEl.className='amsg err';msgEl.textContent='❌ Dates invalides.';}return;}
+  const days=Math.round((new Date(end)-new Date(start))/(86400000))+1;
+  try{
+    await db.collection('leaves').add({
+      orgId:ORG||PRO.orgId||'',
+      uid:U.uid,prenom:PRO.prenom||'',nom:PRO.nom||'',
+      type,startDate:start,endDate:end,days,reason:reason||'',
+      status:'pending',createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+      reviewedBy:null,reviewedAt:null,comment:''
+    });
+    closeMdl();toast(`✅ Demande envoyée · ${days} jour(s)`);
+    initConges();
+  }catch(err){if(msgEl){msgEl.className='amsg err';msgEl.textContent='❌ '+err.message;}}
+}
+
+async function approveLeave(id){
+  try{
+    await db.collection('leaves').doc(id).update({status:'approved',reviewedBy:U.uid,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});
+    toast('✅ Congé approuvé');cngLoadRequests();
+  }catch(e){toast('❌ '+e.message);}
+}
+
+async function rejectLeave(id){
+  const comment=prompt('Motif du refus (optionnel) :','');
+  if(comment===null)return;
+  try{
+    await db.collection('leaves').doc(id).update({status:'rejected',reviewedBy:U.uid,reviewedAt:firebase.firestore.FieldValue.serverTimestamp(),comment:comment||''});
+    toast('⛔ Congé refusé');cngLoadRequests();
+  }catch(e){toast('❌ '+e.message);}
+}
+
+// ═══════════════════════════════════════════════════════
+// ──── MODULE RH DASHBOARD ────
+// ═══════════════════════════════════════════════════════
+async function initRH(){
+  if(!U||!PRO)return;
+  const org=ORG||PRO.orgId||'';
+  const date=todayStr();
+  // Load users in org
+  let users=[];
+  try{const s=await db.collection('users').where('orgId','==',org).get();users=s.docs.map(d=>d.data());}catch(e){}
+  // Load today's pointages
+  let ptgs=[];
+  try{const s=await db.collection('pointages').where('orgId','==',org).where('date','==',date).get();ptgs=s.docs.map(d=>d.data());}catch(e){}
+  // Load active leaves today
+  let onLeave=[];
+  try{const s=await db.collection('leaves').where('orgId','==',org).where('status','==','approved').get();
+    onLeave=s.docs.map(d=>d.data()).filter(lv=>lv.startDate<=date&&lv.endDate>=date);}catch(e){}
+
+  const total=users.length;
+  const present=ptgs.filter(p=>p.arrivedAt).length;
+  const late=ptgs.filter(p=>p.status==='late').length;
+  const leave=onLeave.length;
+
+  const el=id=>document.getElementById(id);
+  if(el('rhTotal'))el('rhTotal').textContent=total;
+  if(el('rhPresent'))el('rhPresent').textContent=present;
+  if(el('rhLeave'))el('rhLeave').textContent=leave;
+  if(el('rhLate'))el('rhLate').textContent=late;
+
+  // Alerts
+  const alerts=document.getElementById('rhAlerts');
+  if(alerts){
+    let html='<div class="rh-sect-ttl">Alertes</div>';
+    if(late>0)html+=`<div class="rh-alert warn">⚠️ ${late} employé(s) en retard aujourd'hui</div>`;
+    const absent=total-present-leave;
+    if(absent>0)html+=`<div class="rh-alert danger">❌ ${absent} employé(s) absent(s) non justifié(s)</div>`;
+    if(leave>0)html+=`<div class="rh-alert info">🌴 ${leave} employé(s) en congé aujourd'hui</div>`;
+    if(late===0&&absent===0)html+='<div class="rh-alert info">✅ Tout le monde est à l\'heure !</div>';
+    alerts.innerHTML=html;
+  }
+
+  // Present list
+  const pList=document.getElementById('rhPresentList');
+  if(pList){
+    if(!ptgs.length){pList.innerHTML='<div style="color:var(--text3);font-size:13px;">Aucun pointage aujourd\'hui</div>';}
+    else pList.innerHTML=ptgs.filter(p=>p.arrivedAt).map(p=>{
+      const nm=`${p.prenom||''} ${p.nom||''}`.trim();
+      const arr=fmtHM(p.arrivedAt);
+      const dep=p.departedAt?`· départ ${fmtHM(p.departedAt)}`:'· en cours';
+      const late=p.status==='late'?'<span class="ptg-badge late" style="font-size:10px;">Retard</span>':'';
+      return `<div class="rh-emp-row"><div class="rh-emp-av" style="background:${gr(p.nom||'')}">${ini(p.nom||'',p.prenom||'')}</div><div class="rh-emp-info"><div class="rh-emp-nm">${nm}${late}</div><div class="rh-emp-sub">↗ ${arr} ${dep}</div></div></div>`;
+    }).join('');
+  }
+
+  // On leave list
+  const lList=document.getElementById('rhLeaveList');
+  if(lList){
+    if(!onLeave.length){lList.innerHTML='<div style="color:var(--text3);font-size:13px;">Personne en congé</div>';}
+    else lList.innerHTML=onLeave.map(lv=>{
+      const nm=`${lv.prenom||''} ${lv.nom||''}`.trim();
+      const types={'conge_paye':'🌴','maladie':'🏥','sans_solde':'🚫','maternite':'👶','autre':'📌'};
+      return `<div class="rh-emp-row"><div class="rh-emp-av" style="background:${gr(lv.nom||'')}">${ini(lv.nom||'',lv.prenom||'')}</div><div class="rh-emp-info"><div class="rh-emp-nm">${nm}</div><div class="rh-emp-sub">${types[lv.type]||'📌'} jusqu'au ${lv.endDate||'—'}</div></div></div>`;
+    }).join('');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// ──── MODULE PLANNING ────
+// ═══════════════════════════════════════════════════════
+let _plnWeekOffset=0;
+
+function plnWeekStart(offset=0){
+  const d=new Date();
+  const day=d.getDay();
+  const diff=d.getDate()-day+(day===0?-6:1);
+  d.setDate(diff+offset*7);
+  d.setHours(0,0,0,0);
+  return d;
+}
+function plnDateStr(d){return d.toISOString().slice(0,10);}
+function plnFmtDay(d){return d.toLocaleDateString('fr-FR',{weekday:'short',day:'numeric'});}
+
+async function initPlanning(){
+  if(!U||!PRO)return;
+  const ws=plnWeekStart(_plnWeekOffset);
+  const we=new Date(ws);we.setDate(we.getDate()+6);
+  const wl=document.getElementById('plnWeekLbl');
+  if(wl)wl.textContent=`${ws.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} – ${we.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})}`;
+
+  // Build day headers
+  const days=[];
+  for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(d.getDate()+i);days.push(d);}
+  const todayISO=todayStr();
+  const daysEl=document.getElementById('plnDays');
+  if(daysEl){
+    daysEl.innerHTML=days.map(d=>{
+      const iso=plnDateStr(d);
+      return `<div class="pln-day-col${iso===todayISO?' today':''}">
+        <div class="pln-day-name">${d.toLocaleDateString('fr-FR',{weekday:'short'})}</div>
+        <div class="pln-day-num" style="${iso===todayISO?'color:var(--primary);':''}">${d.getDate()}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Load shifts
+  const org=ORG||PRO.orgId||'';
+  const startD=plnDateStr(ws),endD=plnDateStr(we);
+  let shifts=[];
+  try{
+    const snap=await db.collection('schedules')
+      .where('orgId','==',org)
+      .where('date','>=',startD)
+      .where('date','<=',endD)
+      .get();
+    shifts=snap.docs.map(d=>({id:d.id,...d.data()}));
+  }catch(e){}
+
+  // Group by employee
+  const byEmp={};
+  shifts.forEach(s=>{
+    const key=s.uid;
+    if(!byEmp[key]){byEmp[key]={prenom:s.prenom,nom:s.nom,uid:s.uid,shifts:[]};}
+    byEmp[key].shifts.push(s);
+  });
+
+  // Also show current user if no shifts
+  if(!byEmp[U.uid]&&PRO){byEmp[U.uid]={prenom:PRO.prenom||'',nom:PRO.nom||'',uid:U.uid,shifts:[]};}
+
+  const grid=document.getElementById('plnGrid');
+  if(grid){
+    if(!Object.keys(byEmp).length){
+      grid.innerHTML='<div style="text-align:center;color:var(--text3);padding:30px;">Aucun planning cette semaine</div>';
+    } else {
+      grid.innerHTML=Object.values(byEmp).map(emp=>{
+        const nm=`${emp.prenom||''} ${emp.nom||''}`.trim();
+        const slots=days.map(d=>{
+          const iso=plnDateStr(d);
+          const sh=emp.shifts.find(s=>s.date===iso);
+          if(!sh)return `<div class="pln-slot off">${d.toLocaleDateString('fr-FR',{weekday:'short'})} —</div>`;
+          const type=sh.type||'regular';
+          const cls=type==='remote'?'remote':type==='off'?'off':'';
+          return `<div class="pln-slot ${cls}">${d.toLocaleDateString('fr-FR',{weekday:'short'})} ${sh.startTime||''}–${sh.endTime||''}</div>`;
+        }).join('');
+        return `<div class="pln-emp-block">
+          <div class="pln-emp-hdr">
+            <div class="pln-emp-av" style="background:${gr(emp.nom||'')}">${ini(emp.nom||'',emp.prenom||'')}</div>
+            <div class="pln-emp-name">${nm}</div>
+          </div>
+          <div class="pln-slots">${slots}</div>
+        </div>`;
+      }).join('');
+    }
+  }
+}
+
+function plnNav(dir){
+  _plnWeekOffset+=dir;
+  initPlanning();
+}
+
+function openAddShift(){
+  if(U.email!==ADMIN_EMAIL){toast('⛔ Réservé à l\'administrateur');return;}
+  const today=todayStr();
+  openMdl('📆 Ajouter un créneau',`
+    <div class="ff"><label>Employé (UID ou email)</label><input class="fi" id="shUid" type="text" placeholder="Laissez vide = vous-même"/></div>
+    <div class="ff"><label>Date</label><input class="fi" id="shDate" type="date" value="${today}"/></div>
+    <div class="g2">
+      <div class="ff"><label>Heure début</label><input class="fi" id="shStart" type="time" value="08:00"/></div>
+      <div class="ff"><label>Heure fin</label><input class="fi" id="shEnd" type="time" value="17:00"/></div>
+    </div>
+    <div class="ff"><label>Type</label>
+      <select class="fi" id="shType">
+        <option value="regular">🏢 Présentiel</option>
+        <option value="remote">💻 Télétravail</option>
+        <option value="off">🚫 Repos</option>
+      </select></div>`,
+    `<button class="mbt mbt-c" onclick="closeMdl()">Annuler</button>
+     <button class="mbt mbt-ok" onclick="doAddShift()">Enregistrer</button>`);
+}
+
+async function doAddShift(){
+  const shDate=document.getElementById('shDate')?.value;
+  const shStart=document.getElementById('shStart')?.value;
+  const shEnd=document.getElementById('shEnd')?.value;
+  const shType=document.getElementById('shType')?.value||'regular';
+  const shUidInput=document.getElementById('shUid')?.value.trim();
+  if(!shDate){toast('❌ Date requise');return;}
+  const targetUid=shUidInput||U.uid;
+  const targetPre=shUidInput?'':PRO.prenom||'';
+  const targetNom=shUidInput?shUidInput:PRO.nom||'';
+  try{
+    await db.collection('schedules').add({
+      orgId:ORG||PRO.orgId||'',
+      uid:targetUid,prenom:targetPre,nom:targetNom,
+      date:shDate,startTime:shStart||'',endTime:shEnd||'',type:shType,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    closeMdl();toast('✅ Créneau ajouté !');initPlanning();
+  }catch(err){toast('❌ '+err.message);}
+}
 
 // INIT + ANDROID TOUCH FIX
 document.addEventListener('DOMContentLoaded',()=>{
