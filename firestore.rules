@@ -104,8 +104,16 @@ service cloud.firestore {
 
     // ── Structures / abonnements ──────────────────────────────────────────
     match /organizations/{orgId} {
-      allow read:  if isAuthed();
-      allow write: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
+      allow read:   if isAuthed();
+      // Créer sa propre structure (setup wizard)
+      allow create: if isAuthed() && request.resource.data.createdBy == myUid();
+      // Mettre à jour : créateur de la structure ou admin principal
+      allow update: if isAuthed() && (
+        resource.data.createdBy == myUid() ||
+        request.auth.token.email == 'alexfotso75@gmail.com'
+      );
+      // Supprimer : admin principal uniquement
+      allow delete: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
     }
 
     // ── Pointage ──────────────────────────────────────────────────────────
