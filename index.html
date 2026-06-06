@@ -532,6 +532,101 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 .pln-slot{padding:5px 10px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(139,92,246,.12);color:var(--primary);}
 .pln-slot.off{background:rgba(239,68,68,.1);color:#EF4444;}
 .pln-slot.remote{background:rgba(6,182,212,.12);color:#06B6D4;}
+
+/* ─── CRM ─── */
+.crm-stat{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+.crm-stat.prospect{background:rgba(245,158,11,.15);color:#F59E0B;}
+.crm-stat.client{background:rgba(16,185,129,.15);color:#10B981;}
+.crm-stat.inactif{background:rgba(100,116,139,.15);color:#64748B;}
+.crm-stat.gagne{background:rgba(16,185,129,.15);color:#10B981;}
+.crm-stat.perdu{background:rgba(239,68,68,.15);color:#EF4444;}
+.crm-stat.qualification{background:rgba(6,182,212,.15);color:#06B6D4;}
+.crm-stat.proposition{background:rgba(139,92,246,.15);color:var(--primary);}
+.crm-stat.negociation{background:rgba(236,72,153,.15);color:var(--accent);}
+.crm-stat.prospection{background:rgba(100,116,139,.15);color:#94A3B8;}
+.crm-pipe{display:flex;gap:12px;padding:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.crm-col{flex:0 0 220px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.crm-col-head{padding:12px 14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+.crm-col-body{padding:10px;min-height:60px;}
+.crm-deal{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:10px;margin-bottom:8px;cursor:pointer;touch-action:manipulation;}
+.crm-deal:active{background:rgba(139,92,246,.08);}
+.crm-deal-ttl{font-size:13px;font-weight:700;margin-bottom:4px;}
+.crm-deal-amt{font-size:15px;font-weight:900;color:var(--primary);}
+.crm-deal-cli{font-size:11px;color:var(--text2);margin-top:3px;}
+
+/* ─── PROJETS ─── */
+.proj-card{margin:0 16px 12px;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);cursor:pointer;touch-action:manipulation;}
+.proj-card:active{background:var(--surface2);}
+.proj-stat{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+.proj-stat.en_cours{background:rgba(6,182,212,.15);color:#06B6D4;}
+.proj-stat.termine{background:rgba(16,185,129,.15);color:#10B981;}
+.proj-stat.en_pause{background:rgba(245,158,11,.15);color:#F59E0B;}
+.proj-stat.annule{background:rgba(239,68,68,.15);color:#EF4444;}
+.proj-prog{height:6px;border-radius:99px;background:var(--border2);overflow:hidden;margin:10px 0 6px;}
+.proj-prog-fill{height:100%;border-radius:99px;background:var(--grad);transition:width .3s;}
+
+/* ─── EXPENSES ─── */
+.exp-item{display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:16px;background:var(--surface);border:1px solid var(--border);margin:0 16px 10px;}
+.exp-ico{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.exp-info{flex:1;min-width:0;}
+.exp-ttl{font-size:14px;font-weight:700;}
+.exp-meta{font-size:12px;color:var(--text2);margin-top:2px;}
+.exp-amt{font-size:16px;font-weight:900;color:var(--primary);white-space:nowrap;text-align:right;}
+.exp-stat{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;margin-top:4px;}
+.exp-stat.pending{background:rgba(245,158,11,.15);color:#F59E0B;}
+.exp-stat.approved{background:rgba(16,185,129,.15);color:#10B981;}
+.exp-stat.rejected{background:rgba(239,68,68,.15);color:#EF4444;}
+
+/* ─── ANALYTICS ─── */
+.ana-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px;}
+.ana-kpi{padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);}
+.ana-kpi-val{font-size:30px;font-weight:900;line-height:1;}
+.ana-kpi-lbl{font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:4px;}
+.ana-chart{margin:0 16px 16px;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);}
+.ana-chart-ttl{font-size:13px;font-weight:800;margin-bottom:12px;}
+.ana-bars{display:flex;align-items:flex-end;gap:6px;height:90px;}
+.ana-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.ana-bar{width:100%;border-radius:6px 6px 0 0;background:var(--grad);min-height:4px;}
+.ana-bar-lbl{font-size:9px;color:var(--text3);font-weight:700;}
+.ana-sect{margin:0 16px 16px;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);}
+.ana-sect-ttl{font-size:13px;font-weight:800;margin-bottom:12px;}
+.ana-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.ana-row:last-child{border-bottom:none;}
+
+/* ─── RECRUTEMENT ─── */
+.rec-stat{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+.rec-stat.ouvert{background:rgba(16,185,129,.15);color:#10B981;}
+.rec-stat.ferme{background:rgba(100,116,139,.15);color:#64748B;}
+.rec-stat.recu{background:rgba(245,158,11,.15);color:#F59E0B;}
+.rec-stat.entretien{background:rgba(6,182,212,.15);color:#06B6D4;}
+.rec-stat.selectionne{background:rgba(16,185,129,.15);color:#10B981;}
+.rec-stat.refuse{background:rgba(239,68,68,.15);color:#EF4444;}
+.rec-job{margin:0 16px 10px;padding:14px;border-radius:16px;background:var(--surface);border:1px solid var(--border);}
+.rec-job-ttl{font-size:15px;font-weight:800;margin-bottom:4px;}
+.rec-job-dep{font-size:12px;color:var(--text2);margin-bottom:8px;}
+.rec-cand{display:flex;align-items:center;gap:12px;padding:12px;border-radius:13px;background:var(--surface);border:1px solid var(--border);margin-bottom:8px;cursor:pointer;touch-action:manipulation;}
+.rec-cand:active{background:var(--surface2);}
+
+/* ─── ÉVALUATIONS ─── */
+.eval-card{margin:0 16px 12px;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);}
+.eval-stat{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+.eval-stat.brouillon{background:rgba(245,158,11,.15);color:#F59E0B;}
+.eval-stat.publiee{background:rgba(16,185,129,.15);color:#10B981;}
+.eval-score{font-size:28px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* ─── STOCK ─── */
+.stk-item{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:var(--surface);border:1px solid var(--border);margin:0 16px 10px;cursor:pointer;touch-action:manipulation;}
+.stk-item:active{background:var(--surface2);}
+.stk-ico{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.stk-info{flex:1;min-width:0;}
+.stk-nm{font-size:14px;font-weight:700;}
+.stk-ref{font-size:11px;color:var(--text3);margin-top:2px;}
+.stk-qty{text-align:right;}
+.stk-qty-val{font-size:20px;font-weight:900;}
+.stk-qty-lbl{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;}
+.stk-low{color:var(--red);}
+.stk-ok{color:var(--green);}
+.stk-alert-banner{margin:0 16px 12px;padding:12px 14px;border-radius:13px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:13px;font-weight:700;}
 </style>
 </head>
 <body>
@@ -1011,6 +1106,86 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
     </div>
   </div>
 
+  <!-- pgCRM -->
+  <div id="pgCRM" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">🤝 CRM</div></div>
+      <button type="button" class="hbtn" id="crmFabBtn" onclick="crmFabAction()">➕</button>
+    </div>
+    <div style="display:flex;gap:8px;padding:12px 16px 0;flex:0 0 auto;">
+      <button type="button" class="ptg-tab on" id="crmTabClients" onclick="crmTab('clients')">Clients</button>
+      <button type="button" class="ptg-tab" id="crmTabPipeline" onclick="crmTab('pipeline')">Pipeline</button>
+    </div>
+    <div class="content" id="crmContent"><div class="ldr"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+  </div>
+
+  <!-- pgProjects -->
+  <div id="pgProjects" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">🏗️ Projets</div></div>
+      <button type="button" class="hbtn" onclick="openAddProject()">➕</button>
+    </div>
+    <div class="sbar"><div class="sbar-in"><span>🔍</span><input placeholder="Rechercher un projet…" oninput="filterProjects(this.value)"/></div></div>
+    <div class="content" id="projectsList"><div class="ldr"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+  </div>
+
+  <!-- pgExpenses -->
+  <div id="pgExpenses" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">💸 Notes de frais</div></div>
+      <button type="button" class="hbtn" onclick="openAddExpense()">➕</button>
+    </div>
+    <div class="content" id="expensesList"><div class="ldr"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+  </div>
+
+  <!-- pgAnalytics -->
+  <div id="pgAnalytics" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">📈 Analytics</div></div>
+      <button type="button" class="hbtn" onclick="initAnalytics()">🔄</button>
+    </div>
+    <div class="content" id="analyticsContent"><div class="ldr"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+  </div>
+
+  <!-- pgRecruit -->
+  <div id="pgRecruit" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">🎯 Recrutement</div></div>
+      <button type="button" class="hbtn" id="recFabBtn" onclick="recFabAction()">➕</button>
+    </div>
+    <div style="display:flex;gap:8px;padding:12px 16px 0;flex:0 0 auto;">
+      <button type="button" class="ptg-tab on" id="recTabJobs" onclick="recTab('jobs')">Offres</button>
+      <button type="button" class="ptg-tab" id="recTabCands" onclick="recTab('candidates')">Candidats</button>
+    </div>
+    <div class="content" id="recruitContent"><div class="ldr"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+  </div>
+
+  <!-- pgEval -->
+  <div id="pgEval" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">⭐ Évaluations</div></div>
+      <button type="button" class="hbtn" onclick="openAddEval()">➕</button>
+    </div>
+    <div class="content" id="evalList"><div class="ldr"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+  </div>
+
+  <!-- pgStock -->
+  <div id="pgStock" class="pg">
+    <div class="hdr">
+      <button type="button" class="hbtn" onclick="navBack()">←</button>
+      <div class="htxt"><div class="htitle">📦 Inventaire</div></div>
+      <button type="button" class="hbtn" onclick="openAddStock()">➕</button>
+    </div>
+    <div class="sbar"><div class="sbar-in"><span>🔍</span><input placeholder="Rechercher un article…" oninput="filterStock(this.value)"/></div></div>
+    <div class="content" id="stockList"><div class="ldr"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+  </div>
+
   <!-- BOTTOM NAV -->
   <nav class="bnav" id="bnav">
     <button class="nbt on" data-pg="pgMsgs" onclick="navTo('pgMsgs',this)"><span class="ni">💬</span><span class="nl">Messages</span></button>
@@ -1026,6 +1201,13 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
     <button class="nbt" data-pg="pgNews" onclick="navTo('pgNews',this)"><span class="ni">📢</span><span class="nl">Actualités</span></button>
     <button class="nbt" data-pg="pgDocs" onclick="navTo('pgDocs',this)"><span class="ni">📎</span><span class="nl">Documents</span></button>
     <button class="nbt" data-pg="pgPolls" onclick="navTo('pgPolls',this)"><span class="ni">📊</span><span class="nl">Sondages</span></button>
+    <button class="nbt" data-pg="pgCRM" onclick="navTo('pgCRM',this)"><span class="ni">🤝</span><span class="nl">CRM</span></button>
+    <button class="nbt" data-pg="pgProjects" onclick="navTo('pgProjects',this)"><span class="ni">🏗️</span><span class="nl">Projets</span></button>
+    <button class="nbt" data-pg="pgExpenses" onclick="navTo('pgExpenses',this)"><span class="ni">💸</span><span class="nl">Dépenses</span></button>
+    <button class="nbt" data-pg="pgAnalytics" onclick="navTo('pgAnalytics',this)"><span class="ni">📈</span><span class="nl">Analytics</span></button>
+    <button class="nbt" data-pg="pgRecruit" onclick="navTo('pgRecruit',this)"><span class="ni">🎯</span><span class="nl">Recrutement</span></button>
+    <button class="nbt" data-pg="pgEval" onclick="navTo('pgEval',this)"><span class="ni">⭐</span><span class="nl">Évaluations</span></button>
+    <button class="nbt" data-pg="pgStock" onclick="navTo('pgStock',this)"><span class="ni">📦</span><span class="nl">Inventaire</span></button>
     <button class="nbt" data-pg="pgPrint" onclick="navTo('pgPrint',this)"><span class="ni">🖨️</span><span class="nl">Impression</span></button>
     <button class="nbt" data-pg="pgSettings" onclick="navTo('pgSettings',this)"><span class="ni">⚙️</span><span class="nl">Paramètres</span></button>
   </nav>
@@ -1123,6 +1305,10 @@ let U=null,PRO=null,ORG=null,CHAT=null;
 let uCache=[],empCache=[],allConvs=[];
 let convUnsub=null,msgsUnsub=null,usrUnsub=null,proUnsub=null;
 let calUnsub=null,taskUnsub=null,newsUnsub=null,docsUnsub=null,pollsUnsub=null,empUnsub=null;
+let crmUnsub=null,projUnsub=null,expUnsub=null,recJobUnsub=null,recCandUnsub=null,evalUnsub=null,stockUnsub=null;
+let _crmTab='clients',_crmClients=[],_crmDeals=[];
+let _recTab='jobs',_recJobs=[],_recCands=[];
+let _allProjects=[],_projSearch='',_allStock=[],_stockSearch='';
 let replyTo=null,editId=null;
 let vrRec=null,vrChunks=[],vrTimer=null,vrSecs=0,vrBlob=null;
 let emojiOpen=false;
@@ -1190,6 +1376,13 @@ function goTo(pgId){
   if(pgId==='pgConges'){initConges();}
   if(pgId==='pgRH'){initRH();}
   if(pgId==='pgPlanning'){initPlanning();}
+  if(pgId==='pgCRM'){initCRM();}
+  if(pgId==='pgProjects'){initProjects();}
+  if(pgId==='pgExpenses'){initExpenses();}
+  if(pgId==='pgAnalytics'){initAnalytics();}
+  if(pgId==='pgRecruit'){initRecruit();}
+  if(pgId==='pgEval'){initEval();}
+  if(pgId==='pgStock'){initStock();}
 }
 
 function navTo(pgId,btn){
@@ -2180,7 +2373,15 @@ function cleanUp(){
   if(pollsUnsub)try{pollsUnsub();}catch(e){}
   if(empUnsub)try{empUnsub();}catch(e){}
   if(proUnsub)try{proUnsub();}catch(e){}
+  if(crmUnsub)try{crmUnsub();}catch(e){}
+  if(projUnsub)try{projUnsub();}catch(e){}
+  if(expUnsub)try{expUnsub();}catch(e){}
+  if(recJobUnsub)try{recJobUnsub();}catch(e){}
+  if(recCandUnsub)try{recCandUnsub();}catch(e){}
+  if(evalUnsub)try{evalUnsub();}catch(e){}
+  if(stockUnsub)try{stockUnsub();}catch(e){}
   convUnsub=msgsUnsub=usrUnsub=calUnsub=taskUnsub=newsUnsub=docsUnsub=pollsUnsub=empUnsub=proUnsub=null;
+  crmUnsub=projUnsub=expUnsub=recJobUnsub=recCandUnsub=evalUnsub=stockUnsub=null;
 }
 
 function doLogout(){
@@ -3241,6 +3442,728 @@ async function doAddShift(){
     });
     closeMdl();toast('✅ Créneau ajouté !');initPlanning();
   }catch(err){toast('❌ '+err.message);}
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// ──── CRM ────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════
+function crmFabAction(){if(_crmTab==='pipeline')openAddDeal();else openAddClient();}
+
+function crmTab(t){
+  _crmTab=t;
+  document.getElementById('crmTabClients')?.classList.toggle('on',t==='clients');
+  document.getElementById('crmTabPipeline')?.classList.toggle('on',t==='pipeline');
+  renderCRM();
+}
+
+function initCRM(){
+  if(crmUnsub)try{crmUnsub();}catch(e){}
+  const orgId=ORG||PRO?.orgId||'';if(!orgId)return;
+  crmUnsub=db.collection('clients').where('orgId','==',orgId)
+    .orderBy('createdAt','desc').onSnapshot(snap=>{
+      _crmClients=snap.docs.map(d=>({id:d.id,...d.data()}));
+      if(_crmTab==='clients')renderCRM();
+    },()=>{});
+  loadDeals();
+}
+
+function loadDeals(){
+  const orgId=ORG||PRO?.orgId||'';if(!orgId)return;
+  db.collection('deals').where('orgId','==',orgId).orderBy('createdAt','desc').get()
+    .then(s=>{_crmDeals=s.docs.map(d=>({id:d.id,...d.data()}));if(_crmTab==='pipeline')renderCRM();})
+    .catch(()=>{});
+}
+
+function statLabel(s){
+  return {prospect:'Prospect',client:'Client',inactif:'Inactif',
+    prospection:'Prospection',qualification:'Qualification',proposition:'Proposition',
+    negociation:'Négociation',gagne:'Gagné',perdu:'Perdu'}[s]||s;
+}
+
+function fmtMoney(v){return Number(v||0).toLocaleString('fr-FR')+' FCFA';}
+
+function renderCRM(){
+  const el=document.getElementById('crmContent');if(!el)return;
+  if(_crmTab==='clients'){
+    if(!_crmClients.length){el.innerHTML='<div class="empty"><div class="ei">🤝</div><div class="et">Aucun client</div><div class="es">Ajoutez vos clients et prospects.</div></div>';return;}
+    el.innerHTML='<div style="padding:14px 0 20px;">'+_crmClients.map(c=>`
+      <div class="card" style="cursor:pointer;touch-action:manipulation;" onclick="openClientDetail('${c.id}')">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+          <div style="width:44px;height:44px;border-radius:14px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;">${(c.nom||'?')[0].toUpperCase()}</div>
+          <div style="flex:1;min-width:0;"><div style="font-size:15px;font-weight:800;">${e(c.nom||'')}</div><div style="font-size:12px;color:var(--text2);">${e(c.societe||'')}</div></div>
+          <span class="crm-stat ${c.statut||'prospect'}">${statLabel(c.statut||'prospect')}</span>
+        </div>
+        <div style="display:flex;gap:16px;font-size:12px;color:var(--text3);">
+          ${c.email?`<span>✉️ ${e(c.email)}</span>`:''}${c.tel?`<span>📞 ${e(c.tel)}</span>`:''}
+        </div>
+      </div>`).join('')+'</div>';
+  } else {
+    const stages=[
+      {key:'prospection',lbl:'Prospection',col:'var(--text3)'},
+      {key:'qualification',lbl:'Qualification',col:'var(--teal)'},
+      {key:'proposition',lbl:'Proposition',col:'var(--primary)'},
+      {key:'negociation',lbl:'Négociation',col:'var(--accent)'},
+      {key:'gagne',lbl:'Gagné ✅',col:'var(--green)'},
+      {key:'perdu',lbl:'Perdu ❌',col:'var(--red)'},
+    ];
+    el.innerHTML=`<div class="crm-pipe">${stages.map(s=>{
+      const deals=_crmDeals.filter(d=>d.statut===s.key);
+      const total=deals.reduce((a,d)=>a+(parseFloat(d.montant)||0),0);
+      return `<div class="crm-col">
+        <div class="crm-col-head" style="color:${s.col};">${s.lbl} <span style="color:var(--text3);font-weight:600;">(${deals.length})</span>${total>0?`<div style="font-size:11px;color:var(--primary);margin-top:2px;">${fmtMoney(total)}</div>`:''}</div>
+        <div class="crm-col-body">
+          ${deals.map(d=>`<div class="crm-deal" onclick="openDealDetail('${d.id}')"><div class="crm-deal-ttl">${e(d.titre||'')}</div><div class="crm-deal-amt">${fmtMoney(d.montant||0)}</div><div class="crm-deal-cli">${e(d.clientNom||'')}</div></div>`).join('')}
+          <div onclick="openAddDeal('${s.key}')" style="text-align:center;padding:10px 0;font-size:12px;color:var(--text3);cursor:pointer;touch-action:manipulation;">+ Ajouter</div>
+        </div></div>`;
+    }).join('')}</div><div style="height:20px;"></div>`;
+  }
+}
+
+function openAddClient(){
+  openMdl('🤝 Nouveau client',`
+    <div class="ff"><label>Nom complet *</label><input class="fi" id="cliNom" type="text" placeholder="Jean Dupont"/></div>
+    <div class="ff"><label>Société</label><input class="fi" id="cliSoc" type="text" placeholder="Acme Corp"/></div>
+    <div class="g2"><div class="ff"><label>Email</label><input class="fi" id="cliEmail" type="email" placeholder="jean@acme.com"/></div><div class="ff"><label>Téléphone</label><input class="fi" id="cliTel" type="tel" placeholder="+237..."/></div></div>
+    <div class="ff"><label>Statut</label><select class="fi" id="cliStat"><option value="prospect">Prospect</option><option value="client">Client</option><option value="inactif">Inactif</option></select></div>
+    <div class="ff"><label>Notes</label><textarea class="fta" id="cliNotes" placeholder="Informations supplémentaires…"></textarea></div>
+  `,'doAddClient()');
+}
+
+async function doAddClient(){
+  const nom=document.getElementById('cliNom')?.value.trim();
+  if(!nom){toast('❌ Nom requis');return;}
+  const orgId=ORG||PRO?.orgId||'';
+  try{
+    await db.collection('clients').add({orgId,nom,societe:document.getElementById('cliSoc')?.value.trim()||'',email:document.getElementById('cliEmail')?.value.trim()||'',tel:document.getElementById('cliTel')?.value.trim()||'',statut:document.getElementById('cliStat')?.value||'prospect',notes:document.getElementById('cliNotes')?.value.trim()||'',createdBy:U.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeMdl();toast('✅ Client ajouté !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+function openClientDetail(id){
+  const c=_crmClients.find(x=>x.id===id);if(!c)return;
+  openMdl('🤝 '+e(c.nom),`
+    <div style="margin-bottom:14px;"><span class="crm-stat ${c.statut||'prospect'}">${statLabel(c.statut||'prospect')}</span></div>
+    ${c.societe?`<div class="ff"><label>Société</label><div style="font-size:14px;">${e(c.societe)}</div></div>`:''}
+    ${c.email?`<div class="ff"><label>Email</label><a href="mailto:${e(c.email)}" style="color:var(--primary);font-size:14px;">${e(c.email)}</a></div>`:''}
+    ${c.tel?`<div class="ff"><label>Téléphone</label><a href="tel:${e(c.tel)}" style="color:var(--primary);font-size:14px;">${e(c.tel)}</a></div>`:''}
+    ${c.notes?`<div class="ff"><label>Notes</label><div style="font-size:13px;color:var(--text2);line-height:1.5;">${e(c.notes)}</div></div>`:''}
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button class="mbt mbt-ok" onclick="openEditClient('${id}');closeMdl();" style="flex:1;">✏️ Modifier</button>
+      <button class="mbt mbt-d" onclick="closeMdl();delClient('${id}');" style="flex:0 0 auto;">🗑️</button>
+    </div>`,'');
+  document.querySelector('.mfoot')?.remove();
+}
+
+function openEditClient(id){
+  const c=_crmClients.find(x=>x.id===id);if(!c)return;
+  openMdl('✏️ Modifier client',`
+    <div class="ff"><label>Nom *</label><input class="fi" id="cliNom" type="text" value="${e(c.nom||'')}"/></div>
+    <div class="ff"><label>Société</label><input class="fi" id="cliSoc" type="text" value="${e(c.societe||'')}"/></div>
+    <div class="g2"><div class="ff"><label>Email</label><input class="fi" id="cliEmail" type="email" value="${e(c.email||'')}"/></div><div class="ff"><label>Téléphone</label><input class="fi" id="cliTel" type="tel" value="${e(c.tel||'')}"/></div></div>
+    <div class="ff"><label>Statut</label><select class="fi" id="cliStat">${['prospect','client','inactif'].map(s=>`<option value="${s}"${c.statut===s?' selected':''}>${statLabel(s)}</option>`).join('')}</select></div>
+    <div class="ff"><label>Notes</label><textarea class="fta" id="cliNotes">${e(c.notes||'')}</textarea></div>
+  `,`doEditClient('${id}')`);
+}
+
+async function doEditClient(id){
+  const nom=document.getElementById('cliNom')?.value.trim();if(!nom){toast('❌ Nom requis');return;}
+  try{
+    await db.collection('clients').doc(id).update({nom,societe:document.getElementById('cliSoc')?.value.trim()||'',email:document.getElementById('cliEmail')?.value.trim()||'',tel:document.getElementById('cliTel')?.value.trim()||'',statut:document.getElementById('cliStat')?.value||'prospect',notes:document.getElementById('cliNotes')?.value.trim()||''});
+    closeMdl();toast('✅ Client modifié !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+async function delClient(id){
+  confirm2('🗑️ Supprimer ce client ?','Cette action est irréversible.',async()=>{
+    try{await db.collection('clients').doc(id).delete();toast('✅ Supprimé');}catch(err){toast('❌ '+err.message);}
+  },'d');
+}
+
+function openAddDeal(stage='prospection'){
+  openMdl('💼 Nouvelle opportunité',`
+    <div class="ff"><label>Titre *</label><input class="fi" id="dealTitre" type="text" placeholder="Contrat Acme Corp"/></div>
+    <div class="ff"><label>Client</label><select class="fi" id="dealClient"><option value="">-- Aucun --</option>${_crmClients.map(c=>`<option value="${c.id}">${e(c.nom)}</option>`).join('')}</select></div>
+    <div class="g2"><div class="ff"><label>Montant (FCFA)</label><input class="fi" id="dealAmt" type="number" placeholder="0"/></div><div class="ff"><label>Étape</label><select class="fi" id="dealStage">${['prospection','qualification','proposition','negociation','gagne','perdu'].map(s=>`<option value="${s}"${s===stage?' selected':''}>${statLabel(s)}</option>`).join('')}</select></div></div>
+    <div class="ff"><label>Date limite</label><input class="fi" id="dealDl" type="date"/></div>
+    <div class="ff"><label>Notes</label><textarea class="fta" id="dealNotes" placeholder="Détails…"></textarea></div>
+  `,'doAddDeal()');
+}
+
+async function doAddDeal(){
+  const titre=document.getElementById('dealTitre')?.value.trim();if(!titre){toast('❌ Titre requis');return;}
+  const cliId=document.getElementById('dealClient')?.value||'';
+  const cli=_crmClients.find(c=>c.id===cliId);
+  const orgId=ORG||PRO?.orgId||'';
+  try{
+    await db.collection('deals').add({orgId,titre,clientId:cliId,clientNom:cli?.nom||'',montant:parseFloat(document.getElementById('dealAmt')?.value)||0,statut:document.getElementById('dealStage')?.value||'prospection',deadline:document.getElementById('dealDl')?.value||'',notes:document.getElementById('dealNotes')?.value.trim()||'',createdBy:U.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeMdl();toast('✅ Opportunité ajoutée !');loadDeals();
+  }catch(err){toast('❌ '+err.message);}
+}
+
+function openDealDetail(id){
+  const d=_crmDeals.find(x=>x.id===id);if(!d)return;
+  openMdl('💼 '+e(d.titre),`
+    <div style="margin-bottom:12px;"><span class="crm-stat ${d.statut}">${statLabel(d.statut)}</span></div>
+    <div class="ff"><label>Montant</label><div style="font-size:20px;font-weight:900;color:var(--primary);">${fmtMoney(d.montant||0)}</div></div>
+    ${d.clientNom?`<div class="ff"><label>Client</label><div style="font-size:14px;">${e(d.clientNom)}</div></div>`:''}
+    ${d.deadline?`<div class="ff"><label>Échéance</label><div style="font-size:14px;">${d.deadline}</div></div>`:''}
+    ${d.notes?`<div class="ff"><label>Notes</label><div style="font-size:13px;color:var(--text2);line-height:1.5;">${e(d.notes)}</div></div>`:''}
+    <div class="ff"><label>Changer l'étape</label><select class="fi" id="dealNewStage">${['prospection','qualification','proposition','negociation','gagne','perdu'].map(s=>`<option value="${s}"${d.statut===s?' selected':''}>${statLabel(s)}</option>`).join('')}</select></div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="mbt mbt-ok" onclick="moveDeal('${id}')" style="flex:1;">✅ Mettre à jour</button>
+      <button class="mbt mbt-d" onclick="closeMdl();delDeal('${id}');" style="flex:0 0 auto;">🗑️</button>
+    </div>`,'');
+  document.querySelector('.mfoot')?.remove();
+}
+
+async function moveDeal(id){
+  const ns=document.getElementById('dealNewStage')?.value;
+  try{await db.collection('deals').doc(id).update({statut:ns});toast('✅ Étape mise à jour !');closeMdl();loadDeals();}catch(err){toast('❌ '+err.message);}
+}
+
+async function delDeal(id){
+  confirm2('🗑️ Supprimer cette opportunité ?','',async()=>{
+    try{await db.collection('deals').doc(id).delete();toast('✅ Supprimé');loadDeals();}catch(err){toast('❌ '+err.message);}
+  },'d');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// ──── PROJETS ────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════
+function initProjects(){
+  if(projUnsub)try{projUnsub();}catch(e){}
+  const orgId=ORG||PRO?.orgId||'';if(!orgId)return;
+  projUnsub=db.collection('projects').where('orgId','==',orgId).orderBy('createdAt','desc').onSnapshot(snap=>{
+    _allProjects=snap.docs.map(d=>({id:d.id,...d.data()}));renderProjects();
+  },()=>{});
+}
+
+function filterProjects(q){_projSearch=q;renderProjects();}
+
+function projStatLabel(s){return {en_cours:'En cours',termine:'Terminé',en_pause:'En pause',annule:'Annulé'}[s]||s;}
+
+function renderProjects(){
+  const el=document.getElementById('projectsList');if(!el)return;
+  let list=_allProjects;
+  if(_projSearch)list=list.filter(p=>p.nom?.toLowerCase().includes(_projSearch.toLowerCase()));
+  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">🏗️</div><div class="et">Aucun projet</div><div class="es">Créez votre premier projet pour commencer à collaborer.</div></div>';return;}
+  el.innerHTML='<div style="padding:14px 0 80px;">'+list.map(p=>`
+    <div class="proj-card" onclick="openProjectDetail('${p.id}')">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div style="font-size:16px;font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e(p.nom||'')}</div>
+        <span class="proj-stat ${p.statut||'en_cours'}" style="margin-left:8px;flex-shrink:0;">${projStatLabel(p.statut||'en_cours')}</span>
+      </div>
+      ${p.description?`<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.4;">${e(p.description.slice(0,100))}${p.description.length>100?'…':''}</div>`:''}
+      <div class="proj-prog"><div class="proj-prog-fill" style="width:${p.progression||0}%;"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text3);">
+        <span>${p.progression||0}% complété</span>
+        ${p.deadline?`<span>📅 ${p.deadline}</span>`:''}
+        ${p.budget?`<span>💰 ${fmtMoney(p.budget)}</span>`:''}
+      </div>
+    </div>`).join('')+'</div>';
+}
+
+function openAddProject(){
+  openMdl('🏗️ Nouveau projet',`
+    <div class="ff"><label>Nom du projet *</label><input class="fi" id="projNom" type="text" placeholder="Refonte site web"/></div>
+    <div class="ff"><label>Description</label><textarea class="fta" id="projDesc" placeholder="Objectifs et périmètre du projet…"></textarea></div>
+    <div class="g2"><div class="ff"><label>Date début</label><input class="fi" id="projDeb" type="date"/></div><div class="ff"><label>Date fin prévue</label><input class="fi" id="projFin" type="date"/></div></div>
+    <div class="g2"><div class="ff"><label>Statut</label><select class="fi" id="projStat"><option value="en_cours">En cours</option><option value="en_pause">En pause</option><option value="annule">Annulé</option></select></div><div class="ff"><label>Budget (FCFA)</label><input class="fi" id="projBudget" type="number" placeholder="0"/></div></div>
+  `,'doAddProject()');
+}
+
+async function doAddProject(){
+  const nom=document.getElementById('projNom')?.value.trim();if(!nom){toast('❌ Nom requis');return;}
+  const orgId=ORG||PRO?.orgId||'';
+  try{
+    await db.collection('projects').add({orgId,nom,description:document.getElementById('projDesc')?.value.trim()||'',dateDebut:document.getElementById('projDeb')?.value||'',deadline:document.getElementById('projFin')?.value||'',statut:document.getElementById('projStat')?.value||'en_cours',budget:parseFloat(document.getElementById('projBudget')?.value)||0,progression:0,createdBy:U.uid,membres:[U.uid],createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeMdl();toast('✅ Projet créé !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+function openProjectDetail(id){
+  const p=_allProjects.find(x=>x.id===id);if(!p)return;
+  openMdl('🏗️ '+e(p.nom),`
+    <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">
+      <span class="proj-stat ${p.statut||'en_cours'}">${projStatLabel(p.statut||'en_cours')}</span>
+      ${p.deadline?`<span style="font-size:12px;color:var(--text3);">📅 ${p.deadline}</span>`:''}
+    </div>
+    ${p.description?`<div class="ff"><label>Description</label><div style="font-size:13px;color:var(--text2);line-height:1.5;">${e(p.description)}</div></div>`:''}
+    <div class="ff"><label>Progression — glissez pour mettre à jour</label>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+        <input type="range" min="0" max="100" value="${p.progression||0}" id="projProg" style="flex:1;accent-color:var(--primary);" oninput="document.getElementById('projProgVal').textContent=this.value+'%'"/>
+        <span id="projProgVal" style="font-weight:900;min-width:44px;color:var(--primary);">${p.progression||0}%</span>
+      </div>
+      <div class="proj-prog" style="margin-top:8px;"><div class="proj-prog-fill" id="projProgBar" style="width:${p.progression||0}%;"></div></div>
+    </div>
+    <div class="ff"><label>Statut</label><select class="fi" id="projStatEdit">${['en_cours','en_pause','termine','annule'].map(s=>`<option value="${s}"${(p.statut||'en_cours')===s?' selected':''}>${projStatLabel(s)}</option>`).join('')}</select></div>
+    ${p.budget?`<div class="ff"><label>Budget</label><div style="font-size:15px;font-weight:700;color:var(--primary);">${fmtMoney(p.budget)}</div></div>`:''}
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="mbt mbt-ok" onclick="saveProjectDetail('${id}')" style="flex:1;">💾 Enregistrer</button>
+      <button class="mbt mbt-d" onclick="closeMdl();delProject('${id}');" style="flex:0 0 auto;">🗑️</button>
+    </div>`,'');
+  document.querySelector('.mfoot')?.remove();
+  document.getElementById('projProg')?.addEventListener('input',function(){document.getElementById('projProgBar').style.width=this.value+'%';});
+}
+
+async function saveProjectDetail(id){
+  const v=parseInt(document.getElementById('projProg')?.value)||0;
+  const statut=document.getElementById('projStatEdit')?.value||'en_cours';
+  try{
+    await db.collection('projects').doc(id).update({progression:v,statut:v===100?'termine':statut});
+    toast('✅ Projet mis à jour !');closeMdl();
+  }catch(err){toast('❌ '+err.message);}
+}
+
+async function delProject(id){
+  confirm2('🗑️ Supprimer ce projet ?','',async()=>{
+    try{await db.collection('projects').doc(id).delete();toast('✅ Projet supprimé');}catch(err){toast('❌ '+err.message);}
+  },'d');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// ──── NOTES DE FRAIS ─────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════
+const EXP_CATS=[{k:'transport',lbl:'Transport',ico:'🚗'},{k:'repas',lbl:'Repas',ico:'🍽️'},{k:'hebergement',lbl:'Hébergement',ico:'🏨'},{k:'fournitures',lbl:'Fournitures',ico:'📎'},{k:'communication',lbl:'Communication',ico:'📱'},{k:'formation',lbl:'Formation',ico:'📚'},{k:'autre',lbl:'Autre',ico:'💼'}];
+function expStatLabel(s){return {pending:'En attente',approved:'Approuvée',rejected:'Rejetée'}[s]||s;}
+
+function initExpenses(){
+  if(expUnsub)try{expUnsub();}catch(e){}
+  const orgId=ORG||PRO?.orgId||'';if(!orgId)return;
+  let q=db.collection('expenses').where('orgId','==',orgId);
+  if(U.email!==ADMIN_EMAIL)q=q.where('uid','==',U.uid);
+  expUnsub=q.orderBy('createdAt','desc').onSnapshot(snap=>{
+    renderExpenses(snap.docs.map(d=>({id:d.id,...d.data()})));
+  },()=>{});
+}
+
+function renderExpenses(list){
+  const el=document.getElementById('expensesList');if(!el)return;
+  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">💸</div><div class="et">Aucune note de frais</div><div class="es">Soumettez vos dépenses professionnelles pour remboursement.</div></div>';return;}
+  const pending=list.filter(x=>x.statut==='pending').reduce((a,x)=>a+(x.montant||0),0);
+  el.innerHTML=`${pending>0?`<div class="card" style="background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.2);margin-top:14px;"><div style="font-size:12px;color:var(--amber);font-weight:700;margin-bottom:4px;">EN ATTENTE</div><div style="font-size:22px;font-weight:900;color:var(--amber);">${fmtMoney(pending)}</div></div>`:''}
+    <div style="padding:8px 0 80px;">${list.map(x=>{
+      const cat=EXP_CATS.find(c=>c.k===x.categorie)||{ico:'💼',lbl:'Autre'};
+      return `<div class="exp-item">
+        <div class="exp-ico" style="background:rgba(139,92,246,.1);">${cat.ico}</div>
+        <div class="exp-info">
+          <div class="exp-ttl">${e(x.titre||cat.lbl)}</div>
+          <div class="exp-meta">${x.date||''} · ${e(x.soumisNom||'')}</div>
+          <span class="exp-stat ${x.statut||'pending'}">${expStatLabel(x.statut||'pending')}</span>
+          ${x.description?`<div style="font-size:11px;color:var(--text3);margin-top:4px;">${e(x.description.slice(0,60))}</div>`:''}
+          ${U.email===ADMIN_EMAIL&&x.statut==='pending'?`<div style="display:flex;gap:6px;margin-top:8px;"><button class="cng-approve" style="padding:6px 12px;border-radius:8px;" onclick="approveExp('${x.id}',true)">✅ Approuver</button><button class="cng-reject" style="padding:6px 12px;border-radius:8px;" onclick="approveExp('${x.id}',false)">❌ Rejeter</button></div>`:''}
+        </div>
+        <div class="exp-amt">${fmtMoney(x.montant||0)}</div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+function openAddExpense(){
+  const today=new Date().toISOString().slice(0,10);
+  openMdl('💸 Nouvelle note de frais',`
+    <div class="ff"><label>Titre</label><input class="fi" id="expTitre" type="text" placeholder="Déjeuner client"/></div>
+    <div class="g2"><div class="ff"><label>Montant (FCFA) *</label><input class="fi" id="expAmt" type="number" placeholder="0"/></div><div class="ff"><label>Date</label><input class="fi" id="expDate" type="date" value="${today}"/></div></div>
+    <div class="ff"><label>Catégorie</label><select class="fi" id="expCat">${EXP_CATS.map(c=>`<option value="${c.k}">${c.ico} ${c.lbl}</option>`).join('')}</select></div>
+    <div class="ff"><label>Description</label><textarea class="fta" id="expDesc" placeholder="Détails de la dépense…"></textarea></div>
+  `,'doAddExpense()');
+}
+
+async function doAddExpense(){
+  const amt=parseFloat(document.getElementById('expAmt')?.value);
+  if(!amt||amt<=0){toast('❌ Montant requis');return;}
+  const orgId=ORG||PRO?.orgId||'';
+  try{
+    await db.collection('expenses').add({orgId,uid:U.uid,soumisNom:(PRO?.prenom||'')+' '+(PRO?.nom||''),titre:document.getElementById('expTitre')?.value.trim()||'',montant:amt,date:document.getElementById('expDate')?.value||'',categorie:document.getElementById('expCat')?.value||'autre',description:document.getElementById('expDesc')?.value.trim()||'',statut:'pending',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeMdl();toast('✅ Note de frais soumise !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+async function approveExp(id,ok){
+  try{
+    await db.collection('expenses').doc(id).update({statut:ok?'approved':'rejected',treatedBy:U.uid,treatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+    toast(ok?'✅ Approuvée':'❌ Rejetée');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// ──── ANALYTICS ──────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════
+async function initAnalytics(){
+  const el=document.getElementById('analyticsContent');if(!el)return;
+  el.innerHTML='<div class="ldr"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div>';
+  const orgId=ORG||PRO?.orgId||'';
+  if(!orgId){el.innerHTML='<div class="empty"><div class="et">Aucune structure</div></div>';return;}
+  try{
+    const now=new Date();
+    const monthStart=new Date(now.getFullYear(),now.getMonth(),1).toISOString().slice(0,10);
+    const [emps,tasks,ptgs,leaves,projects,expenses]=await Promise.all([
+      db.collection('employees').where('orgId','==',orgId).get(),
+      db.collection('tasks').where('orgId','==',orgId).get(),
+      db.collection('pointages').where('orgId','==',orgId).where('date','>=',monthStart).get(),
+      db.collection('leaves').where('orgId','==',orgId).where('statut','==','pending').get(),
+      db.collection('projects').where('orgId','==',orgId).get(),
+      db.collection('expenses').where('orgId','==',orgId).where('statut','==','pending').get(),
+    ]);
+    const today=now.toISOString().slice(0,10);
+    const lateTasks=tasks.docs.filter(d=>{const t=d.data();return t.status!=='done'&&t.deadline&&t.deadline<today;}).length;
+    const doneTasks=tasks.docs.filter(d=>d.data().status==='done').length;
+    const activeProjects=projects.docs.filter(d=>d.data().statut==='en_cours').length;
+    const pendingExp=expenses.docs.reduce((a,d)=>a+(d.data().montant||0),0);
+    const days=[];
+    for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);days.push(d.toISOString().slice(0,10));}
+    const ptgByDay={};ptgs.docs.forEach(d=>{const dt=d.data().date||'';ptgByDay[dt]=(ptgByDay[dt]||0)+1;});
+    const maxP=Math.max(1,...days.map(d=>ptgByDay[d]||0));
+    el.innerHTML=`
+      <div class="ana-kpis">
+        <div class="ana-kpi"><div class="ana-kpi-val" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${emps.size}</div><div class="ana-kpi-lbl">👥 Employés</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--teal);">${activeProjects}</div><div class="ana-kpi-lbl">🏗️ Projets actifs</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="color:${lateTasks>0?'var(--red)':'var(--green)'};">${lateTasks}</div><div class="ana-kpi-lbl">⚠️ Tâches en retard</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--amber);">${leaves.size}</div><div class="ana-kpi-lbl">🌴 Congés en attente</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${ptgs.size}</div><div class="ana-kpi-lbl">⏰ Présences ce mois</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--amber);">${pendingExp>999?Math.round(pendingExp/1000)+'k':pendingExp}</div><div class="ana-kpi-lbl">💸 Frais en attente</div></div>
+      </div>
+      <div class="ana-chart">
+        <div class="ana-chart-ttl">📊 Présences — 7 derniers jours</div>
+        <div class="ana-bars">${days.map(d=>{
+          const cnt=ptgByDay[d]||0;const h=Math.max(4,Math.round((cnt/maxP)*72));
+          const lbl=new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short'});
+          return `<div class="ana-bar-wrap"><div style="font-size:10px;color:var(--text3);margin-bottom:3px;">${cnt||''}</div><div class="ana-bar" style="height:${h}px;"></div><div class="ana-bar-lbl">${lbl}</div></div>`;
+        }).join('')}</div>
+      </div>
+      <div class="ana-sect">
+        <div class="ana-sect-ttl">✅ Tâches</div>
+        <div class="ana-row"><span style="flex:1;">Total</span><strong>${tasks.size}</strong></div>
+        <div class="ana-row"><span style="flex:1;color:var(--green);">Terminées</span><strong>${doneTasks}</strong></div>
+        <div class="ana-row"><span style="flex:1;">En cours</span><strong>${tasks.size-doneTasks-lateTasks}</strong></div>
+        <div class="ana-row"><span style="flex:1;color:var(--red);">En retard</span><strong style="color:var(--red);">${lateTasks}</strong></div>
+      </div>
+      <div class="ana-sect">
+        <div class="ana-sect-ttl">🏗️ Projets actifs</div>
+        ${projects.docs.filter(d=>d.data().statut==='en_cours').slice(0,5).map(d=>{const p=d.data();return `<div class="ana-row"><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e(p.nom||'')}</span><div style="width:70px;margin-right:8px;"><div class="proj-prog"><div class="proj-prog-fill" style="width:${p.progression||0}%;"></div></div></div><span style="font-size:12px;font-weight:700;color:var(--primary);min-width:36px;text-align:right;">${p.progression||0}%</span></div>`;}).join('')}
+        ${activeProjects===0?'<div style="font-size:13px;color:var(--text3);padding:8px 0;">Aucun projet actif</div>':''}
+      </div>
+      <div style="height:20px;"></div>`;
+  }catch(err){
+    el.innerHTML=`<div class="empty"><div class="et">Erreur de chargement</div><div class="es">${err.message}</div></div>`;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// ──── RECRUTEMENT ─────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════
+function recFabAction(){if(_recTab==='candidates')openAddCandidate();else openAddJob();}
+function recCandLabel(s){return {recu:'Reçu',entretien:'Entretien',selectionne:'Sélectionné',refuse:'Refusé'}[s]||s;}
+
+function recTab(t){
+  _recTab=t;
+  document.getElementById('recTabJobs')?.classList.toggle('on',t==='jobs');
+  document.getElementById('recTabCands')?.classList.toggle('on',t==='candidates');
+  renderRecruit();
+}
+
+function initRecruit(){
+  if(recJobUnsub)try{recJobUnsub();}catch(e){}
+  if(recCandUnsub)try{recCandUnsub();}catch(e){}
+  const orgId=ORG||PRO?.orgId||'';if(!orgId)return;
+  recJobUnsub=db.collection('job_posts').where('orgId','==',orgId).orderBy('createdAt','desc').onSnapshot(snap=>{
+    _recJobs=snap.docs.map(d=>({id:d.id,...d.data()}));if(_recTab==='jobs')renderRecruit();
+  },()=>{});
+  recCandUnsub=db.collection('candidates').where('orgId','==',orgId).orderBy('createdAt','desc').onSnapshot(snap=>{
+    _recCands=snap.docs.map(d=>({id:d.id,...d.data()}));if(_recTab==='candidates')renderRecruit();
+  },()=>{});
+}
+
+function renderRecruit(){
+  const el=document.getElementById('recruitContent');if(!el)return;
+  if(_recTab==='jobs'){
+    if(!_recJobs.length){el.innerHTML='<div class="empty"><div class="ei">🎯</div><div class="et">Aucune offre</div><div class="es">Publiez vos offres pour recruter les meilleurs talents.</div></div>';return;}
+    el.innerHTML='<div style="padding:14px 0 80px;">'+_recJobs.map(j=>`
+      <div class="rec-job">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;">
+          <div><div class="rec-job-ttl">${e(j.titre||'')}</div><div class="rec-job-dep">🏢 ${e(j.departement||'Non défini')}</div></div>
+          <span class="rec-stat ${j.statut||'ouvert'}">${j.statut==='ouvert'?'Ouvert':'Fermé'}</span>
+        </div>
+        ${j.description?`<div style="font-size:12px;color:var(--text2);line-height:1.4;margin-bottom:10px;">${e(j.description.slice(0,120))}${j.description.length>120?'…':''}</div>`:''}
+        <div style="display:flex;gap:8px;">
+          ${U.email===ADMIN_EMAIL?`<button class="doc-act" onclick="toggleJobStatus('${j.id}','${j.statut||'ouvert'}')">${j.statut==='ouvert'?'🔒 Fermer':'🔓 Ouvrir'}</button>`:''}
+          ${U.email===ADMIN_EMAIL?`<button class="doc-act" style="background:rgba(239,68,68,.12);color:var(--red);" onclick="delJob('${j.id}')">🗑️</button>`:''}
+        </div>
+      </div>`).join('')+'</div>';
+  } else {
+    if(!_recCands.length){el.innerHTML='<div class="empty"><div class="ei">👤</div><div class="et">Aucun candidat</div><div class="es">Les candidatures apparaîtront ici.</div></div>';return;}
+    el.innerHTML='<div style="padding:14px 16px 80px;">'+_recCands.map(c=>`
+      <div class="rec-cand" onclick="openCandDetail('${c.id}')">
+        <div style="width:42px;height:42px;border-radius:13px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;">${(c.nom||'?')[0].toUpperCase()}</div>
+        <div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;">${e(c.nom||'')}</div><div style="font-size:12px;color:var(--text2);">📌 ${e(c.poste||'Non précisé')}</div></div>
+        <span class="rec-stat ${c.statut||'recu'}">${recCandLabel(c.statut||'recu')}</span>
+      </div>`).join('')+'</div>';
+  }
+}
+
+function openAddJob(){
+  openMdl('🎯 Nouvelle offre d\'emploi',`
+    <div class="ff"><label>Intitulé du poste *</label><input class="fi" id="jobTitre" type="text" placeholder="Développeur Full-Stack"/></div>
+    <div class="ff"><label>Département</label><input class="fi" id="jobDep" type="text" placeholder="Informatique"/></div>
+    <div class="ff"><label>Description</label><textarea class="fta" id="jobDesc" placeholder="Missions, profil recherché…"></textarea></div>
+    <div class="ff"><label>Statut</label><select class="fi" id="jobStat"><option value="ouvert">Ouvert</option><option value="ferme">Fermé</option></select></div>
+  `,'doAddJob()');
+}
+
+async function doAddJob(){
+  const titre=document.getElementById('jobTitre')?.value.trim();if(!titre){toast('❌ Intitulé requis');return;}
+  const orgId=ORG||PRO?.orgId||'';
+  try{
+    await db.collection('job_posts').add({orgId,titre,departement:document.getElementById('jobDep')?.value.trim()||'',description:document.getElementById('jobDesc')?.value.trim()||'',statut:document.getElementById('jobStat')?.value||'ouvert',createdBy:U.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeMdl();toast('✅ Offre publiée !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+async function toggleJobStatus(id,cur){
+  const ns=cur==='ouvert'?'ferme':'ouvert';
+  try{await db.collection('job_posts').doc(id).update({statut:ns});toast(ns==='ouvert'?'🔓 Offre ouverte':'🔒 Offre fermée');}catch(err){toast('❌ '+err.message);}
+}
+
+async function delJob(id){
+  confirm2('🗑️ Supprimer cette offre ?','',async()=>{
+    try{await db.collection('job_posts').doc(id).delete();toast('✅ Offre supprimée');}catch(err){toast('❌ '+err.message);}
+  },'d');
+}
+
+function openAddCandidate(){
+  openMdl('👤 Nouveau candidat',`
+    <div class="ff"><label>Nom complet *</label><input class="fi" id="candNom" type="text" placeholder="Marie Dubois"/></div>
+    <div class="g2"><div class="ff"><label>Email</label><input class="fi" id="candEmail" type="email" placeholder="marie@email.com"/></div><div class="ff"><label>Téléphone</label><input class="fi" id="candTel" type="tel" placeholder="+237..."/></div></div>
+    <div class="ff"><label>Poste sollicité</label><select class="fi" id="candPoste"><option value="">-- Sélectionner --</option>${_recJobs.filter(j=>j.statut==='ouvert').map(j=>`<option value="${e(j.titre)}">${e(j.titre)}</option>`).join('')}</select></div>
+    <div class="ff"><label>Statut</label><select class="fi" id="candStat"><option value="recu">Reçu</option><option value="entretien">Entretien planifié</option><option value="selectionne">Sélectionné</option><option value="refuse">Refusé</option></select></div>
+    <div class="ff"><label>Notes</label><textarea class="fta" id="candNotes" placeholder="Points forts, remarques…"></textarea></div>
+  `,'doAddCandidate()');
+}
+
+async function doAddCandidate(){
+  const nom=document.getElementById('candNom')?.value.trim();if(!nom){toast('❌ Nom requis');return;}
+  const orgId=ORG||PRO?.orgId||'';
+  try{
+    await db.collection('candidates').add({orgId,nom,email:document.getElementById('candEmail')?.value.trim()||'',tel:document.getElementById('candTel')?.value.trim()||'',poste:document.getElementById('candPoste')?.value||'',statut:document.getElementById('candStat')?.value||'recu',notes:document.getElementById('candNotes')?.value.trim()||'',createdBy:U.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeMdl();toast('✅ Candidat ajouté !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+function openCandDetail(id){
+  const c=_recCands.find(x=>x.id===id);if(!c)return;
+  openMdl('👤 '+e(c.nom),`
+    <div style="margin-bottom:12px;"><span class="rec-stat ${c.statut||'recu'}">${recCandLabel(c.statut||'recu')}</span></div>
+    ${c.poste?`<div class="ff"><label>Poste</label><div style="font-size:14px;">${e(c.poste)}</div></div>`:''}
+    ${c.email?`<div class="ff"><label>Email</label><a href="mailto:${e(c.email)}" style="color:var(--primary);font-size:14px;">${e(c.email)}</a></div>`:''}
+    ${c.tel?`<div class="ff"><label>Téléphone</label><a href="tel:${e(c.tel)}" style="color:var(--primary);font-size:14px;">${e(c.tel)}</a></div>`:''}
+    ${c.notes?`<div class="ff"><label>Notes</label><div style="font-size:13px;color:var(--text2);line-height:1.5;">${e(c.notes)}</div></div>`:''}
+    <div class="ff"><label>Changer le statut</label><select class="fi" id="candNewStat">${['recu','entretien','selectionne','refuse'].map(s=>`<option value="${s}"${c.statut===s?' selected':''}>${recCandLabel(s)}</option>`).join('')}</select></div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="mbt mbt-ok" onclick="updateCandStatus('${id}')" style="flex:1;">✅ Mettre à jour</button>
+      <button class="mbt mbt-d" onclick="closeMdl();delCand('${id}');" style="flex:0 0 auto;">🗑️</button>
+    </div>`,'');
+  document.querySelector('.mfoot')?.remove();
+}
+
+async function updateCandStatus(id){
+  const ns=document.getElementById('candNewStat')?.value;
+  try{await db.collection('candidates').doc(id).update({statut:ns});toast('✅ Statut mis à jour !');closeMdl();}catch(err){toast('❌ '+err.message);}
+}
+
+async function delCand(id){
+  confirm2('🗑️ Supprimer ce candidat ?','',async()=>{
+    try{await db.collection('candidates').doc(id).delete();toast('✅ Candidat supprimé');}catch(err){toast('❌ '+err.message);}
+  },'d');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// ──── ÉVALUATIONS ────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════
+function initEval(){
+  if(evalUnsub)try{evalUnsub();}catch(e){}
+  const orgId=ORG||PRO?.orgId||'';if(!orgId)return;
+  let q=db.collection('evaluations').where('orgId','==',orgId);
+  if(U.email!==ADMIN_EMAIL)q=q.where('employeUid','==',U.uid);
+  evalUnsub=q.orderBy('createdAt','desc').onSnapshot(snap=>{
+    renderEval(snap.docs.map(d=>({id:d.id,...d.data()})));
+  },()=>{});
+}
+
+function renderEval(list){
+  const el=document.getElementById('evalList');if(!el)return;
+  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">⭐</div><div class="et">Aucune évaluation</div><div class="es">Les évaluations de performance apparaîtront ici.</div></div>';return;}
+  el.innerHTML='<div style="padding:14px 0 80px;">'+list.map(v=>{
+    const avg=(((v.objectifs||0)+(v.competences||0)+(v.collaboration||0))/3).toFixed(1);
+    const stars='⭐'.repeat(Math.round(avg));
+    return `<div class="eval-card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
+        <div>
+          <div style="font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.4px;">${e(v.periode||'')}</div>
+          <div style="font-size:15px;font-weight:800;margin-top:2px;">${e(v.employeNom||'')}</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:1px;">Par ${e(v.evaluateurNom||'')}</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="eval-score">${avg}/5</div>
+          <div style="font-size:16px;margin-top:2px;">${stars}</div>
+          <span class="eval-stat ${v.statut||'brouillon'}">${v.statut==='publiee'?'Publiée':'Brouillon'}</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0;">
+        ${[['Objectifs',v.objectifs],['Compétences',v.competences],['Collaboration',v.collaboration]].map(([lbl,s])=>`<div style="text-align:center;padding:8px;border-radius:10px;background:var(--bg2);"><div style="font-size:18px;font-weight:900;color:var(--primary);">${s||0}/5</div><div style="font-size:10px;color:var(--text3);font-weight:700;">${lbl}</div></div>`).join('')}
+      </div>
+      ${v.commentaire?`<div style="font-size:13px;color:var(--text2);line-height:1.5;border-top:1px solid var(--border);padding-top:10px;margin-top:6px;">"${e(v.commentaire)}"</div>`:''}
+      ${U.email===ADMIN_EMAIL?`<div style="display:flex;gap:8px;margin-top:10px;">
+        <button class="doc-act" onclick="publishEval('${v.id}','${v.statut}')">${v.statut==='publiee'?'📦 Archiver':'📢 Publier'}</button>
+        <button class="doc-act" style="background:rgba(239,68,68,.12);color:var(--red);" onclick="delEval('${v.id}')">🗑️</button>
+      </div>`:''}
+    </div>`;
+  }).join('')+'</div>';
+}
+
+function openAddEval(){
+  const periods=['Q1 2026','Q2 2026','Q3 2026','Q4 2026','Q1 2025','Q2 2025','Annuel 2025','Annuel 2026'];
+  openMdl('⭐ Nouvelle évaluation',`
+    <div class="ff"><label>Nom de l'employé *</label><input class="fi" id="evalEmpNom" type="text" placeholder="Nom Prénom"/></div>
+    <div class="ff"><label>UID Firebase (optionnel)</label><input class="fi" id="evalEmpUid" type="text" placeholder="uid..."/></div>
+    <div class="ff"><label>Période</label><select class="fi" id="evalPeriode">${periods.map(p=>`<option value="${p}">${p}</option>`).join('')}</select></div>
+    ${['Objectifs — Réalisation','Compétences techniques','Collaboration & Esprit d\'équipe'].map((lbl,i)=>{const fid=['evalObj','evalComp','evalCollab'][i];return `<div class="ff"><label>${lbl} (1→5)</label><div style="display:flex;gap:6px;margin-top:4px;">${[1,2,3,4,5].map(n=>`<button type="button" data-field="${fid}" data-val="${n}" onclick="setEvalScore('${fid}',${n},this)" style="width:40px;height:40px;border-radius:10px;border:2px solid var(--border2);background:none;color:var(--text);font-size:15px;font-weight:800;cursor:pointer;touch-action:manipulation;transition:.15s;">${n}</button>`).join('')}<input type="hidden" id="${fid}" value="3"/></div></div>`;}).join('')}
+    <div class="ff"><label>Commentaire</label><textarea class="fta" id="evalCommentaire" placeholder="Points forts, axes d'amélioration, objectifs pour la prochaine période…"></textarea></div>
+  `,'doAddEval()');
+  setTimeout(()=>['evalObj','evalComp','evalCollab'].forEach(f=>setEvalScore(f,3,document.querySelector(`[data-field="${f}"][data-val="3"]`))),100);
+}
+
+function setEvalScore(field,val,btn){
+  const el=document.getElementById(field);if(el)el.value=val;
+  if(!btn)return;
+  const parent=btn.parentElement;
+  parent.querySelectorAll('button[data-field]').forEach((b,i)=>{
+    const v=parseInt(b.dataset.val);
+    b.style.background=v<=val?'var(--primary)':'none';
+    b.style.borderColor=v<=val?'var(--primary)':'var(--border2)';
+    b.style.color=v<=val?'#fff':'var(--text)';
+  });
+}
+
+async function doAddEval(){
+  const empNom=document.getElementById('evalEmpNom')?.value.trim();if(!empNom){toast('❌ Nom de l\'employé requis');return;}
+  const orgId=ORG||PRO?.orgId||'';
+  try{
+    await db.collection('evaluations').add({orgId,employeUid:document.getElementById('evalEmpUid')?.value.trim()||'',employeNom:empNom,periode:document.getElementById('evalPeriode')?.value||'',objectifs:parseInt(document.getElementById('evalObj')?.value)||3,competences:parseInt(document.getElementById('evalComp')?.value)||3,collaboration:parseInt(document.getElementById('evalCollab')?.value)||3,commentaire:document.getElementById('evalCommentaire')?.value.trim()||'',evaluateurUid:U.uid,evaluateurNom:(PRO?.prenom||'')+' '+(PRO?.nom||''),statut:'brouillon',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeMdl();toast('✅ Évaluation créée !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+async function publishEval(id,cur){
+  const ns=cur==='publiee'?'brouillon':'publiee';
+  try{await db.collection('evaluations').doc(id).update({statut:ns});toast(ns==='publiee'?'📢 Évaluation publiée !':'📦 Archivée');}catch(err){toast('❌ '+err.message);}
+}
+
+async function delEval(id){
+  confirm2('🗑️ Supprimer cette évaluation ?','',async()=>{
+    try{await db.collection('evaluations').doc(id).delete();toast('✅ Supprimé');}catch(err){toast('❌ '+err.message);}
+  },'d');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// ──── STOCK / INVENTAIRE ─────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════
+function stkIco(cat){return {electronique:'💻',mobilier:'🪑',vehicule:'🚗',materiel:'🔧',informatique:'🖥️',consommable:'🧴'}[cat]||'📦';}
+
+function initStock(){
+  if(stockUnsub)try{stockUnsub();}catch(e){}
+  const orgId=ORG||PRO?.orgId||'';if(!orgId)return;
+  stockUnsub=db.collection('stock_items').where('orgId','==',orgId).orderBy('nom').onSnapshot(snap=>{
+    _allStock=snap.docs.map(d=>({id:d.id,...d.data()}));renderStock();
+  },()=>{});
+}
+
+function filterStock(q){_stockSearch=q;renderStock();}
+
+function renderStock(){
+  const el=document.getElementById('stockList');if(!el)return;
+  let list=_allStock;
+  if(_stockSearch)list=list.filter(s=>(s.nom||'').toLowerCase().includes(_stockSearch.toLowerCase())||(s.reference||'').toLowerCase().includes(_stockSearch.toLowerCase()));
+  const low=list.filter(s=>(s.quantite||0)<=(s.seuil_alerte||0)&&(s.seuil_alerte||0)>0);
+  if(!list.length){el.innerHTML='<div class="empty"><div class="ei">📦</div><div class="et">Inventaire vide</div><div class="es">Ajoutez vos articles pour commencer la gestion de stock.</div></div>';return;}
+  el.innerHTML=`${low.length?`<div class="stk-alert-banner">⚠️ ${low.length} article(s) en stock bas !</div>`:''}
+    <div style="padding-bottom:80px;">${list.map(s=>{
+      const isLow=(s.seuil_alerte||0)>0&&(s.quantite||0)<=(s.seuil_alerte||0);
+      return `<div class="stk-item" onclick="openStockDetail('${s.id}')">
+        <div class="stk-ico" style="background:${isLow?'rgba(239,68,68,.12)':'rgba(16,185,129,.1);'};">${stkIco(s.categorie)}</div>
+        <div class="stk-info">
+          <div class="stk-nm">${e(s.nom||'')}</div>
+          <div class="stk-ref">${s.reference?'Réf: '+e(s.reference)+' · ':''}${e(s.categorie||'')}</div>
+          ${isLow?`<div style="font-size:11px;color:var(--red);font-weight:700;margin-top:2px;">⚠️ Stock bas (seuil: ${s.seuil_alerte})</div>`:''}
+        </div>
+        <div class="stk-qty"><div class="stk-qty-val ${isLow?'stk-low':'stk-ok'}">${s.quantite||0}</div><div class="stk-qty-lbl">${e(s.unite||'unités')}</div></div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+function openAddStock(){
+  openMdl('📦 Nouvel article',`
+    <div class="ff"><label>Nom de l'article *</label><input class="fi" id="stkNom" type="text" placeholder="Ordinateur portable"/></div>
+    <div class="g2"><div class="ff"><label>Référence</label><input class="fi" id="stkRef" type="text" placeholder="REF-001"/></div><div class="ff"><label>Catégorie</label><select class="fi" id="stkCat"><option value="materiel">Matériel</option><option value="electronique">Électronique</option><option value="informatique">Informatique</option><option value="mobilier">Mobilier</option><option value="vehicule">Véhicule</option><option value="consommable">Consommable</option><option value="autre">Autre</option></select></div></div>
+    <div class="g2"><div class="ff"><label>Quantité initiale *</label><input class="fi" id="stkQty" type="number" placeholder="0" min="0"/></div><div class="ff"><label>Unité</label><input class="fi" id="stkUnite" type="text" placeholder="unités" value="unités"/></div></div>
+    <div class="ff"><label>Seuil d'alerte stock bas</label><input class="fi" id="stkSeuil" type="number" placeholder="5" min="0"/></div>
+    <div class="ff"><label>Description / localisation</label><textarea class="fta" id="stkDesc" placeholder="Description, fournisseur, emplacement…"></textarea></div>
+  `,'doAddStock()');
+}
+
+async function doAddStock(){
+  const nom=document.getElementById('stkNom')?.value.trim();
+  const qty=parseInt(document.getElementById('stkQty')?.value);
+  if(!nom){toast('❌ Nom requis');return;}if(isNaN(qty)||qty<0){toast('❌ Quantité invalide');return;}
+  const orgId=ORG||PRO?.orgId||'';
+  try{
+    await db.collection('stock_items').add({orgId,nom,quantite:qty,reference:document.getElementById('stkRef')?.value.trim()||'',categorie:document.getElementById('stkCat')?.value||'autre',unite:document.getElementById('stkUnite')?.value.trim()||'unités',seuil_alerte:parseInt(document.getElementById('stkSeuil')?.value)||0,description:document.getElementById('stkDesc')?.value.trim()||'',createdBy:U.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeMdl();toast('✅ Article ajouté !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+function openStockDetail(id){
+  const s=_allStock.find(x=>x.id===id);if(!s)return;
+  const isLow=(s.seuil_alerte||0)>0&&(s.quantite||0)<=(s.seuil_alerte||0);
+  openMdl('📦 '+e(s.nom),`
+    ${s.reference?`<div class="ff"><label>Référence</label><div style="font-size:14px;font-weight:700;">${e(s.reference)}</div></div>`:''}
+    <div class="g2">
+      <div class="ff"><label>Stock actuel</label><div style="font-size:28px;font-weight:900;color:${isLow?'var(--red)':'var(--green)'};">${s.quantite||0}<span style="font-size:14px;font-weight:600;margin-left:4px;">${e(s.unite||'')}</span></div>${isLow?`<div style="font-size:11px;color:var(--red);font-weight:700;margin-top:4px;">⚠️ Stock bas !</div>`:''}</div>
+      <div class="ff"><label>Seuil alerte</label><div style="font-size:20px;font-weight:700;color:var(--amber);">${s.seuil_alerte||0}</div></div>
+    </div>
+    ${s.description?`<div class="ff"><label>Description</label><div style="font-size:13px;color:var(--text2);line-height:1.5;">${e(s.description)}</div></div>`:''}
+    <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:6px;">
+      <div class="ff"><label>Enregistrer un mouvement</label>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
+          <select class="fi" id="stkMvType" style="width:130px;flex-shrink:0;"><option value="entree">➕ Entrée</option><option value="sortie">➖ Sortie</option></select>
+          <input class="fi" id="stkMvQty" type="number" placeholder="Quantité" min="1" style="flex:1;"/>
+        </div>
+      </div>
+      <div class="ff"><label>Motif</label><input class="fi" id="stkMvMotif" type="text" placeholder="Achat, utilisation, perte…"/></div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="mbt mbt-ok" onclick="doStockMove('${id}')" style="flex:1;">✅ Valider mouvement</button>
+      <button class="mbt mbt-d" onclick="closeMdl();delStock('${id}');" style="flex:0 0 auto;">🗑️</button>
+    </div>`,'');
+  document.querySelector('.mfoot')?.remove();
+}
+
+async function doStockMove(id){
+  const type=document.getElementById('stkMvType')?.value;
+  const qty=parseInt(document.getElementById('stkMvQty')?.value);
+  if(!qty||qty<=0){toast('❌ Quantité invalide');return;}
+  const s=_allStock.find(x=>x.id===id);if(!s)return;
+  const newQty=type==='entree'?(s.quantite||0)+qty:Math.max(0,(s.quantite||0)-qty);
+  const motif=document.getElementById('stkMvMotif')?.value.trim()||'';
+  try{
+    await db.collection('stock_items').doc(id).update({quantite:newQty});
+    await db.collection('stock_moves').add({orgId:ORG||PRO?.orgId||'',itemId:id,itemNom:s.nom,type,quantite:qty,avant:s.quantite||0,apres:newQty,motif,createdBy:U.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    toast(`✅ ${type==='entree'?'Entrée':'Sortie'} de ${qty} ${s.unite||'unités'} enregistrée`);closeMdl();
+  }catch(err){toast('❌ '+err.message);}
+}
+
+async function delStock(id){
+  confirm2('🗑️ Supprimer cet article ?','',async()=>{
+    try{await db.collection('stock_items').doc(id).delete();toast('✅ Article supprimé');}catch(err){toast('❌ '+err.message);}
+  },'d');
 }
 
 // INIT + ANDROID TOUCH FIX
