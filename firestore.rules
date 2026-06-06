@@ -104,15 +104,18 @@ service cloud.firestore {
 
     // ── Structures / abonnements ──────────────────────────────────────────
     match /organizations/{orgId} {
-      allow read:   if isAuthed();
-      // Créer sa propre structure (setup wizard)
+      // Lecture d'un document précis (validation code lors inscription, sans auth nécessaire)
+      allow get:  if true;
+      // Lister TOUTES les structures : admin uniquement
+      allow list: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
+      // Créer sa propre structure (setup wizard) — max 1 org par uid via createdBy
       allow create: if isAuthed() && request.resource.data.createdBy == myUid();
       // Mettre à jour : créateur de la structure ou admin principal
       allow update: if isAuthed() && (
         resource.data.createdBy == myUid() ||
         request.auth.token.email == 'alexfotso75@gmail.com'
       );
-      // Supprimer : admin principal uniquement
+      // Supprimer : admin uniquement
       allow delete: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
     }
 

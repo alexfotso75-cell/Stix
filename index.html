@@ -1537,7 +1537,7 @@ async function setupNext(step){
       await db.collection('organizations').doc(orgId).set({
         name:orgName,sector,size,createdBy:U.uid,
         createdAt:firebase.firestore.FieldValue.serverTimestamp(),
-        plan:'trial',seats:50,
+        plan:'trial',maxUsers:50,currentUsers:0,
         expiresAt:new Date(Date.now()+30*24*60*60*1000)
       });
       await db.collection('users').doc(U.uid).set({orgId,role:'admin'},{merge:true});
@@ -1734,12 +1734,17 @@ async function validateOrgCode(code){
     const snap=await db.collection('organizations').doc(code).get();
     if(!snap.exists)return{valid:false,msg:'Code structure invalide. Contactez votre administrateur.'};
     const org=snap.data();
-    if(!org.active)return{valid:false,msg:'Cette structure est désactivée. Contactez l\'administrateur.'};
+    if(org.active===false)return{valid:false,msg:'Cette structure est désactivée. Contactez l\'administrateur.'};
+    // Vérification limite de places (maxUsers ou seats, les deux champs sont utilisés)
+    const maxPlaces=org.maxUsers||org.seats||0;
+    const usersActuels=org.currentUsers||0;
+    if(maxPlaces>0&&usersActuels>=maxPlaces){
+      return{valid:false,msg:`Cette structure a atteint sa limite (${maxPlaces} utilisateurs). Contactez votre administrateur.`};
+    }
     return{valid:true,org};
   }catch(e){
-    // network error → allow with warning
     console.warn('validateOrgCode error',e);
-    return{valid:true,org:{maxUsers:0,currentUsers:0}};
+    return{valid:false,msg:'Impossible de vérifier le code. Vérifiez votre connexion.'};
   }
 }
 
@@ -1767,6 +1772,7 @@ async function checkSubscription(orgId){
 
 // ─── ADMIN PANEL ───
 async function openAdminPanel(){
+  if(!U||U.email!==ADMIN_EMAIL){toast('⛔ Accès réservé à l\'administrateur');return;}
   const rows=await loadOrgCodes();
   const html=`<div style="padding:16px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
@@ -1815,6 +1821,7 @@ function openCreateOrg(){
 }
 
 async function doCreateOrg(){
+  if(!U||U.email!==ADMIN_EMAIL){toast('⛔ Accès refusé');return;}
   const code=document.getElementById('newOrgCode')?.value.trim().toUpperCase();
   const name=document.getElementById('newOrgName')?.value.trim();
   const max=parseInt(document.getElementById('newOrgMax')?.value)||0;
@@ -1835,6 +1842,7 @@ async function doCreateOrg(){
 }
 
 async function renewOrg(code){
+  if(!U||U.email!==ADMIN_EMAIL){toast('⛔ Accès refusé');return;}
   const months=parseInt(prompt('Prolonger de combien de mois ?','1'))||0;
   if(!months)return;
   try{
@@ -1849,6 +1857,7 @@ async function renewOrg(code){
 }
 
 async function toggleOrgActive(code,active){
+  if(!U||U.email!==ADMIN_EMAIL){toast('⛔ Accès refusé');return;}
   try{
     await db.collection('organizations').doc(code).update({active});
     toast((active?'✅ Structure activée : ':'⛔ Structure désactivée : ')+code);
@@ -1932,6 +1941,9 @@ function updateProUI(){
   document.getElementById('profSt').textContent=stl;
   ['profStatVal','setStatVal'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=stl;});
   document.querySelectorAll('.odot').forEach(d=>d.style.display='block');
+  // panneau admin : visible uniquement pour alexfotso75@gmail.com
+  const adminSec=document.getElementById('adminSec');
+  if(adminSec)adminSec.style.display=(U&&U.email===ADMIN_EMAIL)?'':'none';
   // sidebar profile sync
   const sbPav=document.getElementById('sbPav');
   if(sbPav){if(photo)sbPav.innerHTML=`<img src="${photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>`;else{sbPav.textContent=i;sbPav.style.background=g;}}
