@@ -56,15 +56,21 @@ img{display:block;max-width:100%;}
 #splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
 .spl-logo{
   width:88px; height:88px; border-radius:24px;
-  background:var(--grad); display:flex; align-items:center; justify-content:center;
-  box-shadow:0 0 50px rgba(139,92,246,.4), var(--shadow);
+  background:#0D0D1F;
+  border:1.5px solid rgba(255,215,0,.4);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 50px rgba(255,215,0,.3), var(--shadow);
   animation:splPop .6s cubic-bezier(.34,1.56,.64,1) both;
   position:relative; z-index:1;
+  flex-direction:column; gap:0;
 }
-.spl-g{font-size:44px; font-weight:900; color:white; line-height:1;}
+.spl-crown{font-size:16px;line-height:1;margin-bottom:1px;}
+.spl-g{font-size:40px; font-weight:900; line-height:1;
+  background:linear-gradient(135deg,#FFFFFF 0%,#FFE566 40%,#FFD700 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .spl-ring{
   position:absolute; inset:-8px; border-radius:32px;
-  border:2px solid rgba(139,92,246,.3);
+  border:2px solid rgba(255,215,0,.3);
   animation:splRing 2s ease-in-out infinite;
 }
 .spl-name{font-size:26px;font-weight:900;color:var(--text);letter-spacing:-.5px;z-index:1;animation:splUp .4s ease .1s both;}
@@ -248,7 +254,9 @@ img{display:block;max-width:100%;}
 #sAuth::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.25),transparent 70%);top:-80px;left:-80px;}
 #sAuth::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(236,72,153,.2),transparent 70%);bottom:-80px;right:-80px;}
 .acard{width:100%;max-width:400px;background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--border2);border-radius:28px;padding:30px 24px;box-shadow:var(--shadow);position:relative;z-index:1;}
-.alogo{width:64px;height:64px;border-radius:20px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;margin:0 auto 14px;box-shadow:var(--glow);}
+.alogo{width:64px;height:64px;border-radius:20px;background:#0D0D1F;border:1.5px solid rgba(255,215,0,.4);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;margin:0 auto 14px;box-shadow:0 0 32px rgba(255,215,0,.25);flex-direction:column;gap:0;}
+.alogo-g{background:linear-gradient(135deg,#FFF 0%,#FFE566 40%,#FFD700 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:28px;font-weight:900;line-height:1;}
+.alogo-cr{font-size:12px;line-height:1;margin-bottom:1px;}
 .aname{text-align:center;font-size:24px;font-weight:900;letter-spacing:-.5px;}
 .asub{text-align:center;font-size:12px;color:var(--text2);margin-bottom:20px;}
 .atabs{display:flex;background:rgba(255,255,255,.04);border-radius:14px;padding:4px;margin-bottom:20px;position:relative;}
@@ -387,7 +395,7 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 #sLanding{background:var(--bg);overflow-y:auto;align-items:flex-start;justify-content:flex-start;padding-bottom:40px;}
 .land-hero{width:100%;padding:56px 24px 32px;text-align:center;background:linear-gradient(180deg,rgba(139,92,246,.14),transparent);position:relative;overflow:hidden;}
 .land-hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.28),transparent 70%);pointer-events:none;}
-.land-logo{width:80px;height:80px;border-radius:24px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#fff;margin:0 auto 16px;box-shadow:0 16px 48px rgba(139,92,246,.4);position:relative;z-index:1;}
+.land-logo{width:80px;height:80px;border-radius:24px;background:#0D0D1F;border:1.5px solid rgba(255,215,0,.4);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;margin:0 auto 16px;box-shadow:0 16px 48px rgba(255,215,0,.25);position:relative;z-index:1;flex-direction:column;gap:0;}
 .land-title{font-size:30px;font-weight:900;letter-spacing:-0.5px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1;margin-bottom:8px;}
 .land-sub{font-size:15px;color:var(--text2);line-height:1.6;position:relative;z-index:1;max-width:320px;margin:0 auto 24px;}
 .land-feats{display:grid;gap:10px;padding:0 20px;margin-bottom:20px;}
@@ -426,6 +434,20 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 .sub-msg{font-size:14px;color:var(--text2);line-height:1.6;}
 .sub-btn{width:100%;padding:15px;border-radius:14px;border:none;background:var(--grad);color:#fff;font-size:15px;font-weight:700;cursor:pointer;touch-action:manipulation;box-shadow:0 8px 24px rgba(139,92,246,.3);}
 .sub-out{color:var(--text3);font-size:13px;cursor:pointer;background:none;border:none;touch-action:manipulation;margin-top:4px;}
+/* ─── DOCUMENTS AMÉLIORÉS ─── */
+.doc-item{display:flex;align-items:center;gap:12px;padding:14px 12px;border-radius:16px;background:var(--surface);border:1px solid var(--border);margin-bottom:10px;}
+.doc-ico{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.doc-info{flex:1;min-width:0;}
+.doc-nm{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.doc-meta{font-size:11px;color:var(--text3);margin-top:3px;}
+.doc-acts{display:flex;gap:6px;flex-shrink:0;}
+.doc-act{padding:7px 11px;border-radius:9px;border:none;background:rgba(139,92,246,.12);color:var(--primary);font-size:12px;font-weight:700;cursor:pointer;touch-action:manipulation;}
+.doc-cat{padding:7px 14px;border-radius:99px;border:1px solid var(--border2);background:none;color:var(--text2);font-size:12px;font-weight:700;cursor:pointer;touch-action:manipulation;white-space:nowrap;}
+.doc-cat.on{background:var(--primary);color:#fff;border-color:transparent;}
+.att-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:4px 0 14px;}
+.att-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:14px;background:var(--surface);border:1px solid var(--border);cursor:pointer;touch-action:manipulation;}
+.att-ico{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.att-lbl{font-size:10px;font-weight:700;color:var(--text2);text-align:center;}
 /* ─── POINTAGE ─── */
 .ptg-clock{text-align:center;padding:28px 20px 16px;}
 .ptg-time{font-size:52px;font-weight:900;letter-spacing:-2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
@@ -517,6 +539,7 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 <!-- SPLASH -->
 <div id="splash">
   <div class="spl-logo">
+    <div class="spl-crown">👑</div>
     <div class="spl-g">G</div>
     <div class="spl-ring"></div>
   </div>
@@ -529,7 +552,7 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 <div id="sLanding" class="screen show">
   <div style="overflow-y:auto;height:100%;-webkit-overflow-scrolling:touch;">
     <div class="land-hero">
-      <div class="land-logo">G</div>
+      <div class="land-logo"><span style="font-size:13px;line-height:1;margin-bottom:1px;">👑</span><span style="background:linear-gradient(135deg,#FFF,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">G</span></div>
       <div class="land-title">GraceLink</div>
       <div class="land-sub">La plateforme de communication sécurisée pour votre entreprise</div>
     </div>
@@ -591,7 +614,7 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 <!-- AUTH -->
 <div id="sAuth" class="screen">
   <div class="acard">
-    <div class="alogo">G</div>
+    <div class="alogo"><span class="alogo-cr">👑</span><span class="alogo-g">G</span></div>
     <div class="aname">GraceLink</div>
     <div class="asub">Communication d'entreprise sécurisée</div>
     <div class="atabs">
@@ -665,7 +688,7 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
     <div class="esheet" id="esheet"></div>
     <div class="cinput">
       <button type="button" class="cibtn" id="etog" onclick="togEmoji()">😀</button>
-      <button type="button" class="cibtn" onclick="document.getElementById('imgIn').click()">📎</button>
+      <button type="button" class="cibtn" onclick="openAttachSheet()">➕</button>
       <textarea id="msgIn" rows="1" placeholder="Message…" oninput="onMsgIn(this)" onkeydown="onMsgKey(event)"></textarea>
       <button type="button" class="cibtn send" id="sendBtn" style="display:none;" onclick="sendMsg()">➤</button>
       <button type="button" class="cibtn mic" id="micBtn" onclick="togVoice()">🎙️</button>
@@ -716,8 +739,17 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 
   <!-- pgDocs -->
   <div id="pgDocs" class="pg">
-    <div class="hdr"><button type="button" class="hbtn" onclick="navTo('pgMsgs')">←</button><div class="htxt"><div class="htitle">Documents</div></div><button type="button" class="hbtn" onclick="openAddDoc()">➕</button></div>
-    <div class="content" id="docsList"></div>
+    <div class="hdr"><button type="button" class="hbtn" onclick="navTo('pgMsgs')">←</button><div class="htxt"><div class="htitle">📎 Documents</div></div><button type="button" class="hbtn" onclick="openAddDoc()">➕</button></div>
+    <div style="padding:10px 14px 6px;"><div class="sbar-in" style="border-radius:12px;"><span>🔍</span><input placeholder="Rechercher un document…" oninput="filterDocs(this.value)" style="background:none;border:none;color:var(--text);font-size:14px;outline:none;width:100%;padding:4px 0;"/></div></div>
+    <div style="display:flex;gap:6px;padding:0 14px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+      <button type="button" class="doc-cat on" id="docCat_all" onclick="filterDocCat('all')">Tous</button>
+      <button type="button" class="doc-cat" id="docCat_pdf" onclick="filterDocCat('pdf')">📕 PDF</button>
+      <button type="button" class="doc-cat" id="docCat_image" onclick="filterDocCat('image')">🖼️ Images</button>
+      <button type="button" class="doc-cat" id="docCat_word" onclick="filterDocCat('word')">📘 Word</button>
+      <button type="button" class="doc-cat" id="docCat_excel" onclick="filterDocCat('excel')">📗 Excel</button>
+      <button type="button" class="doc-cat" id="docCat_link" onclick="filterDocCat('link')">🔗 Liens</button>
+    </div>
+    <div class="content" id="docsList" style="padding:0 14px;"></div>
   </div>
 
   <!-- pgPolls -->
@@ -1050,6 +1082,8 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
 
 <input type="file" id="photoIn" accept="image/*" style="position:fixed;top:-9999px;opacity:0;" onchange="uploadPhoto(this)"/>
 <input type="file" id="imgIn" accept="image/*" style="display:none;" onchange="sendImg(this)"/>
+<input type="file" id="fileIn" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,image/*" style="display:none;" onchange="sendFile(this)"/>
+<input type="file" id="docUpIn" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,image/*" style="display:none;" onchange="uploadDocFile(this)"/>
 
 <!-- FIREBASE SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -2412,6 +2446,264 @@ async function exportData(){
 // CONNEXION
 window.addEventListener('online',()=>toast('✅ Connexion rétablie'));
 window.addEventListener('offline',()=>toast('⚠️ Hors ligne — certaines fonctions indisponibles'));
+
+// ═══════════════════════════════════════════════════════
+// ──── PARTAGE DE FICHIERS & DOCUMENTS ────
+// ═══════════════════════════════════════════════════════
+function fileTypeInfo(name,type){
+  const ext=(name||'').split('.').pop().toLowerCase();
+  const t=type||'';
+  if(t.startsWith('image/')||['jpg','jpeg','png','gif','webp','svg','bmp'].includes(ext))
+    return{ico:'🖼️',color:'rgba(139,92,246,.15)',cat:'image',label:'Image'};
+  if(ext==='pdf'||t==='application/pdf')
+    return{ico:'📕',color:'rgba(239,68,68,.15)',cat:'pdf',label:'PDF'};
+  if(['doc','docx'].includes(ext)||t.includes('word'))
+    return{ico:'📘',color:'rgba(37,99,235,.15)',cat:'word',label:'Word'};
+  if(['xls','xlsx'].includes(ext)||t.includes('excel')||t.includes('spreadsheet'))
+    return{ico:'📗',color:'rgba(16,185,129,.15)',cat:'excel',label:'Excel'};
+  if(['ppt','pptx'].includes(ext)||t.includes('presentation'))
+    return{ico:'📙',color:'rgba(245,158,11,.15)',cat:'ppt',label:'PowerPoint'};
+  if(['zip','rar','7z'].includes(ext))
+    return{ico:'🗜️',color:'rgba(107,114,128,.15)',cat:'archive',label:'Archive'};
+  if(['txt','csv'].includes(ext))
+    return{ico:'📄',color:'rgba(6,182,212,.15)',cat:'text',label:'Texte'};
+  return{ico:'📄',color:'rgba(6,182,212,.15)',cat:'other',label:'Fichier'};
+}
+
+function fmtSize(bytes){
+  if(!bytes)return'';
+  if(bytes<1024)return bytes+'B';
+  if(bytes<1024*1024)return(bytes/1024).toFixed(1)+'KB';
+  return(bytes/(1024*1024)).toFixed(1)+'MB';
+}
+
+function openAttachSheet(){
+  openBs(`<div class="bsh-ttl">➕ Partager</div>
+    <div class="att-grid">
+      <div class="att-item" onclick="closeBs();document.getElementById('imgIn').click();">
+        <div class="att-ico" style="background:rgba(139,92,246,.15);">🖼️</div>
+        <div class="att-lbl">Photo / Vidéo</div>
+      </div>
+      <div class="att-item" onclick="closeBs();document.getElementById('fileIn').click();">
+        <div class="att-ico" style="background:rgba(239,68,68,.15);">📄</div>
+        <div class="att-lbl">Document</div>
+      </div>
+      <div class="att-item" onclick="closeBs();openShareLink();">
+        <div class="att-ico" style="background:rgba(245,158,11,.15);">🔗</div>
+        <div class="att-lbl">Lien Drive</div>
+      </div>
+      <div class="att-item" onclick="closeBs();openPickFromDocs();">
+        <div class="att-ico" style="background:rgba(16,185,129,.15);">📋</div>
+        <div class="att-lbl">Mes docs</div>
+      </div>
+    </div>`);
+}
+
+async function sendFile(input){
+  const file=input.files[0];if(!file)return;
+  const MAX=700*1024;
+  if(file.size>MAX){
+    toast('❌ Fichier trop grand (max 700KB). Utilisez un lien Drive.');
+    input.value='';return;
+  }
+  toast('⏳ Envoi en cours…');
+  const reader=new FileReader();
+  reader.onload=async(ev)=>{
+    const b64=ev.target.result;
+    const fi=fileTypeInfo(file.name,file.type);
+    try{
+      if(!CONV?.id)return;
+      await db.collection('conversations').doc(CONV.id).collection('messages').add({
+        senderId:U.uid,type:'file',
+        fileName:file.name,fileType:file.type,fileData:b64,fileSize:file.size,
+        text:`${fi.ico} ${file.name} (${fmtSize(file.size)})`,
+        ts:firebase.firestore.FieldValue.serverTimestamp(),read:false
+      });
+      toast('✅ Fichier envoyé !');
+    }catch(err){toast('❌ '+err.message);}
+    input.value='';
+  };
+  reader.onerror=()=>{toast('❌ Lecture du fichier échouée');input.value='';};
+  reader.readAsDataURL(file);
+}
+
+function openShareLink(){
+  if(!CONV?.id){toast('❌ Ouvrez d\'abord une conversation');return;}
+  openBs(`<div class="bsh-ttl">🔗 Partager un lien</div>
+    <input class="fi" id="linkUrl" type="url" placeholder="https://drive.google.com/…" style="margin-bottom:10px;"/>
+    <input class="fi" id="linkTitle" type="text" placeholder="Nom du document (optionnel)" style="margin-bottom:14px;"/>
+    <button type="button" class="abtn" onclick="doSendLink()">Envoyer</button>`);
+}
+
+async function doSendLink(){
+  const url=document.getElementById('linkUrl')?.value.trim();
+  const title=document.getElementById('linkTitle')?.value.trim()||url;
+  if(!url){toast('❌ URL requise');return;}
+  try{
+    await db.collection('conversations').doc(CONV.id).collection('messages').add({
+      senderId:U.uid,type:'link',url,title,
+      text:`🔗 ${title}`,
+      ts:firebase.firestore.FieldValue.serverTimestamp(),read:false
+    });
+    closeBs();toast('✅ Lien partagé !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+async function openPickFromDocs(){
+  if(!CONV?.id){toast('❌ Ouvrez d\'abord une conversation');return;}
+  try{
+    const snap=await db.collection('docs_links').where('orgId','==',ORG).limit(20).get();
+    if(snap.empty){toast('Aucun document dans la bibliothèque');return;}
+    const items=snap.docs.map(d=>({id:d.id,...d.data()}));
+    openBs(`<div class="bsh-ttl">📋 Choisir un document</div>`+
+      items.map(d=>{
+        const fi=fileTypeInfo(d.fileName||'',d.fileType||'');
+        const nm=d.title||d.fileName||'Document';
+        return `<div class="bsh-row" onclick="shareDocFromLib('${d.id}','${e(nm)}','${d.url||''}')">
+          <div class="bsh-ico" style="background:${fi.color};">${fi.ico}</div>
+          <div class="bsh-lbl">${e(nm)}</div>
+        </div>`;
+      }).join(''));
+  }catch(err){toast('❌ '+err.message);}
+}
+
+async function shareDocFromLib(id,name,url){
+  closeBs();
+  if(!CONV?.id)return;
+  try{
+    await db.collection('conversations').doc(CONV.id).collection('messages').add({
+      senderId:U.uid,type:'link',url:url||'',title:name,
+      text:`📎 ${name}`,
+      ts:firebase.firestore.FieldValue.serverTimestamp(),read:false
+    });
+    toast('✅ Document partagé !');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+// DOCUMENTS PAGE
+let _docsAll=[],_docsCat='all',_docsSearch='';
+
+function loadDocs(){
+  docsUnsub=db.collection('docs_links').where('orgId','==',ORG).orderBy('createdAt','desc').limit(60).onSnapshot(snap=>{
+    _docsAll=[];snap.forEach(d=>_docsAll.push({id:d.id,...d.data()}));
+    renderDocs();
+  });
+}
+
+function renderDocs(){
+  const el=document.getElementById('docsList');if(!el)return;
+  let items=_docsAll;
+  if(_docsSearch)items=items.filter(d=>(d.title||d.fileName||'').toLowerCase().includes(_docsSearch.toLowerCase()));
+  if(_docsCat!=='all')items=items.filter(d=>{
+    if(_docsCat==='link')return!!d.url&&!d.fileData;
+    return fileTypeInfo(d.fileName||'',d.fileType||'').cat===_docsCat;
+  });
+  if(!items.length){el.innerHTML='<div class="empty"><div class="ei">📭</div><div class="et">Aucun document</div><div class="es">Ajoutez un fichier ou un lien</div></div>';return;}
+  el.innerHTML=items.map(d=>{
+    const fi=fileTypeInfo(d.fileName||d.title||'',d.fileType||'');
+    const nm=d.title||d.fileName||'Document';
+    const meta=[(d.authorEmail||''),(d.fileSize?fmtSize(d.fileSize):'')].filter(Boolean).join(' · ');
+    const openBtn=d.url?`<button type="button" class="doc-act" onclick="window.open('${safeUrl(d.url||'')}','_blank')">Ouvrir</button>`:
+      d.fileData?`<button type="button" class="doc-act" onclick="downloadDoc('${d.id}')">Téléch.</button>`:'';
+    const shareBtn=`<button type="button" class="doc-act" style="background:rgba(16,185,129,.12);color:#10B981;" onclick="shareDocInChat('${d.id}')">Partager</button>`;
+    const delBtn=d.authorEmail===U?.email||U?.email===ADMIN_EMAIL?`<button type="button" class="doc-act" style="background:rgba(239,68,68,.1);color:#EF4444;" onclick="delDoc('${d.id}')">🗑️</button>`:'';
+    return`<div class="doc-item">
+      <div class="doc-ico" style="background:${fi.color};">${fi.ico}</div>
+      <div class="doc-info"><div class="doc-nm" title="${e(nm)}">${e(nm)}</div><div class="doc-meta">${e(meta)}</div></div>
+      <div class="doc-acts">${openBtn}${shareBtn}${delBtn}</div>
+    </div>`;
+  }).join('');
+}
+
+function filterDocs(q){_docsSearch=q;renderDocs();}
+function filterDocCat(cat){
+  _docsCat=cat;
+  document.querySelectorAll('.doc-cat').forEach(b=>b.classList.toggle('on',b.id==='docCat_'+cat));
+  renderDocs();
+}
+
+async function shareDocInChat(docId){
+  const d=_docsAll.find(x=>x.id===docId);
+  if(!d){toast('Document introuvable');return;}
+  if(!CONV?.id){toast('Ouvrez d\'abord une conversation');return;}
+  const nm=d.title||d.fileName||'Document';
+  try{
+    await db.collection('conversations').doc(CONV.id).collection('messages').add({
+      senderId:U.uid,type:'link',url:d.url||'',title:nm,
+      text:`📎 ${nm}`,
+      ts:firebase.firestore.FieldValue.serverTimestamp(),read:false
+    });
+    toast('✅ Partagé dans la conversation !');goTo('pgChat');
+  }catch(err){toast('❌ '+err.message);}
+}
+
+function downloadDoc(docId){
+  const d=_docsAll.find(x=>x.id===docId);
+  if(!d?.fileData)return;
+  const a=document.createElement('a');
+  a.href=d.fileData;a.download=d.fileName||'document';a.click();
+}
+
+function openAddDoc(){
+  openBs(`<div class="bsh-ttl">➕ Ajouter un document</div>
+    <div class="att-grid" style="grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:4px;">
+      <div class="att-item" onclick="closeBs();document.getElementById('docUpIn').click();">
+        <div class="att-ico" style="background:rgba(139,92,246,.15);">📤</div>
+        <div class="att-lbl">Uploader un fichier<br/><span style="font-size:9px;color:var(--text3);">max 700KB</span></div>
+      </div>
+      <div class="att-item" onclick="closeBs();openAddDocLink();">
+        <div class="att-ico" style="background:rgba(245,158,11,.15);">🔗</div>
+        <div class="att-lbl">Lien externe<br/><span style="font-size:9px;color:var(--text3);">Drive, OneDrive…</span></div>
+      </div>
+    </div>`);
+}
+
+async function uploadDocFile(input){
+  const file=input.files[0];if(!file)return;
+  const MAX=700*1024;
+  if(file.size>MAX){toast('❌ Fichier trop grand (max 700KB). Utilisez un lien Drive.');input.value='';return;}
+  toast('⏳ Téléversement…');
+  const reader=new FileReader();
+  reader.onload=async(ev)=>{
+    const b64=ev.target.result;
+    const fi=fileTypeInfo(file.name,file.type);
+    try{
+      await db.collection('docs_links').add({
+        orgId:ORG||PRO?.orgId||'',
+        title:file.name,fileName:file.name,fileType:file.type,fileData:b64,fileSize:file.size,
+        cat:fi.cat,url:'',
+        authorEmail:U.email,authorId:U.uid,
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+      });
+      toast('✅ Document ajouté à la bibliothèque !');
+    }catch(err){toast('❌ '+err.message);}
+    input.value='';
+  };
+  reader.readAsDataURL(file);
+}
+
+function openAddDocLink(){
+  openMdl('🔗 Ajouter un lien',`
+    <div class="ff"><label>Titre du document</label><input class="fi" id="dT" type="text" placeholder="Ex: Rapport mensuel Q1…"/></div>
+    <div class="ff"><label>Lien (Drive / OneDrive / Dropbox…)</label><input class="fi" id="dU" type="url" placeholder="https://…"/></div>`,
+    `<button class="mbt mbt-c" onclick="closeMdl()">Annuler</button>
+     <button class="mbt mbt-ok" onclick="doAddDoc()">Ajouter</button>`);
+}
+
+async function doAddDoc(){
+  const t=(document.getElementById('dT')?.value||'').trim();
+  const url=safeUrl((document.getElementById('dU')?.value||'').trim());
+  if(!t||!url){toast('❌ Titre et lien requis');return;}
+  try{
+    await db.collection('docs_links').add({
+      orgId:ORG||PRO?.orgId||'',title:t,url,cat:'link',
+      fileName:'',fileType:'',fileData:'',fileSize:0,
+      authorEmail:U.email,authorId:U.uid,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    closeMdl();toast('✅ Lien ajouté !');
+  }catch(err){toast('❌ '+err.message);}
+}
 
 // ═══════════════════════════════════════════════════════
 // ──── MODULE POINTAGE (TIME TRACKING) ────
