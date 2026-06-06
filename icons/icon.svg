@@ -1,40 +1,126 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0D1628"/>
-      <stop offset="100%" stop-color="#050912"/>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D0D1F"/>
+      <stop offset="100%" stop-color="#050510"/>
     </linearGradient>
-    <linearGradient id="gGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8B5CF6"/>
-      <stop offset="100%" stop-color="#EC4899"/>
+    <linearGradient id="goldG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="35%" stop-color="#FFE566"/>
+      <stop offset="70%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#C8960C"/>
     </linearGradient>
-    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.20"/>
-      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+    <linearGradient id="crown" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5A0"/>
+      <stop offset="50%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#A87800"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="55%" r="45%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
     </radialGradient>
-    <filter id="gShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#8B5CF6" flood-opacity="0.45"/>
+    <filter id="glowG">
+      <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#FFD700" flood-opacity="0.65"/>
+    </filter>
+    <filter id="glowCrown">
+      <feDropShadow dx="0" dy="2" stdDeviation="7" flood-color="#FFD700" flood-opacity="0.8"/>
+    </filter>
+    <filter id="gemGlow">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFFFFF" flood-opacity="0.9"/>
     </filter>
   </defs>
 
   <!-- Background -->
-  <rect width="512" height="512" rx="112" ry="112" fill="url(#bgGrad)"/>
-  <!-- Subtle border -->
-  <rect width="512" height="512" rx="112" ry="112" fill="none" stroke="#8B5CF6" stroke-width="2" opacity="0.15"/>
-  <!-- Glow -->
-  <circle cx="256" cy="240" r="200" fill="url(#glow)"/>
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#bg)"/>
 
-  <!-- Bold "G" centered -->
-  <text x="256" y="320"
+  <!-- Outer gold ring -->
+  <rect width="512" height="512" rx="112" ry="112" fill="none"
+        stroke="url(#crown)" stroke-width="3.5" opacity="0.45"/>
+  <!-- Inner ring -->
+  <rect x="14" y="14" width="484" height="484" rx="100" ry="100" fill="none"
+        stroke="#FFD700" stroke-width="1" opacity="0.15"/>
+
+  <!-- Central halo -->
+  <circle cx="256" cy="290" r="230" fill="url(#halo)"/>
+
+  <!-- Corner ornaments — top-left -->
+  <path d="M72 72 Q90 54 108 72 M72 72 Q54 90 72 108" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+  <circle cx="72" cy="72" r="4" fill="#FFD700" opacity="0.5"/>
+  <!-- top-right -->
+  <path d="M440 72 Q422 54 404 72 M440 72 Q458 90 440 108" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+  <circle cx="440" cy="72" r="4" fill="#FFD700" opacity="0.5"/>
+  <!-- bottom-left -->
+  <path d="M72 440 Q90 458 108 440 M72 440 Q54 422 72 404" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+  <circle cx="72" cy="440" r="4" fill="#FFD700" opacity="0.5"/>
+  <!-- bottom-right -->
+  <path d="M440 440 Q422 458 404 440 M440 440 Q458 422 440 404" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.4"/>
+  <circle cx="440" cy="440" r="4" fill="#FFD700" opacity="0.5"/>
+
+  <!-- Side diamond ornaments -->
+  <polygon points="256,28 263,40 256,52 249,40" fill="#FFD700" opacity="0.55"/>
+  <polygon points="256,460 263,472 256,484 249,472" fill="#FFD700" opacity="0.55"/>
+  <polygon points="28,256 40,263 52,256 40,249" fill="#FFD700" opacity="0.55"/>
+  <polygon points="460,256 472,263 484,256 472,249" fill="#FFD700" opacity="0.55"/>
+
+  <!-- Sparkles -->
+  <path d="M150 340 L154 350 L164 354 L154 358 L150 368 L146 358 L136 354 L146 350 Z" fill="#FFD700" opacity="0.35"/>
+  <path d="M362 340 L365 348 L373 351 L365 354 L362 362 L359 354 L351 351 L359 348 Z" fill="#FFD700" opacity="0.35"/>
+  <path d="M120 180 L123 188 L131 191 L123 194 L120 202 L117 194 L109 191 L117 188 Z" fill="#FFD700" opacity="0.3"/>
+  <path d="M392 180 L395 188 L403 191 L395 194 L392 202 L389 194 L381 191 L389 188 Z" fill="#FFD700" opacity="0.3"/>
+
+  <!-- ══ CROWN ══ -->
+  <!-- Crown body (5-point) -->
+  <path d="M170 210
+           L170 160
+           L212 183
+           L256 108
+           L300 183
+           L342 160
+           L342 210
+           Z"
+        fill="url(#crown)" filter="url(#glowCrown)"/>
+  <!-- Crown band -->
+  <rect x="170" y="203" width="172" height="26" rx="5" ry="5"
+        fill="url(#crown)" opacity="0.95"/>
+  <!-- Band highlight line -->
+  <line x1="170" y1="212" x2="342" y2="212" stroke="#FFF5A0" stroke-width="1.2" opacity="0.5"/>
+  <!-- Band bottom line -->
+  <line x1="170" y1="226" x2="342" y2="226" stroke="#A87800" stroke-width="1" opacity="0.4"/>
+
+  <!-- Crown gems -->
+  <!-- Center diamond gem -->
+  <polygon points="256,99 265,113 256,127 247,113"
+           fill="#FFFFFF" filter="url(#gemGlow)" opacity="0.95"/>
+  <polygon points="256,104 262,113 256,122 250,113"
+           fill="#FFE566" opacity="0.6"/>
+  <!-- Left gem -->
+  <circle cx="212" cy="180" r="8" fill="#FFFFFF" filter="url(#gemGlow)" opacity="0.9"/>
+  <circle cx="212" cy="180" r="4" fill="#FFD700" opacity="0.8"/>
+  <!-- Right gem -->
+  <circle cx="300" cy="180" r="8" fill="#FFFFFF" filter="url(#gemGlow)" opacity="0.9"/>
+  <circle cx="300" cy="180" r="4" fill="#FFD700" opacity="0.8"/>
+  <!-- Band gems -->
+  <circle cx="220" cy="216" r="4" fill="#FFF5A0" opacity="0.75"/>
+  <circle cx="256" cy="216" r="5" fill="#FFFFFF" opacity="0.85"/>
+  <circle cx="292" cy="216" r="4" fill="#FFF5A0" opacity="0.75"/>
+
+  <!-- ══ G LETTER ══ -->
+  <text x="256" y="398"
         font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
-        font-size="310"
+        font-size="240"
         font-weight="900"
         text-anchor="middle"
-        fill="url(#gGrad)"
-        filter="url(#gShadow)"
-        letter-spacing="-6">G</text>
+        fill="url(#goldG)"
+        filter="url(#glowG)"
+        letter-spacing="-4">G</text>
 
-  <!-- Subtle cross bottom-center -->
-  <rect x="247" y="392" width="18" height="56" rx="5" ry="5" fill="#8B5CF6" opacity="0.45"/>
-  <rect x="224" y="410" width="64" height="18" rx="5" ry="5" fill="#8B5CF6" opacity="0.45"/>
+  <!-- Bottom row of dots -->
+  <circle cx="214" cy="438" r="3" fill="#FFD700" opacity="0.35"/>
+  <circle cx="234" cy="438" r="3" fill="#FFD700" opacity="0.35"/>
+  <circle cx="256" cy="438" r="4.5" fill="#FFD700" opacity="0.45"/>
+  <circle cx="278" cy="438" r="3" fill="#FFD700" opacity="0.35"/>
+  <circle cx="298" cy="438" r="3" fill="#FFD700" opacity="0.35"/>
+
+  <!-- Bottom thin decorative line -->
+  <line x1="140" y1="450" x2="372" y2="450" stroke="#FFD700" stroke-width="1" opacity="0.18"/>
 </svg>
