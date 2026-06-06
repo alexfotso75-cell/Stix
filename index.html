@@ -1157,6 +1157,7 @@ auth.onAuthStateChanged(async u=>{
     showScreen('sApp');
     goTo('pgMsgs');
     navStack=['pgMsgs'];
+    updateProUI();
     initHome();
     listenCalls();
     if(!u.emailVerified) showVerifBanner();

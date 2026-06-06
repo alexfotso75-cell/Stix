@@ -101,5 +101,13 @@ service cloud.firestore {
       allow update: if sameOrg(resource.data.orgId);
       allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
     }
+
+    // ── Structures / abonnements ──────────────────────────────────────────
+    match /organizations/{orgId} {
+      // Tout utilisateur authentifié peut lire (validation du code à l'inscription)
+      allow read:  if isAuthed();
+      // Seul l'admin peut créer / modifier / supprimer
+      allow write: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
+    }
   }
 }
