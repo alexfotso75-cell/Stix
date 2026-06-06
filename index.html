@@ -1144,8 +1144,8 @@ async function toggleOrgActive(code,active){
   }catch(e){toast('❌ '+e.message);}
 }
 
-// AUTH STATE — SESSION persistence: user must log in each time
-auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
+/// AUTH STATE — LOCAL persistence: user stays logged in
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(()=>{});
 auth.onAuthStateChanged(async u=>{
   U=u;
   if(u){
