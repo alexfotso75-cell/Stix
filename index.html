@@ -3796,31 +3796,43 @@ async function initAnalytics(){
   try{
     const now=new Date();
     const monthStart=new Date(now.getFullYear(),now.getMonth(),1).toISOString().slice(0,10);
-    const [emps,tasks,ptgs,leaves,projects,expenses]=await Promise.all([
+    const today=now.toISOString().slice(0,10);
+    // Requêtes simples sur un seul champ pour éviter les index composites
+    const results=await Promise.allSettled([
       db.collection('employees').where('orgId','==',orgId).get(),
       db.collection('tasks').where('orgId','==',orgId).get(),
-      db.collection('pointages').where('orgId','==',orgId).where('date','>=',monthStart).get(),
-      db.collection('leaves').where('orgId','==',orgId).where('statut','==','pending').get(),
+      db.collection('pointages').where('orgId','==',orgId).get(),
+      db.collection('leaves').where('orgId','==',orgId).get(),
       db.collection('projects').where('orgId','==',orgId).get(),
-      db.collection('expenses').where('orgId','==',orgId).where('statut','==','pending').get(),
+      db.collection('expenses').where('orgId','==',orgId).get(),
     ]);
-    const today=now.toISOString().slice(0,10);
-    const lateTasks=tasks.docs.filter(d=>{const t=d.data();return t.status!=='done'&&t.deadline&&t.deadline<today;}).length;
-    const doneTasks=tasks.docs.filter(d=>d.data().status==='done').length;
-    const activeProjects=projects.docs.filter(d=>d.data().statut==='en_cours').length;
-    const pendingExp=expenses.docs.reduce((a,d)=>a+(d.data().montant||0),0);
+    const ok=r=>r.status==='fulfilled'?r.value.docs:[];
+    const empDocs=ok(results[0]);
+    const taskDocs=ok(results[1]);
+    const ptgDocs=ok(results[2]);
+    const leaveDocs=ok(results[3]);
+    const projDocs=ok(results[4]);
+    const expDocs=ok(results[5]);
+    // Filtrage client-side
+    const ptgsMonth=ptgDocs.filter(d=>{ const dt=d.data().date||''; return dt>=monthStart; });
+    const pendingLeaves=leaveDocs.filter(d=>d.data().statut==='pending');
+    const lateTasks=taskDocs.filter(d=>{const t=d.data();return t.status!=='done'&&t.deadline&&t.deadline<today;}).length;
+    const doneTasks=taskDocs.filter(d=>d.data().status==='done').length;
+    const activeProjects=projDocs.filter(d=>d.data().statut==='en_cours');
+    const pendingExp=expDocs.filter(d=>d.data().statut==='pending').reduce((a,d)=>a+(d.data().montant||0),0);
+    // Graphique présences 7 jours
     const days=[];
     for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);days.push(d.toISOString().slice(0,10));}
-    const ptgByDay={};ptgs.docs.forEach(d=>{const dt=d.data().date||'';ptgByDay[dt]=(ptgByDay[dt]||0)+1;});
+    const ptgByDay={};ptgsMonth.forEach(d=>{const dt=d.data().date||'';ptgByDay[dt]=(ptgByDay[dt]||0)+1;});
     const maxP=Math.max(1,...days.map(d=>ptgByDay[d]||0));
     el.innerHTML=`
       <div class="ana-kpis">
-        <div class="ana-kpi"><div class="ana-kpi-val" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${emps.size}</div><div class="ana-kpi-lbl">👥 Employés</div></div>
-        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--teal);">${activeProjects}</div><div class="ana-kpi-lbl">🏗️ Projets actifs</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${empDocs.length}</div><div class="ana-kpi-lbl">👥 Employés</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--teal);">${activeProjects.length}</div><div class="ana-kpi-lbl">🏗️ Projets actifs</div></div>
         <div class="ana-kpi"><div class="ana-kpi-val" style="color:${lateTasks>0?'var(--red)':'var(--green)'};">${lateTasks}</div><div class="ana-kpi-lbl">⚠️ Tâches en retard</div></div>
-        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--amber);">${leaves.size}</div><div class="ana-kpi-lbl">🌴 Congés en attente</div></div>
-        <div class="ana-kpi"><div class="ana-kpi-val" style="background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${ptgs.size}</div><div class="ana-kpi-lbl">⏰ Présences ce mois</div></div>
-        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--amber);">${pendingExp>999?Math.round(pendingExp/1000)+'k':pendingExp}</div><div class="ana-kpi-lbl">💸 Frais en attente</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--amber);">${pendingLeaves.length}</div><div class="ana-kpi-lbl">🌴 Congés en attente</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${ptgsMonth.length}</div><div class="ana-kpi-lbl">⏰ Présences ce mois</div></div>
+        <div class="ana-kpi"><div class="ana-kpi-val" style="color:var(--amber);">${pendingExp>999?Math.round(pendingExp/1000)+'k':pendingExp||0}</div><div class="ana-kpi-lbl">💸 Frais en attente</div></div>
       </div>
       <div class="ana-chart">
         <div class="ana-chart-ttl">📊 Présences — 7 derniers jours</div>
@@ -3832,15 +3844,15 @@ async function initAnalytics(){
       </div>
       <div class="ana-sect">
         <div class="ana-sect-ttl">✅ Tâches</div>
-        <div class="ana-row"><span style="flex:1;">Total</span><strong>${tasks.size}</strong></div>
+        <div class="ana-row"><span style="flex:1;">Total</span><strong>${taskDocs.length}</strong></div>
         <div class="ana-row"><span style="flex:1;color:var(--green);">Terminées</span><strong>${doneTasks}</strong></div>
-        <div class="ana-row"><span style="flex:1;">En cours</span><strong>${tasks.size-doneTasks-lateTasks}</strong></div>
+        <div class="ana-row"><span style="flex:1;">En cours</span><strong>${taskDocs.length-doneTasks-lateTasks}</strong></div>
         <div class="ana-row"><span style="flex:1;color:var(--red);">En retard</span><strong style="color:var(--red);">${lateTasks}</strong></div>
       </div>
       <div class="ana-sect">
         <div class="ana-sect-ttl">🏗️ Projets actifs</div>
-        ${projects.docs.filter(d=>d.data().statut==='en_cours').slice(0,5).map(d=>{const p=d.data();return `<div class="ana-row"><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e(p.nom||'')}</span><div style="width:70px;margin-right:8px;"><div class="proj-prog"><div class="proj-prog-fill" style="width:${p.progression||0}%;"></div></div></div><span style="font-size:12px;font-weight:700;color:var(--primary);min-width:36px;text-align:right;">${p.progression||0}%</span></div>`;}).join('')}
-        ${activeProjects===0?'<div style="font-size:13px;color:var(--text3);padding:8px 0;">Aucun projet actif</div>':''}
+        ${activeProjects.slice(0,5).map(d=>{const p=d.data();return `<div class="ana-row"><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e(p.nom||'')}</span><div style="width:70px;margin-right:8px;"><div class="proj-prog"><div class="proj-prog-fill" style="width:${p.progression||0}%;"></div></div></div><span style="font-size:12px;font-weight:700;color:var(--primary);min-width:36px;text-align:right;">${p.progression||0}%</span></div>`;}).join('')}
+        ${activeProjects.length===0?'<div style="font-size:13px;color:var(--text3);padding:8px 0;">Aucun projet actif</div>':''}
       </div>
       <div style="height:20px;"></div>`;
   }catch(err){
