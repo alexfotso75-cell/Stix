@@ -719,33 +719,8 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
     <div class="setup-step on" id="ss1">
       <div class="setup-step-ico">🏛️</div>
       <div class="setup-step-ttl">Bienvenue sur GraceLink !</div>
-      <div class="setup-step-sub">Configurez votre structure en quelques secondes pour profiter pleinement de l'application.</div>
+      <div class="setup-step-sub">Entrez le nom de votre structure pour commencer.</div>
       <div class="ff"><label>Nom de la structure *</label><input class="fi" id="ssOrgName" type="text" placeholder="Ex : Acme Cameroun SARL"/></div>
-      <div class="ff"><label>Secteur d'activité</label>
-        <select class="fi" id="ssOrgSector">
-          <option value="">-- Sélectionner --</option>
-          <option>Commerce &amp; Distribution</option>
-          <option>BTP &amp; Immobilier</option>
-          <option>Informatique &amp; Tech</option>
-          <option>Santé &amp; Pharmacie</option>
-          <option>Éducation &amp; Formation</option>
-          <option>Agriculture &amp; Agroalimentaire</option>
-          <option>Transport &amp; Logistique</option>
-          <option>Finance &amp; Assurance</option>
-          <option>ONG &amp; Associations</option>
-          <option>Hôtellerie &amp; Restauration</option>
-          <option>Autre</option>
-        </select>
-      </div>
-      <div class="ff"><label>Taille de l'équipe</label>
-        <select class="fi" id="ssOrgSize">
-          <option value="1-5">1 – 5 personnes</option>
-          <option value="6-20">6 – 20 personnes</option>
-          <option value="21-50" selected>21 – 50 personnes</option>
-          <option value="51-100">51 – 100 personnes</option>
-          <option value="100+">Plus de 100 personnes</option>
-        </select>
-      </div>
       <button type="button" class="setup-btn" onclick="setupNext(1)">Continuer →</button>
     </div>
     <!-- Étape 2 : Profil -->
@@ -1488,8 +1463,8 @@ async function setupNext(step){
     const btn=document.querySelector('#ss1 .setup-btn');
     if(btn){btn.disabled=true;btn.textContent='Création…';}
     const orgId='ORG_'+Date.now()+'_'+Math.random().toString(36).slice(2,7).toUpperCase();
-    const sector=document.getElementById('ssOrgSector').value;
-    const size=document.getElementById('ssOrgSize').value;
+    const sector='';
+    const size='';
     try{
       await db.collection('organizations').doc(orgId).set({
         name:orgName,sector,size,createdBy:U.uid,
