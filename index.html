@@ -1527,8 +1527,8 @@ function initSetup(){
 async function setupNext(step){
   // Sécurité : un utilisateur qui a déjà un orgId ne peut pas créer une nouvelle structure
   if(step===1&&PRO?.orgId){
-    toast('Vous appartenez déjà à une structure.');
-    showScreen('sApp');buildSidebar();goTo('pgMsgs');navStack=['pgMsgs'];updateProUI();initHome();listenCalls();
+    toast('Vous appartenez déjà à une structure. Contactez votre administrateur.');
+    await doLogoutSilent();
     return;
   }
   if(step===1){
@@ -1878,16 +1878,29 @@ auth.onAuthStateChanged(async u=>{
   if(u){
     setPresence(true);
     await loadPro();
-    // First-time setup: user has no org and never completed setup
-    if(!PRO?.setupDone && !PRO?.orgId){
+
+    // PRO toujours null après 4s → profil introuvable (doc pas encore créé ou erreur réseau)
+    // Ne jamais afficher le setup dans ce cas — afficher un écran d'attente
+    if(!PRO){
+      hideSplash();
+      showScreen('sLanding');
+      toast('Chargement du profil… Reconnectez-vous si cela persiste.');
+      return;
+    }
+
+    // Setup wizard : UNIQUEMENT si le document existe ET pas d'orgId ET jamais configuré
+    // Cas légitimes : admin qui crée sa première structure
+    if(!PRO.orgId && !PRO.setupDone){
       initSetup();
       showScreen('sSetup');
       hideSplash();
       return;
     }
-    // check subscription
-    const subOk=await checkSubscription(PRO?.orgId||ORG);
+
+    // Vérification abonnement (blocage si org désactivée ou expirée)
+    const subOk=await checkSubscription(PRO.orgId||ORG);
     if(!subOk){showScreen('sSub');hideSplash();return;}
+
     showScreen('sApp');
     buildSidebar();
     goTo('pgMsgs');
@@ -1896,7 +1909,6 @@ auth.onAuthStateChanged(async u=>{
     initHome();
     listenCalls();
     if(!u.emailVerified) showVerifBanner();
-    // show admin section if admin
     if(u.email===ADMIN_EMAIL){const as=document.getElementById('adminSec');if(as)as.style.display='';}
   }else{
     PRO=null;ORG=null;uCache=[];allConvs=[];loaded={};
@@ -2713,6 +2725,12 @@ function doLogout(){
   confirm2('🚪 Se déconnecter ?','Vous serez redirigé vers la page de connexion.',()=>{
     setPresence(false);cleanUp();auth.signOut().catch(er=>toast('❌ '+er.message));
   },'d');
+}
+
+async function doLogoutSilent(){
+  setPresence(false);cleanUp();
+  await auth.signOut().catch(()=>{});
+  showScreen('sLanding');
 }
 
 // CALL
