@@ -1832,13 +1832,16 @@ auth.onAuthStateChanged(async u=>{
     setPresence(true);
     await loadPro();
 
-    // PRO toujours null après 4s → profil introuvable (doc pas encore créé ou erreur réseau)
-    // Ne jamais afficher le setup dans ce cas — afficher un écran d'attente
+    // PRO toujours null après 12s → connexion très lente ou nouveau compte
     if(!PRO){
-      hideSplash();
-      showScreen('sLanding');
-      toast('Chargement du profil… Reconnectez-vous si cela persiste.');
-      return;
+      // Réessayer une fois après 5s supplémentaires avant d'abandonner
+      await new Promise(r=>setTimeout(r,5000));
+      if(!PRO){
+        hideSplash();
+        showScreen('sAuth');
+        toast('❌ Connexion trop lente. Réessayez.');
+        return;
+      }
     }
 
     // Setup wizard : UNIQUEMENT si le document existe ET pas d'orgId ET jamais configuré
@@ -1876,18 +1879,17 @@ function loadPro(){
   if(proUnsub)try{proUnsub();}catch(e){}
   return new Promise(resolve=>{
     let resolved=false;
-    // Attendre jusqu'à 4s que le document soit créé (race condition inscription)
+    // Attendre jusqu'à 12s — connexions lentes (3G/4G en Afrique)
     const timeout=setTimeout(()=>{
       if(!resolved){resolved=true;resolve();}
-    },4000);
+    },12000);
     proUnsub=db.collection('users').doc(U.uid).onSnapshot(snap=>{
       if(snap.exists){
         PRO=snap.data();ORG=PRO.orgId||null;
         updateProUI();
-        // Résoudre seulement quand le document existe (données fiables)
         if(!resolved){resolved=true;clearTimeout(timeout);resolve();}
       }
-      // Si le document n'existe pas encore, on attend (pas de resolve)
+      // Document pas encore créé → on attend sans résoudre
     },err=>{
       console.error('Profile listener:',err);
       if(!resolved){resolved=true;clearTimeout(timeout);resolve();}
