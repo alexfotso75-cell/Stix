@@ -1805,30 +1805,15 @@ auth.onAuthStateChanged(async u=>{
   U=u;
   if(u){
     setPresence(true);
-    hideSplash(); // cacher le splash immédiatement
-    showScreen('sAuth'); // montrer un écran pendant le chargement
     await loadPro();
-
-    // PRO toujours null → profil introuvable
-    if(!PRO){
-      showScreen('sAuth');
-      toast('❌ Profil introuvable. Réessayez.');
-      return;
-    }
-    }
-
-    // Setup wizard : UNIQUEMENT si le document existe ET pas d'orgId ET jamais configuré
-    // Cas légitimes : admin qui crée sa première structure
-    if(!PRO.orgId && !PRO.setupDone){
+    if(!PRO?.orgId && !PRO?.setupDone){
       initSetup();
       showScreen('sSetup');
+      hideSplash();
       return;
     }
-
-    // Vérification abonnement (blocage si org désactivée ou expirée)
-    const subOk=await checkSubscription(PRO.orgId||ORG);
-    if(!subOk){showScreen('sSub');return;}
-
+    const subOk=await checkSubscription(PRO?.orgId||ORG);
+    if(!subOk){showScreen('sSub');hideSplash();return;}
     showScreen('sApp');
     buildSidebar();
     goTo('pgMsgs');
@@ -1842,8 +1827,8 @@ auth.onAuthStateChanged(async u=>{
     PRO=null;ORG=null;uCache=[];allConvs=[];loaded={};
     cleanUp();
     showScreen('sLanding');
-    hideSplash();
   }
+  hideSplash();
 });
 
 function loadPro(){
@@ -1851,17 +1836,13 @@ function loadPro(){
   if(proUnsub)try{proUnsub();}catch(e){}
   return new Promise(resolve=>{
     let resolved=false;
-    // Attendre jusqu'à 12s — connexions lentes (3G/4G en Afrique)
     const timeout=setTimeout(()=>{
       if(!resolved){resolved=true;resolve();}
-    },12000);
+    },6000);
     proUnsub=db.collection('users').doc(U.uid).onSnapshot(snap=>{
-      if(snap.exists){
-        PRO=snap.data();ORG=PRO.orgId||null;
-        updateProUI();
-        if(!resolved){resolved=true;clearTimeout(timeout);resolve();}
-      }
-      // Document pas encore créé → on attend sans résoudre
+      if(snap.exists){PRO=snap.data();ORG=PRO.orgId||null;}
+      updateProUI();
+      if(!resolved){resolved=true;clearTimeout(timeout);resolve();}
     },err=>{
       console.error('Profile listener:',err);
       if(!resolved){resolved=true;clearTimeout(timeout);resolve();}
