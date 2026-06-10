@@ -693,57 +693,8 @@ body.theme-light{--bg:#F1F5F9;--bg2:#E2E8F0;--surface:#FFFFFF;--surface2:#F8FAFC
   <div class="spl-dots"><span></span><span></span><span></span></div>
 </div>
 
-<!-- LANDING -->
-<div id="sLanding" class="screen show">
-  <div style="overflow-y:auto;height:100%;-webkit-overflow-scrolling:touch;">
-    <div class="land-hero">
-      <div class="land-logo"><span style="font-size:13px;line-height:1;margin-bottom:1px;">👑</span><span style="background:linear-gradient(135deg,#FFF,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">G</span></div>
-      <div class="land-title">GraceLink</div>
-      <div class="land-sub">La plateforme de communication sécurisée pour votre entreprise</div>
-    </div>
-    <div class="land-feats">
-      <div class="land-feat"><div class="land-feat-ico">💬</div><div class="land-feat-lbl"><strong>Messagerie sécurisée</strong>Messages privés et groupes d'équipe</div></div>
-      <div class="land-feat"><div class="land-feat-ico">📋</div><div class="land-feat-lbl"><strong>Annuaire d'entreprise</strong>Tous vos contacts en un seul endroit</div></div>
-      <div class="land-feat"><div class="land-feat-ico">📅</div><div class="land-feat-lbl"><strong>Agenda & Tâches</strong>Planification et suivi de vos projets</div></div>
-      <div class="land-feat"><div class="land-feat-ico">📢</div><div class="land-feat-lbl"><strong>Actualités & Documents</strong>Partagez l'information en temps réel</div></div>
-    </div>
-    <div class="price-wrap">
-      <div style="text-align:center;"><span class="price-badge">Abonnement mensuel</span></div>
-      <div class="price-card">
-        <div class="price-val">1 750 FCFA</div>
-        <div class="price-info">par utilisateur / mois · Sans engagement</div>
-        <div class="price-calc-box">
-          <label>Calculez votre budget</label>
-          <div class="price-row">
-            <input type="number" id="calcUsers" value="5" min="1" max="500" oninput="calcPrice()" style="touch-action:manipulation;"/>
-            <div class="price-total-val"><span id="calcTotal">8 750</span> FCFA<small>/ mois</small></div>
-          </div>
-        </div>
-        <button type="button" class="land-cta" onclick="showScreen('sAuth')">Créer mon compte</button>
-        <button type="button" class="land-login-btn" onclick="showScreen('sAuth')">J'ai déjà un compte</button>
-      </div>
-    </div>
-    <div class="pay-sect">
-      <div class="pay-ttl">Comment payer ?</div>
-      <a class="pay-card-row" href="tel:688663609" onclick="event.preventDefault();openPayment('orange')">
-        <div class="pay-ico-box" style="background:rgba(255,140,0,.15);">🟠</div>
-        <div class="pay-info-col"><div class="pay-nm">Orange Money</div><div class="pay-nb">688 663 609</div></div>
-        <span style="color:var(--text3);">›</span>
-      </a>
-      <a class="pay-card-row" href="tel:688663609" onclick="event.preventDefault();openPayment('mtn')">
-        <div class="pay-ico-box" style="background:rgba(255,204,0,.15);">🟡</div>
-        <div class="pay-info-col"><div class="pay-nm">MTN MoMo</div><div class="pay-nb">688 663 609</div></div>
-        <span style="color:var(--text3);">›</span>
-      </a>
-      <a class="pay-card-row" href="https://wa.me/237688663609" target="_blank" rel="noopener">
-        <div class="pay-ico-box" style="background:rgba(37,211,102,.15);">💬</div>
-        <div class="pay-info-col"><div class="pay-nm">WhatsApp — Confirmation</div><div class="pay-nb">Envoyez votre preuve de paiement</div></div>
-        <span style="color:var(--text3);">›</span>
-      </a>
-      <div style="text-align:center;padding:10px 0 20px;font-size:12px;color:var(--text3);">Après confirmation, vous recevrez votre code de structure par WhatsApp</div>
-    </div>
-  </div>
-</div>
+<!-- LANDING (redirige directement vers auth) -->
+<div id="sLanding" class="screen show"></div>
 
 <!-- SUBSCRIPTION EXPIRED -->
 <div id="sSub" class="screen">
@@ -1625,6 +1576,8 @@ function closeLB(){document.getElementById('lbx').classList.remove('on');}
 
 // NAVIGATION
 function showScreen(id){
+  // La landing page n'existe plus — rediriger vers l'auth
+  if(id==='sLanding') id='sAuth';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('show'));
   document.getElementById(id)?.classList.add('show');
 }
