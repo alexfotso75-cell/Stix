@@ -1451,10 +1451,10 @@ function initSetup(){
 }
 
 async function setupNext(step){
-  // Sécurité : un utilisateur qui a déjà un orgId ne peut pas créer une nouvelle structure
+  // Si l'utilisateur a déjà un orgId (chargé en arrière-plan) → aller directement dans l'app
   if(step===1&&PRO?.orgId){
-    toast('Vous appartenez déjà à une structure. Contactez votre administrateur.');
-    await doLogoutSilent();
+    await db.collection('users').doc(U.uid).set({setupDone:true},{merge:true}).catch(()=>{});
+    showScreen('sApp');buildSidebar();goTo('pgMsgs');navStack=['pgMsgs'];updateProUI();initHome();listenCalls();
     return;
   }
   if(step===1){
@@ -1806,7 +1806,8 @@ auth.onAuthStateChanged(async u=>{
   if(u){
     setPresence(true);
     await loadPro();
-    if(!PRO?.orgId && !PRO?.setupDone){
+    // Setup uniquement si VRAIMENT pas d'orgId ET pas de setupDone
+    if(PRO && !PRO.orgId && !PRO.setupDone){
       initSetup();
       showScreen('sSetup');
       hideSplash();
