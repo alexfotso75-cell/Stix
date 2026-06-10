@@ -1805,18 +1805,16 @@ auth.onAuthStateChanged(async u=>{
   U=u;
   if(u){
     setPresence(true);
+    hideSplash(); // cacher le splash immédiatement
+    showScreen('sAuth'); // montrer un écran pendant le chargement
     await loadPro();
 
-    // PRO toujours null après 12s → connexion très lente ou nouveau compte
+    // PRO toujours null → profil introuvable
     if(!PRO){
-      // Réessayer une fois après 5s supplémentaires avant d'abandonner
-      await new Promise(r=>setTimeout(r,5000));
-      if(!PRO){
-        hideSplash();
-        showScreen('sAuth');
-        toast('❌ Connexion trop lente. Réessayez.');
-        return;
-      }
+      showScreen('sAuth');
+      toast('❌ Profil introuvable. Réessayez.');
+      return;
+    }
     }
 
     // Setup wizard : UNIQUEMENT si le document existe ET pas d'orgId ET jamais configuré
@@ -1824,13 +1822,12 @@ auth.onAuthStateChanged(async u=>{
     if(!PRO.orgId && !PRO.setupDone){
       initSetup();
       showScreen('sSetup');
-      hideSplash();
       return;
     }
 
     // Vérification abonnement (blocage si org désactivée ou expirée)
     const subOk=await checkSubscription(PRO.orgId||ORG);
-    if(!subOk){showScreen('sSub');hideSplash();return;}
+    if(!subOk){showScreen('sSub');return;}
 
     showScreen('sApp');
     buildSidebar();
@@ -1845,8 +1842,8 @@ auth.onAuthStateChanged(async u=>{
     PRO=null;ORG=null;uCache=[];allConvs=[];loaded={};
     cleanUp();
     showScreen('sLanding');
+    hideSplash();
   }
-  hideSplash();
 });
 
 function loadPro(){
