@@ -1525,6 +1525,12 @@ function initSetup(){
 }
 
 async function setupNext(step){
+  // Sécurité : un utilisateur qui a déjà un orgId ne peut pas créer une nouvelle structure
+  if(step===1&&PRO?.orgId){
+    toast('Vous appartenez déjà à une structure.');
+    showScreen('sApp');buildSidebar();goTo('pgMsgs');navStack=['pgMsgs'];updateProUI();initHome();listenCalls();
+    return;
+  }
   if(step===1){
     const orgName=(document.getElementById('ssOrgName').value||'').trim();
     if(!orgName){toast('Veuillez saisir le nom de votre structure');return;}
@@ -1905,13 +1911,21 @@ function loadPro(){
   if(proUnsub)try{proUnsub();}catch(e){}
   return new Promise(resolve=>{
     let resolved=false;
-    proUnsub=db.collection('users').doc(U.uid).onSnapshot(snap=>{
-      if(snap.exists){PRO=snap.data();ORG=PRO.orgId||null;}
-      updateProUI();
+    // Attendre jusqu'à 4s que le document soit créé (race condition inscription)
+    const timeout=setTimeout(()=>{
       if(!resolved){resolved=true;resolve();}
+    },4000);
+    proUnsub=db.collection('users').doc(U.uid).onSnapshot(snap=>{
+      if(snap.exists){
+        PRO=snap.data();ORG=PRO.orgId||null;
+        updateProUI();
+        // Résoudre seulement quand le document existe (données fiables)
+        if(!resolved){resolved=true;clearTimeout(timeout);resolve();}
+      }
+      // Si le document n'existe pas encore, on attend (pas de resolve)
     },err=>{
       console.error('Profile listener:',err);
-      if(!resolved){resolved=true;resolve();}
+      if(!resolved){resolved=true;clearTimeout(timeout);resolve();}
     });
   });
 }
