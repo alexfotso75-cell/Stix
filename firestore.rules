@@ -2,219 +2,67 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function isAuthed()    { return request.auth != null; }
-    function myUid()       { return request.auth.uid; }
-    function myOrg() {
-      return get(/databases/$(database)/documents/users/$(myUid())).data.orgId;
-    }
-    function sameOrg(orgId){ return isAuthed() && orgId == myOrg(); }
+    function isAuthed() { return request.auth != null; }
+    function uid()      { return request.auth.uid; }
+    function isAdmin()  { return request.auth.token.email == 'alexfotso75@gmail.com'; }
 
-    // ── Profils utilisateurs ──────────────────────────────────────────────
-    match /users/{uid} {
-      // Tout utilisateur authentifié peut lire les profils (recherche de contacts)
+    // ── Utilisateurs ──────────────────────────────────────────────────────
+    match /users/{userId} {
       allow read:   if isAuthed();
-      // Création uniquement pour son propre uid
-      allow create: if isAuthed() && myUid() == uid;
-      // Mise à jour uniquement pour son propre uid
-      allow update: if isAuthed() && myUid() == uid;
-      // Suppression uniquement pour son propre uid
-      allow delete: if isAuthed() && myUid() == uid;
+      allow create: if isAuthed() && uid() == userId;
+      allow update: if isAuthed() && (uid() == userId || isAdmin());
+      allow delete: if isAdmin();
     }
 
-    // ── Conversations 1-à-1 ───────────────────────────────────────────────
+    // ── Paramètres (code d'invitation) ────────────────────────────────────
+    match /settings/{doc} {
+      allow read:   if isAuthed();
+      allow write:  if isAdmin();
+    }
+
+    // ── Conversations (DM + groupes) ──────────────────────────────────────
     match /conversations/{convId} {
-      allow read:   if isAuthed() && myUid() in resource.data.users;
-      allow create: if isAuthed()
-                   && myUid() in request.resource.data.users
-                   && request.resource.data.orgId == myOrg();
-      allow update: if isAuthed() && myUid() in resource.data.users;
+      allow read:   if isAuthed() && uid() in resource.data.participants;
+      allow create: if isAuthed() && uid() in request.resource.data.participants;
+      allow update: if isAuthed() && uid() in resource.data.participants;
       allow delete: if false;
 
       match /messages/{msgId} {
         function conv() {
           return get(/databases/$(database)/documents/conversations/$(convId)).data;
         }
-        allow read:   if isAuthed() && myUid() in conv().users;
-        allow create: if isAuthed()
-                     && myUid() in conv().users
-                     && request.resource.data.senderId == myUid();
-        allow update: if isAuthed() && (
-          resource.data.senderId == myUid() ||
-          myUid() in conv().users
-        );
+        allow read:   if isAuthed() && uid() in conv().participants;
+        allow create: if isAuthed() && uid() in conv().participants
+                                    && request.resource.data.sender == uid();
+        allow update: if isAuthed() && uid() in conv().participants;
         allow delete: if false;
       }
     }
 
-    // ── Groupes ───────────────────────────────────────────────────────────
-    match /groups/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId) && resource.data.createdBy == myUid();
+    // ── Canaux de diffusion ───────────────────────────────────────────────
+    match /channels/{chanId} {
+      allow read:   if isAuthed();
+      allow create: if isAdmin();
+      allow update: if isAuthed() && (isAdmin() || resource.data.owner == uid());
+      allow delete: if isAdmin();
+
+      match /posts/{postId} {
+        allow read:   if isAuthed();
+        allow create: if isAuthed() && (
+          isAdmin() ||
+          get(/databases/$(database)/documents/channels/$(chanId)).data.owner == uid()
+        );
+        allow update: if false;
+        allow delete: if isAdmin();
+      }
     }
 
-    // ── Événements agenda ─────────────────────────────────────────────────
-    match /calendar_events/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
-      allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
-    }
-
-    // ── Tâches ────────────────────────────────────────────────────────────
-    match /tasks/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
-    }
-
-    // ── Annuaire employés ─────────────────────────────────────────────────
-    match /employees/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId);
-    }
-
-    // ── Actualités ────────────────────────────────────────────────────────
-    match /news/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
-      allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
-    }
-
-    // ── Documents / liens ─────────────────────────────────────────────────
-    match /docs_links/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId);
-    }
-
-    // ── Sondages ──────────────────────────────────────────────────────────
-    match /polls/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId) && resource.data.authorId == myUid();
-    }
-
-    // ── Structures / abonnements ──────────────────────────────────────────
-    match /organizations/{orgId} {
-      // Lecture d'un document précis (validation code lors inscription, sans auth nécessaire)
-      allow get:  if true;
-      // Lister TOUTES les structures : admin uniquement
-      allow list: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
-      // Créer sa propre structure (setup wizard) — max 1 org par uid via createdBy
-      allow create: if isAuthed() && request.resource.data.createdBy == myUid();
-      // Mettre à jour : créateur de la structure ou admin principal
-      allow update: if isAuthed() && (
-        resource.data.createdBy == myUid() ||
-        request.auth.token.email == 'alexfotso75@gmail.com'
-      );
-      // Supprimer : admin uniquement
-      allow delete: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
-    }
-
-    // ── Pointage ──────────────────────────────────────────────────────────
-    match /pointages/{docId} {
-      allow read:  if isAuthed() && (resource.data.uid == myUid() || sameOrg(resource.data.orgId));
-      allow create: if isAuthed() && request.resource.data.uid == myUid();
-      allow update: if isAuthed() && resource.data.uid == myUid();
-      allow delete: if false;
-    }
-
-    // ── Congés ────────────────────────────────────────────────────────────
-    match /leaves/{docId} {
-      allow read:  if isAuthed() && (resource.data.uid == myUid() || sameOrg(resource.data.orgId));
-      allow create: if isAuthed() && request.resource.data.uid == myUid();
-      allow update: if isAuthed() && (
-        resource.data.uid == myUid() ||
-        request.auth.token.email == 'alexfotso75@gmail.com'
-      );
-      allow delete: if isAuthed() && resource.data.uid == myUid() && resource.data.status == 'pending';
-    }
-
-    // ── Planning ──────────────────────────────────────────────────────────
-    match /schedules/{docId} {
-      allow read:  if sameOrg(resource.data.orgId);
-      allow create: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
-      allow update: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
-      allow delete: if isAuthed() && request.auth.token.email == 'alexfotso75@gmail.com';
-    }
-
-    // ── CRM Clients ───────────────────────────────────────────────────────────
-    match /clients/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId);
-    }
-
-    // ── CRM Opportunités ──────────────────────────────────────────────────────
-    match /deals/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId);
-    }
-
-    // ── Projets ───────────────────────────────────────────────────────────────
-    match /projects/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId) && resource.data.createdBy == myUid();
-    }
-
-    // ── Notes de frais ────────────────────────────────────────────────────────
-    match /expenses/{docId} {
-      allow read:   if isAuthed() && (resource.data.uid == myUid() || sameOrg(resource.data.orgId));
-      allow create: if isAuthed() && request.resource.data.uid == myUid();
-      allow update: if isAuthed() && (resource.data.uid == myUid() || request.auth.token.email == 'alexfotso75@gmail.com');
-      allow delete: if isAuthed() && resource.data.uid == myUid() && resource.data.statut == 'pending';
-    }
-
-    // ── Offres d'emploi ───────────────────────────────────────────────────────
-    match /job_posts/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId);
-    }
-
-    // ── Candidatures ──────────────────────────────────────────────────────────
-    match /candidates/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId);
-    }
-
-    // ── Evaluations de performance ────────────────────────────────────────────
-    match /evaluations/{docId} {
-      allow read:   if isAuthed() && (resource.data.employeUid == myUid() || sameOrg(resource.data.orgId));
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId);
-    }
-
-    // ── Stock / Inventaire ────────────────────────────────────────────────────
-    match /stock_items/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
-      allow update: if sameOrg(resource.data.orgId);
-      allow delete: if sameOrg(resource.data.orgId);
-    }
-
-    match /stock_moves/{docId} {
-      allow read:   if sameOrg(resource.data.orgId);
-      allow create: if sameOrg(request.resource.data.orgId);
+    // ── Fichiers partagés ─────────────────────────────────────────────────
+    match /sharedFiles/{fileId} {
+      allow read:   if isAuthed() && uid() in resource.data.participants;
+      allow create: if isAuthed() && uid() in request.resource.data.participants;
       allow update: if false;
-      allow delete: if false;
+      allow delete: if isAuthed() && resource.data.sender == uid();
     }
   }
 }

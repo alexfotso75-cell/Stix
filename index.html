@@ -913,7 +913,17 @@ window.addEventListener('load',()=>{
         const snap=await db.collection('users').doc(u.uid).get();
         if(snap.exists){
           ME=snap.data();
-          if(!ME.approved){$('sAuth').classList.add('show');$('sAuth').style.display='flex';$('authMsg1').className='amsg ok';$('authMsg1').textContent='Compte créé ! En attente d\'approbation admin.';$('splash').classList.add('hide');return;}
+          // Admin bypass: always allowed, auto-fix missing approved flag
+          if(u.email===ADMIN&&!ME.approved){
+            ME.approved=true;ME.admin=true;
+            db.collection('users').doc(u.uid).update({approved:true,admin:true}).catch(()=>{});
+          }
+          // Block only users explicitly set to approved:false (not legacy/undefined)
+          if(ME.approved===false){
+            $('sAuth').classList.add('show');$('sAuth').style.display='flex';
+            $('authMsg1').className='amsg ok';$('authMsg1').textContent='Votre compte est en attente d\'approbation par l\'administrateur.';
+            $('splash').classList.add('hide');return;
+          }
           if(!ME.name){$('sSetup').classList.add('show');$('sSetup').style.display='flex';$('splash').classList.add('hide');return;}
           startApp();
         }else{$('sSetup').classList.add('show');$('sSetup').style.display='flex';$('splash').classList.add('hide');}
@@ -971,27 +981,48 @@ async function setupStep2(){
   const validCode=codeDoc&&codeDoc.exists?codeDoc.data().code:'GRACELINK';
   const isAdmin=auth.currentUser.email===ADMIN;
   if(code!==validCode&&!isAdmin){$('swMsg2').className='amsg err';$('swMsg2').textContent='Code invalide. Contactez votre administrateur.';return;}
+  const btn=document.querySelector('#swS2 .abtn');if(btn){btn.disabled=true;btn.textContent='⏳';}
   let avatar='';
   if(swAvatarFile){try{const ref=st.ref(`avatars/${meUid}`);await ref.put(swAvatarFile);avatar=await ref.getDownloadURL();}catch(e){}}
   const fn=$('swFn').value.trim(),ln=$('swLn').value.trim(),name=fn+' '+ln;
-  await db.collection('users').doc(meUid).set({name,firstName:fn,lastName:ln,role:$('swRole').value.trim(),avatar,email:auth.currentUser.email,presence:'online',approved:isAdmin,admin:isAdmin,createdAt:TS()});
-  if(isAdmin){ME={name,firstName:fn,lastName:ln,role:$('swRole').value.trim(),avatar,email:auth.currentUser.email,presence:'online',approved:true,admin:true};startApp();}
-  else{$('sSetup').classList.remove('show');$('sSetup').style.display='';$('sAuth').classList.add('show');$('sAuth').style.display='flex';showAuthStep(1);$('authMsg1').className='amsg ok';$('authMsg1').textContent='Compte créé ! En attente de l\'approbation de l\'administrateur.';}
+  try{
+    await db.collection('users').doc(meUid).set({name,firstName:fn,lastName:ln,role:$('swRole').value.trim(),avatar,email:auth.currentUser.email,presence:'online',approved:isAdmin,admin:isAdmin,createdAt:TS()});
+    if(isAdmin){ME={name,firstName:fn,lastName:ln,role:$('swRole').value.trim(),avatar,email:auth.currentUser.email,presence:'online',approved:true,admin:true};startApp();}
+    else{$('sSetup').classList.remove('show');$('sSetup').style.display='';$('sAuth').classList.add('show');$('sAuth').style.display='flex';showAuthStep(1);$('authMsg1').className='amsg ok';$('authMsg1').textContent='Compte créé ! En attente de l\'approbation de l\'administrateur.';}
+  }catch(e){
+    $('swMsg2').className='amsg err';$('swMsg2').textContent='Erreur: '+(e.message||e.code||'Réessayez');
+    if(btn){btn.disabled=false;btn.textContent='Rejoindre →';}
+  }
 }
 </script>
 <script>
 // ── App Start ─────────────────────────────────────────────────────────
 async function startApp(){
-  const snap=await db.collection('users').doc(meUid).get().catch(()=>null);
-  if(snap&&snap.exists)ME=snap.data();
-  db.collection('users').doc(meUid).update({presence:'online',lastSeen:TS()}).catch(()=>{});
-  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('show');s.style.display='';});
-  $('sApp').style.display='flex';$('sApp').classList.add('show');$('splash').classList.add('hide');
-  updateMeUI();
-  if(ME.email===ADMIN||ME.admin){$('adminBtn').style.display='';$('newChanBtn').style.display='';}
-  startDiscListener();startChanListener();startFilesListener();startTeamListener();
-  if(window.innerWidth>=800){showSbContent(0);showMainPg('pgWelcome');}else{goTab(0);}
-  if(auth.currentUser&&!auth.currentUser.emailVerified)$('verBanner').style.display='flex';
+  try{
+    // Refresh user data from Firestore (best-effort)
+    const snap=await db.collection('users').doc(meUid).get().catch(()=>null);
+    if(snap&&snap.exists){ME=snap.data();if(ME.email===ADMIN)ME.admin=true;}
+    if(!ME){ME={email:auth.currentUser?.email||'',name:'Utilisateur',approved:true};}
+    // Update presence (fire & forget)
+    db.collection('users').doc(meUid).update({presence:'online',lastSeen:TS()}).catch(()=>{});
+    // Switch UI
+    document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('show');s.style.display='';});
+    $('sApp').style.display='flex';$('sApp').classList.add('show');
+    $('splash').classList.add('hide');
+    updateMeUI();
+    if(ME.email===ADMIN||ME.admin){$('adminBtn').style.display='';$('newChanBtn').style.display='';}
+    // Start real-time listeners
+    startDiscListener();startChanListener();startFilesListener();startTeamListener();
+    if(window.innerWidth>=800){showSbContent(0);showMainPg('pgWelcome');}else{goTab(0);}
+    if(auth.currentUser&&!auth.currentUser.emailVerified)$('verBanner').style.display='flex';
+  }catch(e){
+    toast('Erreur de démarrage: '+(e.message||e));
+    console.error('startApp error',e);
+    // Force show app anyway
+    document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('show');s.style.display='';});
+    $('sApp').style.display='flex';$('sApp').classList.add('show');$('splash').classList.add('hide');
+    if(window.innerWidth>=800)showMainPg('pgWelcome');else goTab(0);
+  }
 }
 
 function updateMeUI(){
