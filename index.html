@@ -470,6 +470,35 @@ a{color:var(--pr);text-decoration:none;}
 .tag-gn{background:rgba(16,185,129,.12);color:var(--gn);}
 .tag-rd{background:rgba(239,68,68,.12);color:var(--rd);}
 .tag-bl{background:rgba(59,130,246,.12);color:var(--pr);}
+/* ── GLOBAL SEARCH ── */
+.gs-result{display:flex;align-items:center;gap:13px;padding:13px 16px;border-bottom:1px solid var(--bd);cursor:pointer;transition:.12s;}
+.gs-result:active{background:var(--sf);}
+.gs-cat{padding:10px 16px 4px;font-size:10px;font-weight:800;color:var(--tx3);letter-spacing:1.5px;text-transform:uppercase;}
+/* ── GUIDE ── */
+.guide-step{padding:18px 16px;border-bottom:1px solid var(--bd);display:flex;gap:14px;align-items:flex-start;}
+.guide-ico{width:42px;height:42px;border-radius:13px;background:rgba(59,130,246,.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto;}
+.guide-body{flex:1;}
+.guide-ttl{font-size:15px;font-weight:700;margin-bottom:4px;}
+.guide-txt{font-size:13px;color:var(--tx2);line-height:1.65;}
+/* ── TOGGLE SWITCH ── */
+.toggle{position:relative;width:46px;height:26px;cursor:pointer;flex:0 0 auto;display:inline-block;}
+.toggle input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-sl{position:absolute;inset:0;border-radius:99px;background:var(--sf3);transition:.25s;}
+.toggle input:checked + .toggle-sl{background:var(--pr);}
+.toggle-sl::before{content:'';position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.25s;}
+.toggle input:checked + .toggle-sl::before{transform:translateX(20px);}
+.ns-row{display:flex;align-items:center;gap:13px;padding:15px 16px;border-bottom:1px solid var(--bd);}
+.ns-body{flex:1;}
+.ns-lbl{font-size:14px;font-weight:600;}
+.ns-sub{font-size:12px;color:var(--tx2);margin-top:2px;}
+/* ── TEAM SUGGESTIONS ── */
+.sugg-wrap{padding:16px;}
+.sugg-ttl{font-size:12px;font-weight:800;color:var(--tx3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
+.sugg-row{display:flex;gap:16px;overflow-x:auto;padding-bottom:4px;}
+.sugg-row::-webkit-scrollbar{display:none;}
+.sugg-item{display:flex;flex-direction:column;align-items:center;gap:7px;flex:0 0 auto;cursor:pointer;padding:4px;}
+.sugg-item:active{opacity:.7;}
+.sugg-nm{font-size:11px;color:var(--tx2);max-width:64px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /* ── FICHIERS ── */
 .filt-tabs{display:flex;gap:6px;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--bd);overflow-x:auto;flex:0 0 auto;}
 .filt-tabs::-webkit-scrollbar{display:none;}
@@ -554,6 +583,10 @@ a{color:var(--pr);text-decoration:none;}
       <div class="ff"><label class="fl">Prénom</label><input id="swFn" class="fi" type="text" placeholder="Prénom" maxlength="30"/></div>
       <div class="ff"><label class="fl">Nom</label><input id="swLn" class="fi" type="text" placeholder="Nom" maxlength="30"/></div>
       <div class="ff"><label class="fl">Poste / Rôle (optionnel)</label><input id="swRole" class="fi" type="text" placeholder="ex: Développeur, Manager..." maxlength="50"/></div>
+      <div class="ff"><label class="fl">Département / Service (optionnel)</label><input id="swDept" class="fi" type="text" placeholder="ex: Marketing, Informatique, RH..." maxlength="60"/></div>
+      <div class="ff"><label class="fl">Téléphone (optionnel)</label><input id="swPhone" class="fi" type="tel" placeholder="+237 6XX XXX XXX" maxlength="20"/></div>
+      <div class="ff"><label class="fl">Date de naissance (optionnel)</label><input id="swDob" class="fi" type="date" style="color-scheme:dark"/></div>
+      <div class="ff"><label class="fl">Sexe (optionnel)</label><select id="swGender" class="fi"><option value="">Non précisé</option><option value="homme">Homme</option><option value="femme">Femme</option><option value="autre">Autre</option></select></div>
       <div id="swMsg1" class="amsg"></div>
       <button class="abtn" id="swSubmitBtn" onclick="setupFinish()">Commencer →</button>
     </div>
@@ -719,11 +752,19 @@ a{color:var(--pr);text-decoration:none;}
         <div class="me-section">
           <span class="me-sec-title">Informations</span>
           <div class="me-row"><div class="me-ico">📧</div><div class="me-body"><div class="me-lbl">E-mail</div><div class="me-val" id="meEmail">—</div></div></div>
-          <div class="me-row" onclick="openEditProfile()"><div class="me-ico">👤</div><div class="me-body"><div class="me-lbl">Modifier le profil</div><div class="me-val">Nom, rôle, photo</div></div><div class="me-arr">›</div></div>
+          <div class="me-row" id="mePhoneRow" style="display:none"><div class="me-ico">📱</div><div class="me-body"><div class="me-lbl">Téléphone</div><div class="me-val" id="mePhone">—</div></div></div>
+          <div class="me-row" id="meDeptRow" style="display:none"><div class="me-ico">🏢</div><div class="me-body"><div class="me-lbl">Département</div><div class="me-val" id="meDept">—</div></div></div>
+          <div class="me-row" id="meDobRow" style="display:none"><div class="me-ico">🎂</div><div class="me-body"><div class="me-lbl">Date de naissance</div><div class="me-val" id="meDob">—</div></div></div>
+          <div class="me-row" onclick="openEditProfile()"><div class="me-ico">✏️</div><div class="me-body"><div class="me-lbl">Modifier le profil</div><div class="me-val">Nom, rôle, coordonnées</div></div><div class="me-arr">›</div></div>
         </div>
         <div class="me-section">
-          <span class="me-sec-title">Paramètres</span>
-          <div class="me-row" onclick="requestNotifPerm()"><div class="me-ico">🔔</div><div class="me-body"><div class="me-lbl">Notifications</div><div class="me-val" id="notifStatus">Cliquez pour activer</div></div><div class="me-arr">›</div></div>
+          <span class="me-sec-title">Outils</span>
+          <div class="me-row" onclick="goPg('pgSearch');setTimeout(initSearch,80)"><div class="me-ico">🔍</div><div class="me-body"><div class="me-lbl">Recherche globale</div><div class="me-val">Conversations, canaux, membres</div></div><div class="me-arr">›</div></div>
+          <div class="me-row" onclick="goPg('pgNotifSettings');setTimeout(loadNotifSettings,80)"><div class="me-ico">🔔</div><div class="me-body"><div class="me-lbl">Notifications</div><div class="me-val" id="notifStatus">Cliquez pour configurer</div></div><div class="me-arr">›</div></div>
+          <div class="me-row" onclick="goPg('pgGuide')"><div class="me-ico">❓</div><div class="me-body"><div class="me-lbl">Guide d'utilisation</div><div class="me-val">Comment utiliser GraceLink</div></div><div class="me-arr">›</div></div>
+        </div>
+        <div class="me-section">
+          <span class="me-sec-title">Compte</span>
           <div class="me-row danger" onclick="doSignOut()"><div class="me-ico">🚪</div><div class="me-body"><div class="me-lbl">Se déconnecter</div></div></div>
         </div>
       </div>
@@ -756,7 +797,53 @@ a{color:var(--pr);text-decoration:none;}
           <span class="me-sec-title">Informations</span>
           <div class="me-row"><div class="me-ico">📧</div><div class="me-body"><div class="me-lbl">E-mail</div><div class="me-val" id="mvEmail">—</div></div></div>
           <div class="me-row"><div class="me-ico">💼</div><div class="me-body"><div class="me-lbl">Rôle</div><div class="me-val" id="mvRoleDetail">—</div></div></div>
+          <div class="me-row" id="mvPhoneRow" style="display:none"><div class="me-ico">📱</div><div class="me-body"><div class="me-lbl">Téléphone</div><div class="me-val" id="mvPhone">—</div></div></div>
+          <div class="me-row" id="mvDeptRow" style="display:none"><div class="me-ico">🏢</div><div class="me-body"><div class="me-lbl">Département</div><div class="me-val" id="mvDept">—</div></div></div>
+          <div class="me-row" id="mvDobRow" style="display:none"><div class="me-ico">🎂</div><div class="me-body"><div class="me-lbl">Date de naissance</div><div class="me-val" id="mvDob">—</div></div></div>
+          <div class="me-row" id="mvGenderRow" style="display:none"><div class="me-ico">🧑</div><div class="me-body"><div class="me-lbl">Genre</div><div class="me-val" id="mvGender">—</div></div></div>
         </div>
+      </div>
+    </div>
+
+    <!-- Global Search -->
+    <div id="pgSearch" class="pg">
+      <div class="hdr"><button class="hbk" onclick="backPg()">‹</button><div class="htitle"><div class="hn">Recherche</div></div></div>
+      <div class="srch-wrap"><div class="srch"><span class="srch-ico">🔍</span><input type="text" id="gsInput" placeholder="Conversations, canaux, membres..." oninput="doGlobalSearch(this.value)"/></div></div>
+      <div class="scr" id="gsResults"><div class="empty"><div class="ei">🔍</div><div class="et">Recherche globale</div><div class="es">Tapez pour rechercher parmi vos conversations, canaux et contacts</div></div></div>
+    </div>
+
+    <!-- Notification Settings -->
+    <div id="pgNotifSettings" class="pg">
+      <div class="hdr"><button class="hbk" onclick="backPg()">‹</button><div class="htitle"><div class="hn">Notifications</div></div></div>
+      <div class="scr">
+        <div class="me-section">
+          <span class="me-sec-title">Push Notifications</span>
+          <div class="ns-row"><div class="ns-body"><div class="ns-lbl">Activer les notifications</div><div class="ns-sub">Recevoir des alertes pour les nouveaux messages</div></div><label class="toggle"><input type="checkbox" id="notifToggle" onchange="toggleNotifPerm(this)"/><span class="toggle-sl"></span></label></div>
+          <div class="ns-row"><div class="ns-body"><div class="ns-lbl">Messages directs</div><div class="ns-sub">Notifications pour les messages privés</div></div><label class="toggle"><input type="checkbox" id="notifDM" checked/><span class="toggle-sl"></span></label></div>
+          <div class="ns-row"><div class="ns-body"><div class="ns-lbl">Groupes de discussion</div><div class="ns-sub">Nouveaux messages dans vos groupes</div></div><label class="toggle"><input type="checkbox" id="notifGroup" checked/><span class="toggle-sl"></span></label></div>
+          <div class="ns-row"><div class="ns-body"><div class="ns-lbl">Publications de canaux</div><div class="ns-sub">Nouvelles publications dans les canaux suivis</div></div><label class="toggle"><input type="checkbox" id="notifChan"/><span class="toggle-sl"></span></label></div>
+        </div>
+        <div class="me-section">
+          <span class="me-sec-title">Silencieux</span>
+          <div class="ns-row"><div class="ns-body"><div class="ns-lbl">Ne pas déranger</div><div class="ns-sub">Aucune notification jusqu'à désactivation</div></div><label class="toggle"><input type="checkbox" id="notifDND"/><span class="toggle-sl"></span></label></div>
+        </div>
+        <div style="padding:16px 16px 32px"><button class="abtn" onclick="saveNotifSettings()">Enregistrer les préférences</button></div>
+      </div>
+    </div>
+
+    <!-- Guide -->
+    <div id="pgGuide" class="pg">
+      <div class="hdr"><button class="hbk" onclick="backPg()">‹</button><div class="htitle"><div class="hn">Guide d'utilisation</div></div></div>
+      <div class="scr">
+        <div style="padding:24px 16px 12px;text-align:center"><div style="font-size:48px">📖</div><div style="font-size:18px;font-weight:800;margin-top:10px;letter-spacing:-.2px">Bienvenue sur GraceLink</div><div style="font-size:13px;color:var(--tx2);margin-top:6px;line-height:1.65">La plateforme de communication d'entreprise nouvelle génération</div></div>
+        <div class="guide-step"><div class="guide-ico">💬</div><div class="guide-body"><div class="guide-ttl">Messages directs</div><div class="guide-txt">Appuyez sur <strong>💬 Messages</strong> puis ✏️ pour envoyer un message privé à un collègue. Créez aussi des groupes de discussion via le bouton 👥.</div></div></div>
+        <div class="guide-step"><div class="guide-ico">📢</div><div class="guide-body"><div class="guide-ttl">Canaux de diffusion</div><div class="guide-txt">Les canaux permettent de diffuser des annonces à l'équipe. Abonnez-vous à ceux qui vous intéressent pour recevoir leurs publications.</div></div></div>
+        <div class="guide-step"><div class="guide-ico">📁</div><div class="guide-body"><div class="guide-ttl">Fichiers partagés</div><div class="guide-txt">Tous les fichiers, images et messages vocaux échangés dans vos conversations apparaissent ici, organisés et consultables.</div></div></div>
+        <div class="guide-step"><div class="guide-ico">👥</div><div class="guide-body"><div class="guide-ttl">Annuaire d'équipe</div><div class="guide-txt">Retrouvez tous les membres de votre organisation avec leurs informations, leur statut en temps réel et démarrez une conversation en un clic.</div></div></div>
+        <div class="guide-step"><div class="guide-ico">🎤</div><div class="guide-body"><div class="guide-ttl">Messages vocaux</div><div class="guide-txt">Appuyez sur 🎤 pour enregistrer un message vocal. Idéal pour les messages longs ou quand vous êtes en déplacement.</div></div></div>
+        <div class="guide-step"><div class="guide-ico">📎</div><div class="guide-body"><div class="guide-ttl">Partage de fichiers</div><div class="guide-txt">Via le bouton 📎, partagez des photos, documents (PDF, Word, Excel) directement dans vos conversations. Taille max : 20 MB.</div></div></div>
+        <div class="guide-step"><div class="guide-ico">😊</div><div class="guide-body"><div class="guide-ttl">Réactions & Options</div><div class="guide-txt">Maintenez appuyé sur un message pour accéder aux réactions rapides et aux options : répondre, copier, transférer ou supprimer.</div></div></div>
+        <div class="guide-step"><div class="guide-ico">🔍</div><div class="guide-body"><div class="guide-ttl">Recherche globale</div><div class="guide-txt">Utilisez la recherche pour retrouver rapidement n'importe quel contact, conversation ou canal dans toute l'application.</div></div></div>
       </div>
     </div>
 
@@ -831,7 +918,11 @@ a{color:var(--pr);text-decoration:none;}
       </div>
       <div class="ff" style="margin-bottom:12px"><label class="fl">Prénom</label><input id="epFn" class="fi" type="text"/></div>
       <div class="ff" style="margin-bottom:12px"><label class="fl">Nom</label><input id="epLn" class="fi" type="text"/></div>
-      <div class="ff"><label class="fl">Rôle / Poste</label><input id="epRole" class="fi" type="text" placeholder="Développeur, Manager..."/></div>
+      <div class="ff" style="margin-bottom:12px"><label class="fl">Rôle / Poste</label><input id="epRole" class="fi" type="text" placeholder="Développeur, Manager..."/></div>
+      <div class="ff" style="margin-bottom:12px"><label class="fl">Département / Service</label><input id="epDept" class="fi" type="text" placeholder="Marketing, Informatique, RH..."/></div>
+      <div class="ff" style="margin-bottom:12px"><label class="fl">Téléphone</label><input id="epPhone" class="fi" type="tel" placeholder="+237 6XX XXX XXX" maxlength="20"/></div>
+      <div class="ff" style="margin-bottom:12px"><label class="fl">Date de naissance</label><input id="epDob" class="fi" type="date" style="color-scheme:dark"/></div>
+      <div class="ff"><label class="fl">Sexe</label><select id="epGender" class="fi"><option value="">Non précisé</option><option value="homme">Homme</option><option value="femme">Femme</option><option value="autre">Autre</option></select></div>
     </div>
     <div class="mfoot"><button class="mbt mbt-c" onclick="closeOvl('ovlEditProfile')">Annuler</button><button class="mbt mbt-ok" onclick="saveProfile()">Enregistrer</button></div>
   </div>
@@ -968,8 +1059,9 @@ async function setupFinish(){
   if(swAvatarFile){try{const ref=st.ref(`avatars/${meUid}`);await ref.put(swAvatarFile);avatar=await ref.getDownloadURL();}catch(e){}}
   const name=fn+' '+ln;
   try{
-    await db.collection('users').doc(meUid).set({name,firstName:fn,lastName:ln,role:$('swRole').value.trim(),avatar,email:auth.currentUser.email,presence:'online',approved:isAdmin,admin:isAdmin,createdAt:TS()});
-    if(isAdmin){ME={name,firstName:fn,lastName:ln,role:$('swRole').value.trim(),avatar,email:auth.currentUser.email,presence:'online',approved:true,admin:true};startApp();}
+    const role=$('swRole').value.trim(),dept=$('swDept').value.trim(),phone=$('swPhone').value.trim(),dob=$('swDob').value,gender=$('swGender').value;
+    await db.collection('users').doc(meUid).set({name,firstName:fn,lastName:ln,role,department:dept,phone,dob,gender,avatar,email:auth.currentUser.email,presence:'online',approved:isAdmin,admin:isAdmin,createdAt:TS()});
+    if(isAdmin){ME={name,firstName:fn,lastName:ln,role,department:dept,phone,dob,gender,avatar,email:auth.currentUser.email,presence:'online',approved:true,admin:true};startApp();}
     else{$('sSetup').classList.remove('show');$('sSetup').style.display='';$('sAuth').classList.add('show');$('sAuth').style.display='flex';showAuthStep(1);$('authMsg1').className='amsg ok';$('authMsg1').textContent='Profil créé ! En attente de l\'approbation de l\'administrateur.';}
   }catch(e){
     $('swMsg1').className='amsg err';$('swMsg1').textContent='Erreur: '+(e.message||e.code||'Réessayez');
@@ -996,6 +1088,12 @@ async function startApp(){
     // Start real-time listeners
     startDiscListener();startChanListener();startFilesListener();startTeamListener();
     if(window.innerWidth>=800){showSbContent(0);showMainPg('pgWelcome');}else{goTab(0);}
+    // Auto-create "Général" channel for admin on first login
+    if(ME.email===ADMIN||ME.admin){
+      db.collection('channels').limit(1).get().then(snap=>{
+        if(snap.empty)db.collection('channels').add({name:'Général',description:'Canal de communication principal de l\'organisation',emoji:'📣',visibility:'public',owner:meUid,subscribers:[meUid],createdAt:TS()}).catch(()=>{});
+      }).catch(()=>{});
+    }
     if(auth.currentUser&&!auth.currentUser.emailVerified)$('verBanner').style.display='flex';
   }catch(e){
     toast('Erreur de démarrage: '+(e.message||e));
@@ -1014,6 +1112,10 @@ function updateMeUI(){
   const av=$('meAv');av.style.background=avBg(ME.name||'?');
   av.innerHTML=ME.avatar?`<img src="${ME.avatar}" style="width:90px;height:90px;object-fit:cover;border-radius:50%"/><div class="me-av-ov">📷</div>`:`<span id="meAvInit">${ini(ME.name)}</span><div class="me-av-ov">📷</div>`;
   ['Online','Busy','Away'].forEach(p=>{$('meChip'+p)?.classList.toggle('on',ME.presence===(p.toLowerCase()));});
+  if(ME.phone){const r=$('mePhoneRow');if(r){r.style.display='';$('mePhone').textContent=ME.phone;}}
+  if(ME.department){const r=$('meDeptRow');if(r){r.style.display='';$('meDept').textContent=ME.department;}}
+  if(ME.dob){const r=$('meDobRow');if(r){r.style.display='';$('meDob').textContent=fmtDob(ME.dob);}}
+  if('Notification' in window)$('notifStatus').textContent=Notification.permission==='granted'?'Activées ✓':'Cliquez pour configurer';
 }
 
 async function setPresence(p){ME.presence=p;await db.collection('users').doc(meUid).update({presence:p});updateMeUI();toast({online:'En ligne ✓',busy:'Occupé ✓',away:'Absent ✓'}[p]||'✓');}
@@ -1054,7 +1156,12 @@ function renderDiscList(){
   const list=$('discList');if(!list)return;
   const q=$('discSearch').value.toLowerCase();
   const convs=q?allConvs.filter(c=>convName(c).toLowerCase().includes(q)):allConvs;
-  if(!convs.length){list.innerHTML=`<div class="empty"><div class="ei">💬</div><div class="et">Aucune conversation</div><div class="es">Commencez par envoyer un message à un collègue</div><button class="eb" onclick="goPg('pgNewMsg')">Nouveau message</button></div>`;return;}
+  if(!convs.length){
+    const suggestions=allTeam.filter(m=>m.id!==meUid).slice(0,8);
+    let suggHtml='';
+    if(suggestions.length){suggHtml=`<div class="sugg-wrap"><div class="sugg-ttl">Collègues disponibles</div><div class="sugg-row">${suggestions.map(m=>`<div class="sugg-item" onclick="startDmWith('${m.id}')"><div style="position:relative">${mkAv(m.name,m.avatar,56)}<div style="position:absolute;bottom:1px;right:1px;width:13px;height:13px;border-radius:50%;background:${m.presence==='online'?'var(--gn)':m.presence==='busy'?'var(--rd)':'var(--am)'};border:2.5px solid var(--bg2)"></div></div><div class="sugg-nm">${escH(m.name.split(' ')[0])}</div></div>`).join('')}</div></div>`;}
+    list.innerHTML=`${suggHtml}<div class="empty" style="flex:none;padding:32px 30px 60px"><div class="ei">💬</div><div class="et">Aucune conversation</div><div class="es">Commencez par envoyer un message à un collègue</div><button class="eb" onclick="goPg('pgNewMsg')">Nouveau message</button></div>`;return;
+  }
   list.innerHTML='';
   convs.forEach(c=>{
     const nm=convName(c),av=convAvatar(c),unread=c.unread?.[meUid]||0,t=fmtTime(c.lastTime);
@@ -1345,8 +1452,13 @@ function startTeamListener(){
 }
 function renderSbTeam(sc){allTeam.filter(m=>m.id!==meUid).forEach(m=>{const d=document.createElement('div');d.className='team-item';const dot=m.presence==='online'?'🟢':m.presence==='busy'?'🔴':'🟡';d.innerHTML=`${mkAv(m.name,m.avatar,48)}<div class="cbody"><div class="cnm">${escH(m.name)}</div><div class="cpv">${dot} ${m.role||m.email}</div></div>`;d.onclick=()=>{openMember(m);};sc.appendChild(d);});}
 
+function fmtDob(dob){if(!dob)return'—';try{const[y,m,d]=dob.split('-');return`${d}/${m}/${y}`;}catch(e){return dob;}}
+function showMvRow(rowId,valId,val){const r=$(rowId);if(r){r.style.display=val?'':'none';if(val)$(valId).textContent=val;}}
+
 function openMember(m){
   curMemberId=m.id;$('mvName').textContent=m.name;$('mvNm').textContent=m.name;$('mvRoleTxt').textContent=m.role||m.email;$('mvRoleDetail').textContent=m.role||'—';$('mvEmail').textContent=m.email||'—';
+  showMvRow('mvPhoneRow','mvPhone',m.phone||'');showMvRow('mvDeptRow','mvDept',m.department||'');
+  showMvRow('mvDobRow','mvDob',m.dob?fmtDob(m.dob):'');showMvRow('mvGenderRow','mvGender',m.gender?({homme:'Homme',femme:'Femme',autre:'Autre'}[m.gender]||m.gender):'');
   const av=$('mvAv');av.style.background=avBg(m.name);av.innerHTML=m.avatar?`<img src="${m.avatar}" style="width:90px;height:90px;object-fit:cover;border-radius:50%"/>`:`<span id="mvAvInit">${ini(m.name)}</span>`;
   goPg('pgMemberView');
 }
@@ -1354,13 +1466,14 @@ function openMember(m){
 // ── Profile ───────────────────────────────────────────────────────────
 function openEditProfile(){
   $('epFn').value=ME.firstName||ME.name?.split(' ')[0]||'';$('epLn').value=ME.lastName||ME.name?.split(' ').slice(1).join(' ')||'';$('epRole').value=ME.role||'';
+  $('epDept').value=ME.department||'';$('epPhone').value=ME.phone||'';$('epDob').value=ME.dob||'';$('epGender').value=ME.gender||'';
   const ep=$('epAvPick');ep.style.background=avBg(ME.name||'?');ep.innerHTML=ME.avatar?`<img src="${ME.avatar}" style="width:90px;height:90px;object-fit:cover;border-radius:50%"/><div class="av-pick-ov">📷</div>`:`<span id="epAvInit">${ini(ME.name)}</span><div class="av-pick-ov">📷</div>`;epAvatarFile=null;openOvl('ovlEditProfile');
 }
 async function handleEpAvatar(input){const f=input.files[0];if(!f)return;epAvatarFile=f;const r=new FileReader();r.onload=e=>{$('epAvPick').innerHTML=`<img src="${e.target.result}" style="width:90px;height:90px;object-fit:cover;border-radius:50%"/><div class="av-pick-ov">📷</div>`;};r.readAsDataURL(f);}
 async function saveProfile(){
   const fn=$('epFn').value.trim(),ln=$('epLn').value.trim();if(!fn||!ln){toast('Prénom et nom requis');return;}
   let av=ME.avatar||'';if(epAvatarFile){try{const ref=st.ref(`avatars/${meUid}`);await ref.put(epAvatarFile);av=await ref.getDownloadURL();}catch(e){}}
-  const upd={name:fn+' '+ln,firstName:fn,lastName:ln,role:$('epRole').value.trim(),avatar:av};
+  const upd={name:fn+' '+ln,firstName:fn,lastName:ln,role:$('epRole').value.trim(),department:$('epDept').value.trim(),phone:$('epPhone').value.trim(),dob:$('epDob').value,gender:$('epGender').value,avatar:av};
   await db.collection('users').doc(meUid).update(upd);ME={...ME,...upd};updateMeUI();closeOvl('ovlEditProfile');toast('Profil mis à jour !');epAvatarFile=null;
 }
 async function handleMeAvatar(input){const f=input.files[0];if(!f)return;try{const ref=st.ref(`avatars/${meUid}`);await ref.put(f);const av=await ref.getDownloadURL();await db.collection('users').doc(meUid).update({avatar:av});ME.avatar=av;updateMeUI();toast('Photo mise à jour !');}catch(e){toast('Erreur upload');}}
@@ -1393,8 +1506,39 @@ function closeLbx(){$('lbx').classList.remove('on');}
 const audioPool={};
 function playAudio(url,btn){let a=audioPool[url];if(!a){a=new Audio(url);audioPool[url]=a;}if(a.paused){a.play();btn.textContent='⏸';}else{a.pause();btn.textContent='▶';}a.onended=()=>{btn.textContent='▶';};}
 
-// ── Notifications ─────────────────────────────────────────────────────
-async function requestNotifPerm(){if(!('Notification' in window)){toast('Notifications non supportées');return;}const p=await Notification.requestPermission();$('notifStatus').textContent=p==='granted'?'Activées ✓':'Bloquées';if(p==='granted')toast('Notifications activées !');}
+// ── Global Search ────────────────────────────────────────────────────
+function initSearch(){const inp=$('gsInput');if(inp){inp.value='';inp.focus();}$('gsResults').innerHTML='<div class="empty"><div class="ei">🔍</div><div class="et">Recherche globale</div><div class="es">Tapez pour rechercher parmi vos conversations, canaux et contacts</div></div>';}
+function doGlobalSearch(q){
+  const res=$('gsResults');if(!q||q.length<1){res.innerHTML='<div class="empty"><div class="ei">🔍</div><div class="et">Recherche globale</div><div class="es">Tapez pour rechercher parmi vos conversations, canaux et contacts</div></div>';return;}
+  const ql=q.toLowerCase();let html='';
+  const members=allTeam.filter(m=>m.id!==meUid&&(m.name||'').toLowerCase().includes(ql));
+  if(members.length){html+=`<div class="gs-cat">Membres</div>`;members.slice(0,5).forEach(m=>{const dot=m.presence==='online'?'🟢':m.presence==='busy'?'🔴':'🟡';html+=`<div class="gs-result" onclick="openMember(${JSON.stringify({id:m.id,name:m.name,email:m.email,role:m.role||'',avatar:m.avatar||'',phone:m.phone||'',department:m.department||'',dob:m.dob||'',gender:m.gender||''}).replace(/"/g,'&quot;')})">${mkAv(m.name,m.avatar,42)}<div><div style="font-size:14px;font-weight:600">${escH(m.name)}</div><div style="font-size:12px;color:var(--tx2)">${dot} ${m.role||m.email}</div></div></div>`;});}
+  const convs=allConvs.filter(c=>convName(c).toLowerCase().includes(ql));
+  if(convs.length){html+=`<div class="gs-cat">Conversations</div>`;convs.slice(0,5).forEach(c=>{const nm=convName(c);html+=`<div class="gs-result" onclick="openConv('${c.id}')">${mkAv(nm,convAvatar(c),42)}<div><div style="font-size:14px;font-weight:600">${escH(nm)}</div><div style="font-size:12px;color:var(--tx2)">${escH(c.lastMsg||'')}</div></div></div>`;});}
+  const chans=allChans.filter(c=>(c.name||'').toLowerCase().includes(ql));
+  if(chans.length){html+=`<div class="gs-cat">Canaux</div>`;chans.slice(0,5).forEach(c=>{html+=`<div class="gs-result" onclick="openChan('${c.id}')"><div style="width:42px;height:42px;border-radius:13px;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto">${c.emoji||'📢'}</div><div><div style="font-size:14px;font-weight:600">${escH(c.name)}</div><div style="font-size:12px;color:var(--tx2)">${escH(c.description||'')}</div></div></div>`;});}
+  if(!members.length&&!convs.length&&!chans.length)html='<div class="empty"><div class="ei">🔍</div><div class="et">Aucun résultat</div><div class="es">Aucun résultat pour « '+escH(q)+' »</div></div>';
+  res.innerHTML=html;
+}
+
+// ── Notification Settings ────────────────────────────────────────────
+function loadNotifSettings(){
+  const perm='Notification' in window?Notification.permission:'default';
+  const tog=$('notifToggle');if(tog)tog.checked=perm==='granted';
+  const saved=JSON.parse(localStorage.getItem('glNotifPrefs')||'{}');
+  ['DM','Group','Chan','DND'].forEach(k=>{const el=$('notif'+k);if(el&&saved[k]!==undefined)el.checked=saved[k];});
+}
+async function toggleNotifPerm(cb){
+  if(!('Notification' in window)){toast('Notifications non supportées');cb.checked=false;return;}
+  if(cb.checked){const p=await Notification.requestPermission();cb.checked=p==='granted';if(p==='granted'){toast('Notifications activées !');if($('notifStatus'))$('notifStatus').textContent='Activées ✓';}else toast('Permission refusée par le navigateur.');}
+  else{toast('Pour désactiver, modifiez les paramètres du navigateur.');}
+}
+function saveNotifSettings(){
+  const prefs={DM:$('notifDM')?.checked,Group:$('notifGroup')?.checked,Chan:$('notifChan')?.checked,DND:$('notifDND')?.checked};
+  localStorage.setItem('glNotifPrefs',JSON.stringify(prefs));toast('Préférences enregistrées ✓');backPg();}
+
+// ── Notifications (quick) ─────────────────────────────────────────────
+async function requestNotifPerm(){if(!('Notification' in window)){toast('Notifications non supportées');return;}const p=await Notification.requestPermission();if($('notifStatus'))$('notifStatus').textContent=p==='granted'?'Activées ✓':'Bloquées';if(p==='granted')toast('Notifications activées !');}
 
 // ── Sign Out ──────────────────────────────────────────────────────────
 async function doSignOut(){if(!confirm('Se déconnecter ?'))return;await db.collection('users').doc(meUid).update({presence:'offline'}).catch(()=>{});[discUnsub,chanUnsub,filesUnsub,teamUnsub,convUnsub].forEach(u=>u&&u());await auth.signOut();location.reload();}
