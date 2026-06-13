@@ -470,7 +470,23 @@ a{color:var(--pr);text-decoration:none;}
 .tag-gn{background:rgba(16,185,129,.12);color:var(--gn);}
 .tag-rd{background:rgba(239,68,68,.12);color:var(--rd);}
 .tag-bl{background:rgba(59,130,246,.12);color:var(--pr);}
-.tag-gr{background:var(--sf2);color:var(--tx2);}
+/* ── FICHIERS ── */
+.filt-tabs{display:flex;gap:6px;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--bd);overflow-x:auto;flex:0 0 auto;}
+.filt-tabs::-webkit-scrollbar{display:none;}
+.ftab{padding:7px 16px;border-radius:99px;border:1.5px solid var(--bd3);background:transparent;color:var(--tx2);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.15s;}
+.ftab.on{background:rgba(59,130,246,.12);border-color:var(--pr);color:var(--pr);}
+.fitem{display:flex;align-items:center;gap:13px;padding:13px 16px;border-bottom:1px solid var(--bd);cursor:pointer;transition:.12s;}
+.fitem:active{background:var(--sf);}
+.fitem-thumb{width:50px;height:50px;border-radius:12px;overflow:hidden;flex:0 0 auto;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid var(--bd2);}
+.fitem-thumb img{width:100%;height:100%;object-fit:cover;}
+.fitem-body{flex:1;min-width:0;}
+.fitem-nm{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fitem-meta{font-size:12px;color:var(--tx2);margin-top:3px;}
+.fitem-dl{color:var(--pr);font-size:20px;padding:8px;background:none;border:none;cursor:pointer;flex:0 0 auto;}
+.img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.img-gitem{aspect-ratio:1;overflow:hidden;cursor:pointer;background:var(--sf2);}
+.img-gitem img{width:100%;height:100%;object-fit:cover;transition:.15s;}
+.img-gitem:hover img{transform:scale(1.05);}
 </style>
 </head>
 <body>
@@ -564,7 +580,7 @@ a{color:var(--pr);text-decoration:none;}
     <div class="sb-nav">
       <button class="sb-nb on" id="sbT0" onclick="goTab(0)"><span class="sbi">💬</span><span>Messages</span></button>
       <button class="sb-nb" id="sbT1" onclick="goTab(1)"><span class="sbi">📢</span><span>Canaux</span></button>
-      <button class="sb-nb" id="sbT2" onclick="goTab(2)"><span class="sbi">🔵</span><span>Statuts</span></button>
+      <button class="sb-nb" id="sbT2" onclick="goTab(2)"><span class="sbi">📁</span><span>Fichiers</span></button>
       <button class="sb-nb" id="sbT3" onclick="goTab(3)"><span class="sbi">👥</span><span>Équipe</span></button>
     </div>
     <div class="sb-list" id="sbContent"></div>
@@ -672,35 +688,18 @@ a{color:var(--pr);text-decoration:none;}
       </div>
     </div>
 
-    <!-- Statuts List (mobile) -->
-    <div id="pgStatList" class="pg">
-      <div class="home-hdr"><div class="h-title">Statuts</div><button class="hbtn" onclick="goPg('pgNewStat')">＋</button></div>
-      <div class="scr" id="statList">
-        <div class="st-stories-row" id="statStoriesRow"></div>
-        <div class="sb-list-hdr">Mises à jour récentes</div>
-        <div id="statUpdates"></div>
+    <!-- Fichiers Hub -->
+    <div id="pgFichiers" class="pg">
+      <div class="home-hdr"><div class="h-title">Fichiers partagés</div></div>
+      <div class="srch-wrap"><div class="srch"><span class="srch-ico">🔍</span><input type="text" placeholder="Rechercher un fichier..." oninput="filterFiles(this.value)"/></div></div>
+      <div class="filt-tabs">
+        <button class="ftab on" onclick="setFileFilter('all',this)">Tous</button>
+        <button class="ftab" onclick="setFileFilter('image',this)">Images</button>
+        <button class="ftab" onclick="setFileFilter('file',this)">Documents</button>
+        <button class="ftab" onclick="setFileFilter('audio',this)">Audio</button>
       </div>
-    </div>
-
-    <!-- New Status -->
-    <div id="pgNewStat" class="pg">
-      <div class="hdr"><button class="hbk" onclick="backPg()">‹</button><div class="htitle"><div class="hn">Nouveau statut</div></div><button class="hbtn" onclick="postNewStat()">✓</button></div>
-      <div class="scr-p">
-        <div class="ns-preview" id="nsPreview" style="background:var(--grad);min-height:260px;cursor:pointer" onclick="document.getElementById('nsImgFile').click()">
-          <div class="stv-txt" id="nsPreviewTxt" style="font-size:20px">Votre statut...</div>
-          <input type="file" id="nsImgFile" accept="image/*" style="display:none" onchange="handleNsImg(this)"/>
-        </div>
-        <div style="margin-top:16px">
-          <div class="ns-bg-row" id="nsBgRow">
-            <div class="ns-bg-dot on" style="background:var(--grad)" data-bg="var(--grad)" onclick="selectNsBg(this)"></div>
-            <div class="ns-bg-dot" style="background:linear-gradient(135deg,#7C3AED,#6366F1)" data-bg="linear-gradient(135deg,#7C3AED,#6366F1)" onclick="selectNsBg(this)"></div>
-            <div class="ns-bg-dot" style="background:linear-gradient(135deg,#059669,#10B981)" data-bg="linear-gradient(135deg,#059669,#10B981)" onclick="selectNsBg(this)"></div>
-            <div class="ns-bg-dot" style="background:linear-gradient(135deg,#DC2626,#F87171)" data-bg="linear-gradient(135deg,#DC2626,#F87171)" onclick="selectNsBg(this)"></div>
-            <div class="ns-bg-dot" style="background:linear-gradient(135deg,#D97706,#FBBF24)" data-bg="linear-gradient(135deg,#D97706,#FBBF24)" onclick="selectNsBg(this)"></div>
-            <div class="ns-bg-dot" style="background:var(--sf2);border:2px solid var(--bd3);font-size:16px;display:flex;align-items:center;justify-content:center" data-bg="image" onclick="document.getElementById('nsImgFile').click()">📷</div>
-          </div>
-          <div class="ff" style="margin-top:12px"><textarea id="nsText" class="fi" rows="3" placeholder="Écrivez votre statut..." maxlength="500" style="resize:none" oninput="updateNsPreview(this.value)"></textarea></div>
-        </div>
+      <div class="scr" id="fichiersList">
+        <div class="empty"><div class="ei">📁</div><div class="et">Aucun fichier</div><div class="es">Les fichiers partagés dans vos conversations apparaîtront ici</div></div>
       </div>
     </div>
 
@@ -782,26 +781,10 @@ a{color:var(--pr);text-decoration:none;}
   <nav class="bnav">
     <button class="nbt on" id="nbt0" onclick="goTab(0)"><div class="ni">💬<div class="nbt-bdg" id="msgBadge"></div></div><div class="nl">Messages</div><div class="bnav-bar"></div></button>
     <button class="nbt" id="nbt1" onclick="goTab(1)"><div class="ni">📢</div><div class="nl">Canaux</div><div class="bnav-bar"></div></button>
-    <button class="nbt" id="nbt2" onclick="goTab(2)"><div class="ni">🔵<div class="nbt-bdg" id="statBadge"></div></div><div class="nl">Statuts</div><div class="bnav-bar"></div></button>
+    <button class="nbt" id="nbt2" onclick="goTab(2)"><div class="ni">📁</div><div class="nl">Fichiers</div><div class="bnav-bar"></div></button>
     <button class="nbt" id="nbt3" onclick="goTab(3)"><div class="ni">👥</div><div class="nl">Équipe</div><div class="bnav-bar"></div></button>
   </nav>
 </div>
-<!-- Status Viewer -->
-<div id="stViewer">
-  <div class="stv-bars" id="stvBars"></div>
-  <div class="stv-hdr">
-    <div class="stv-av" id="stvAv">?</div>
-    <div><div class="stv-nm" id="stvNm">—</div><div class="stv-t" id="stvT">—</div></div>
-    <button class="stv-x" onclick="closeStViewer()">✕</button>
-  </div>
-  <div class="stv-body">
-    <div class="stv-tap-l" onclick="stvPrev()"></div>
-    <div class="stv-tap-r" onclick="stvNext()"></div>
-    <div id="stvContent"></div>
-  </div>
-  <div class="stv-foot"><div class="stv-views" id="stvViews"></div></div>
-</div>
-
 <!-- Quick Reactions -->
 <div id="qrPicker" class="qr">
   <button class="qrb" onclick="doReact('👍')">👍</button>
@@ -892,14 +875,14 @@ const REM=firebase.firestore.FieldValue.arrayRemove;
 
 // ── State ──────────────────────────────────────────────────────────────
 let ME=null,meUid=null,curConvId=null,curChanId=null,curMemberId=null;
-let convUnsub=null,discUnsub=null,chanUnsub=null,statUnsub=null,teamUnsub=null;
+let convUnsub=null,discUnsub=null,chanUnsub=null,teamUnsub=null;
 let replyMsg=null,ctxMsgId=null;
 let voiceRec=null,voiceTimer=null,voiceChunks=[],voiceSec=0;
 let pgStack=[],curTab=0;
-let allTeam=[],allConvs=[],allChans=[],allStats=[];
-let grpSelected=[],nsImgDataUrl='',nsBg='var(--grad)',chanImgFile=null,epAvatarFile=null,swAvatarFile=null;
-let stvStories=[],stvUid='',stvIndex=0,stvTimer=null;
-const TAB_PAGES=['pgDiscList','pgChanList','pgStatList','pgEquipe'];
+let allTeam=[],allConvs=[],allChans=[];
+let grpSelected=[],chanImgFile=null,epAvatarFile=null,swAvatarFile=null;
+let allFiles=[],fileFilter='all',filesUnsub=null;
+const TAB_PAGES=['pgDiscList','pgChanList','pgFichiers','pgEquipe'];
 const EMOJIS={smileys:'😀😃😄😁😆😅🤣😂🙂🙃😉😊😇🥰😍🤩😘😗☺😚😙🥲😋😛😜🤪😝🤑🤗🤭🤫🤔🤐🤨😐😑😶😏😒🙄😬🤥😌😔😪😴😷🤒🤕🤢🤮🤧🥵🥶😵🤯🥳😎🤓🧐😕😟🙁☹😮😲😳🥺😦😧😨😰😥😢😭😱😖😣😞😓😩😫😤😡😠🤬😈👿💀'.split(''),hands:'👋🤚🖐✋🖖👌🤌✌🤞🤟🤘🤙👈👉👆👇☝👍👎✊👊🤛🤜👏🙌🤲🙏💪✍💅🤳'.split(''),nature:'🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐸🐵🙈🙉🙊🐔🐧🐦🦆🦅🦉🦇🐺🐗🐴🦄🐝🐛🦋🐌🐞🐜🦂🐢🐍🦎🐙🦑🐡🐠🐟🐬🐳🦈'.split(''),food:'🍎🍊🍋🍌🍉🍇🍓🫐🍒🍑🥭🍍🥥🥝🍅🍆🥑🥦🥬🥒🌽🍄🥕🥗🍲🍜🍝🍣🍤🍙🍚🍛🍱🥟🍤🍩🍪🎂🍰🧁🍫🍿🍭🍬☕🍵🍺🥤🧃'.split(''),objects:'⌚📱💻⌨🖥🖨🕹💾📷📸📹🎥📞☎📺📻🧭⏰💡🔦📔📒📕📗📘📙📚📄📊📈📉📋📌📍✂🖊✒📝'.split(''),symbols:'❤🧡💛💚💙💜🖤🤍🤎💔❣💕💞💓💗💖💘💝✅❌⭐🌟✨🔥💫⚡💥🎉🎊🎁🎈🔔🔕💯'.split('')};
 
 // ── Utils ─────────────────────────────────────────────────────────────
@@ -1006,7 +989,7 @@ async function startApp(){
   $('sApp').style.display='flex';$('sApp').classList.add('show');$('splash').classList.add('hide');
   updateMeUI();
   if(ME.email===ADMIN||ME.admin){$('adminBtn').style.display='';$('newChanBtn').style.display='';}
-  startDiscListener();startChanListener();startStatListener();startTeamListener();
+  startDiscListener();startChanListener();startFilesListener();startTeamListener();
   if(window.innerWidth>=800){showSbContent(0);showMainPg('pgWelcome');}else{goTab(0);}
   if(auth.currentUser&&!auth.currentUser.emailVerified)$('verBanner').style.display='flex';
 }
@@ -1040,7 +1023,7 @@ function backPg(){const prev=pgStack.pop();if(prev)showMainPg(prev);else goTab(c
 
 function showSbContent(n){
   const sc=$('sbContent');if(!sc)return;sc.innerHTML='';
-  if(n===0)renderSbDiscs(sc);else if(n===1)renderSbChans(sc);else if(n===2)renderSbStats(sc);else renderSbTeam(sc);
+  if(n===0)renderSbDiscs(sc);else if(n===1)renderSbChans(sc);else if(n===2)renderSbFichiers(sc);else renderSbTeam(sc);
 }
 
 // ── Conversations ─────────────────────────────────────────────────────
@@ -1158,7 +1141,7 @@ async function stopAndSendVoice(){
   voiceRec.onstop=async()=>{
     const blob=new Blob(voiceChunks,{type:'audio/webm'});clearInterval(voiceTimer);$('voiceBar').classList.remove('on');
     const dur=`${Math.floor(voiceSec/60)}:${String(voiceSec%60).padStart(2,'0')}`;
-    try{const ref=st.ref(`voice/${meUid}_${Date.now()}.webm`);await ref.put(blob);const url=await ref.getDownloadURL();const msg={sender:meUid,senderName:ME.name,time:TS(),type:'audio',url,duration:dur,readBy:{[meUid]:true}};if(replyMsg){msg.replyTo={id:replyMsg.id,text:'🎤 Audio',senderName:replyMsg.senderName};cancelReply();}db.collection('conversations').doc(curConvId).collection('messages').add(msg);db.collection('conversations').doc(curConvId).update({lastMsg:'🎤 Message vocal',lastTime:TS(),lastSender:meUid});}catch(e){toast('Erreur envoi audio');}
+    try{const ref=st.ref(`voice/${meUid}_${Date.now()}.webm`);await ref.put(blob);const url=await ref.getDownloadURL();const msg={sender:meUid,senderName:ME.name,time:TS(),type:'audio',url,duration:dur,readBy:{[meUid]:true}};if(replyMsg){msg.replyTo={id:replyMsg.id,text:'🎤 Audio',senderName:replyMsg.senderName};cancelReply();}db.collection('conversations').doc(curConvId).collection('messages').add(msg);db.collection('conversations').doc(curConvId).update({lastMsg:'🎤 Message vocal',lastTime:TS(),lastSender:meUid});const cv=allConvs.find(x=>x.id===curConvId);db.collection('sharedFiles').add({type:'audio',url,fileName:`Audio ${dur}`,size:blob.size,sender:meUid,senderName:ME.name,convId:curConvId,participants:cv?.participants||[meUid],time:TS()}).catch(()=>{});}catch(e){toast('Erreur envoi audio');}
   };voiceRec.stop();voiceRec.stream?.getTracks().forEach(t=>t.stop());
 }
 
@@ -1173,7 +1156,10 @@ async function attachFile(input,type){
   if(!isImg){msg.fileName=f.name;msg.size=f.size;}
   if(replyMsg){msg.replyTo={id:replyMsg.id,text:isImg?'🖼️ Photo':'📄 Fichier',senderName:replyMsg.senderName};cancelReply();}
   await db.collection('conversations').doc(curConvId).collection('messages').add(msg);
-  db.collection('conversations').doc(curConvId).update({lastMsg:isImg?'🖼️ Photo':'📄 '+f.name,lastTime:TS(),lastSender:meUid});}
+  db.collection('conversations').doc(curConvId).update({lastMsg:isImg?'🖼️ Photo':'📄 '+f.name,lastTime:TS(),lastSender:meUid});
+  // Log to shared files hub
+  const conv=allConvs.find(x=>x.id===curConvId);
+  db.collection('sharedFiles').add({type:isImg?'image':'file',url,fileName:f.name,size:f.size,sender:meUid,senderName:ME.name,convId:curConvId,participants:conv?.participants||[meUid],time:TS()}).catch(()=>{});}
   catch(e){toast('Erreur: '+e.message);}
 }
 
@@ -1297,50 +1283,45 @@ async function createChan(){
   toast('Canal créé !');backPg();
 }
 
-// ── Statuses ──────────────────────────────────────────────────────────
-function startStatListener(){
-  if(statUnsub)statUnsub();
-  const processed={};
-  statUnsub=db.collection('statuses').onSnapshot(snap=>{
-    allStats=[];const promises=snap.docs.map(d=>{const uid=d.id;return db.collection('statuses').doc(uid).collection('stories').orderBy('createdAt','desc').limit(5).get().then(ss=>{const stories=ss.docs.map(s=>({id:s.id,...s.data()}));if(stories.length){const mem=allTeam.find(t=>t.id===uid)||{id:uid,name:uid,avatar:null};allStats.push({uid,user:mem,stories});}});});
-    Promise.all(promises).then(()=>{renderStatList();if(window.innerWidth>=800&&curTab===2)showSbContent(2);});
-  },()=>{});
+// ── Fichiers ──────────────────────────────────────────────────────────
+function startFilesListener(){
+  if(filesUnsub)filesUnsub();
+  filesUnsub=db.collection('sharedFiles').where('participants','array-contains',meUid).orderBy('time','desc').limit(200)
+    .onSnapshot(snap=>{allFiles=snap.docs.map(d=>({id:d.id,...d.data()}));renderFilesList('');if(window.innerWidth>=800&&curTab===2)showSbContent(2);},()=>{});
 }
-function renderStatList(){
-  const row=$('statStoriesRow');if(!row)return;
-  row.innerHTML=`<div class="stry-item" onclick="goPg('pgNewStat')"><div class="stry-ring me" style="position:relative"><div class="stry-inner">${ME?.avatar?`<img src="${ME.avatar}"/>`:(ini(ME?.name||'?'))}</div><div class="stry-add">+</div></div><div class="stry-nm">Mon statut</div></div>`;
-  allStats.forEach(s=>{if(s.uid===meUid)return;const seen=s.stories.every(st=>st.views?.[meUid]);const d=document.createElement('div');d.className='stry-item';d.onclick=()=>openStViewer(s.uid);d.innerHTML=`<div class="stry-ring${seen?' seen':''}"><div class="stry-inner">${s.user.avatar?`<img src="${s.user.avatar}"/>`:(ini(s.user.name))}</div></div><div class="stry-nm">${escH(s.user.name.split(' ')[0])}</div>`;row.appendChild(d);});
-  const upd=$('statUpdates');if(!upd)return;upd.innerHTML='';
-  allStats.forEach(s=>{const seen=s.stories.every(st=>st.views?.[meUid]);const latest=s.stories[0];const d=document.createElement('div');d.className='st-list-item';d.onclick=()=>openStViewer(s.uid);d.innerHTML=`<div class="stl-ring${seen?' seen':''}"><div class="stl-inner">${s.user.avatar?`<img src="${s.user.avatar}"/>`:(ini(s.user.name))}</div></div><div class="cbody"><div class="cnm">${escH(s.user.name)}</div><div class="cpv">${latest?.text?.slice(0,50)||'📸 Photo'}</div></div><div class="ct">${fmtTime(latest?.createdAt)}</div>`;upd.appendChild(d);});
-}
-function renderSbStats(sc){sc.innerHTML=`<div class="sb-list-fab" onclick="goPg('pgNewStat')">＋&nbsp; Nouveau statut</div>`;allStats.forEach(s=>{const d=document.createElement('div');d.className='st-list-item';d.onclick=()=>openStViewer(s.uid);d.innerHTML=`<div class="stl-ring${s.stories.every(st=>st.views?.[meUid])?' seen':''}"><div class="stl-inner">${s.user.avatar?`<img src="${s.user.avatar}"/>`:(ini(s.user.name))}</div></div><div class="cbody"><div class="cnm">${escH(s.user.name)}</div><div class="cpv">${s.stories[0]?.text||'📸 Photo'}</div></div>`;sc.appendChild(d);});}
 
-function openStViewer(uid){const st=allStats.find(s=>s.uid===uid);if(!st?.stories.length)return;stvUid=uid;stvStories=st.stories;stvIndex=0;$('stViewer').classList.add('on');$('stvNm').textContent=st.user.name;$('stvAv').innerHTML=st.user.avatar?`<img src="${st.user.avatar}"/>`:ini(st.user.name);$('stvAv').style.background=avBg(st.user.name);showStory(0);}
-function closeStViewer(){$('stViewer').classList.remove('on');clearTimeout(stvTimer);stvTimer=null;}
-function showStory(i){
-  clearTimeout(stvTimer);if(i<0||i>=stvStories.length){closeStViewer();return;}
-  stvIndex=i;const s=stvStories[i];
-  $('stvBars').innerHTML=stvStories.map((_,j)=>`<div class="stv-bar"><div class="stv-bar-f" id="stb_${j}" style="width:${j<i?'100':'0'}%"></div></div>`).join('');
-  const cont=$('stvContent');
-  if(s.type==='image'&&s.img)cont.innerHTML=`<img class="stv-img" src="${s.img}"/>${s.text?`<div class="stv-caption">${escH(s.text)}</div>`:''}`;
-  else cont.innerHTML=`<div class="stv-txt" style="background:${s.bg||'var(--grad)'};padding:40px 30px;border-radius:16px">${escH(s.text||'')}</div>`;
-  $('stvT').textContent=fmtTs(s.createdAt);
-  if(s.id&&stvUid){const u={};u[`views.${meUid}`]=true;db.collection('statuses').doc(stvUid).collection('stories').doc(s.id).update(u).catch(()=>{});}
-  let w=0;const bar=document.getElementById('stb_'+i);const dur=s.type==='image'?5000:4000;const step=100/(dur/50);
-  function tick(){w=Math.min(w+step,100);if(bar)bar.style.width=w+'%';if(w<100)stvTimer=setTimeout(tick,50);else showStory(i+1);}stvTimer=setTimeout(tick,50);
+function renderFilesList(q){
+  const list=$('fichiersList');if(!list)return;
+  let files=q?allFiles.filter(f=>(f.fileName||'').toLowerCase().includes(q.toLowerCase())):allFiles;
+  if(fileFilter!=='all')files=files.filter(f=>f.type===fileFilter);
+  if(!files.length){list.innerHTML=`<div class="empty"><div class="ei">📁</div><div class="et">Aucun fichier</div><div class="es">Les fichiers partagés dans vos conversations apparaîtront ici</div></div>`;return;}
+  if(fileFilter==='image'){
+    list.innerHTML=`<div class="img-grid">${files.map(f=>`<div class="img-gitem" onclick="openLbx('${f.url}')"><img src="${f.url}" loading="lazy"/></div>`).join('')}</div>`;return;
+  }
+  list.innerHTML='';
+  files.forEach(f=>{
+    const d=document.createElement('div');d.className='fitem';
+    const thumb=f.type==='image'?`<div class="fitem-thumb"><img src="${f.url}" loading="lazy"/></div>`:`<div class="fitem-thumb">${f.type==='audio'?'🎤':getFileIcon(f.fileName)}</div>`;
+    const conv=allConvs.find(c=>c.id===f.convId);const convNm=conv?convName(conv):'';
+    d.innerHTML=`${thumb}<div class="fitem-body"><div class="fitem-nm">${escH(f.fileName||'Fichier')}</div><div class="fitem-meta">${fmtSize(f.size)} · ${fmtTime(f.time)}${convNm?' · '+escH(convNm):''}</div></div><button class="fitem-dl" onclick="event.stopPropagation();window.open('${f.url}','_blank')">↓</button>`;
+    if(f.type==='image')d.onclick=()=>openLbx(f.url);
+    list.appendChild(d);
+  });
 }
-function stvPrev(){showStory(stvIndex-1);}function stvNext(){showStory(stvIndex+1);}
 
-function updateNsPreview(txt){$('nsPreviewTxt').textContent=txt||'Votre statut...';}
-function selectNsBg(el){document.querySelectorAll('.ns-bg-dot').forEach(d=>d.classList.remove('on'));el.classList.add('on');nsBg=el.dataset.bg;if(nsBg!=='image'){$('nsPreview').style.background=nsBg;nsImgDataUrl='';}}
-function handleNsImg(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{nsImgDataUrl=e.target.result;$('nsPreview').style.background=`url(${e.target.result}) center/cover`;$('nsPreviewTxt').style.display='none';};r.readAsDataURL(f);}
-async function postNewStat(){
-  const txt=$('nsText').value.trim();if(!txt&&!nsImgDataUrl){toast('Ajoutez du texte ou une image');return;}
-  let img='';
-  if(nsImgDataUrl){try{const blob=await(await fetch(nsImgDataUrl)).blob();const ref=st.ref(`status/${meUid}_${Date.now()}`);await ref.put(blob);img=await ref.getDownloadURL();}catch(e){}}
-  await db.collection('statuses').doc(meUid).set({uid:meUid},{merge:true});
-  await db.collection('statuses').doc(meUid).collection('stories').add({type:img?'image':'text',text:txt,img,bg:nsBg,createdAt:TS(),views:{[meUid]:true}});
-  toast('Statut publié !');$('nsText').value='';nsImgDataUrl='';nsBg='var(--grad)';$('nsPreview').style.background='var(--grad)';$('nsPreviewTxt').style.display='';goTab(2);
+function getFileIcon(name){const ext=(name||'').split('.').pop().toLowerCase();const m={pdf:'📕',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',ppt:'📋',pptx:'📋',txt:'📄',zip:'📦',mp4:'🎬',mp3:'🎵'};return m[ext]||'📄';}
+function filterFiles(q){renderFilesList(q);}
+function setFileFilter(filter,btn){fileFilter=filter;document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderFilesList('');}
+
+function renderSbFichiers(sc){
+  if(!allFiles.length){sc.innerHTML='<div style="padding:20px;color:var(--tx2);text-align:center;font-size:14px">Aucun fichier partagé</div>';return;}
+  allFiles.slice(0,30).forEach(f=>{
+    const d=document.createElement('div');d.className='fitem';
+    const thumb=f.type==='image'?`<div class="fitem-thumb"><img src="${f.url}" loading="lazy"/></div>`:`<div class="fitem-thumb">${f.type==='audio'?'🎤':getFileIcon(f.fileName)}</div>`;
+    d.innerHTML=`${thumb}<div class="fitem-body"><div class="fitem-nm">${escH(f.fileName||'Fichier')}</div><div class="fitem-meta">${fmtTime(f.time)}</div></div>`;
+    d.onclick=f.type==='image'?()=>openLbx(f.url):()=>window.open(f.url,'_blank');
+    sc.appendChild(d);
+  });
 }
 </script>
 <script>
@@ -1403,7 +1384,7 @@ function playAudio(url,btn){let a=audioPool[url];if(!a){a=new Audio(url);audioPo
 async function requestNotifPerm(){if(!('Notification' in window)){toast('Notifications non supportées');return;}const p=await Notification.requestPermission();$('notifStatus').textContent=p==='granted'?'Activées ✓':'Bloquées';if(p==='granted')toast('Notifications activées !');}
 
 // ── Sign Out ──────────────────────────────────────────────────────────
-async function doSignOut(){if(!confirm('Se déconnecter ?'))return;await db.collection('users').doc(meUid).update({presence:'offline'}).catch(()=>{});[discUnsub,chanUnsub,statUnsub,teamUnsub,convUnsub].forEach(u=>u&&u());await auth.signOut();location.reload();}
+async function doSignOut(){if(!confirm('Se déconnecter ?'))return;await db.collection('users').doc(meUid).update({presence:'offline'}).catch(()=>{});[discUnsub,chanUnsub,filesUnsub,teamUnsub,convUnsub].forEach(u=>u&&u());await auth.signOut();location.reload();}
 
 // ── Global handlers ───────────────────────────────────────────────────
 document.addEventListener('click',e=>{if($('emojiSheet')?.classList.contains('on')&&!e.target.closest('.cinput')){$('emojiSheet').classList.remove('on');$('emojiTogBtn')?.classList.remove('on');}});
