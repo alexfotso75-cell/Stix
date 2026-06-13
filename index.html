@@ -541,7 +541,6 @@ a{color:var(--pr);text-decoration:none;}
 
 <div id="sSetup" class="screen">
   <div class="sw-wrap">
-    <div class="sw-prog"><div class="sw-bar on" id="swB1"></div><div class="sw-bar" id="swB2"></div></div>
     <div id="swS1" class="sw-step on">
       <div class="sw-ico">✨</div>
       <div class="sw-ttl">Bienvenue !</div>
@@ -556,18 +555,7 @@ a{color:var(--pr);text-decoration:none;}
       <div class="ff"><label class="fl">Nom</label><input id="swLn" class="fi" type="text" placeholder="Nom" maxlength="30"/></div>
       <div class="ff"><label class="fl">Poste / Rôle (optionnel)</label><input id="swRole" class="fi" type="text" placeholder="ex: Développeur, Manager..." maxlength="50"/></div>
       <div id="swMsg1" class="amsg"></div>
-      <button class="abtn" onclick="setupStep1()">Continuer →</button>
-    </div>
-    <div id="swS2" class="sw-step">
-      <div class="sw-ico">🔐</div>
-      <div class="sw-ttl">Code d'invitation</div>
-      <div class="sw-sub">Entrez le code fourni par votre administrateur pour rejoindre l'espace de travail</div>
-      <div class="ff"><label class="fl">Code d'invitation</label>
-        <input id="swCode" class="fi" type="text" placeholder="XXXXXX" maxlength="20" style="text-transform:uppercase;letter-spacing:3px;font-size:20px;font-weight:800;text-align:center"/>
-      </div>
-      <div id="swMsg2" class="amsg"></div>
-      <button class="abtn" onclick="setupStep2()">Rejoindre →</button>
-      <button class="a-back" style="margin-top:4px" onclick="showSetupStep(1)">‹ Retour</button>
+      <button class="abtn" id="swSubmitBtn" onclick="setupFinish()">Commencer →</button>
     </div>
   </div>
 </div>
@@ -970,28 +958,22 @@ async function checkEmailVerified(){await auth.currentUser.reload();if(auth.curr
 async function resendVerif(){try{await auth.currentUser.sendEmailVerification();toast('E-mail renvoyé !');}catch(e){toast(e.message);}}
 
 // ── Setup ─────────────────────────────────────────────────────────────
-function showSetupStep(n){document.querySelectorAll('.sw-step').forEach(s=>s.classList.remove('on'));$('swS'+n).classList.add('on');document.querySelectorAll('.sw-bar').forEach((b,i)=>{b.classList.toggle('on',i<n);});}
 async function handleSwAvatar(input){const f=input.files[0];if(!f)return;swAvatarFile=f;const r=new FileReader();r.onload=e=>{$('swAvPick').innerHTML=`<img src="${e.target.result}" style="width:90px;height:90px;object-fit:cover;border-radius:50%;"/><div class="av-pick-ov">📷</div>`;};r.readAsDataURL(f);}
-function setupStep1(){const fn=$('swFn').value.trim(),ln=$('swLn').value.trim();if(!fn||!ln){$('swMsg1').className='amsg err';$('swMsg1').textContent='Prénom et nom requis.';return;}$('swMsg1').className='amsg';showSetupStep(2);}
-async function setupStep2(){
-  const code=$('swCode').value.trim().toUpperCase();
-  if(!code){$('swMsg2').className='amsg err';$('swMsg2').textContent='Code requis.';return;}
-  $('swMsg2').className='amsg';
-  const codeDoc=await db.collection('settings').doc('inviteCode').get().catch(()=>null);
-  const validCode=codeDoc&&codeDoc.exists?codeDoc.data().code:'GRACELINK';
+async function setupFinish(){
+  const fn=$('swFn').value.trim(),ln=$('swLn').value.trim();
+  if(!fn||!ln){$('swMsg1').className='amsg err';$('swMsg1').textContent='Prénom et nom requis.';return;}
+  const btn=$('swSubmitBtn');btn.disabled=true;btn.textContent='⏳';$('swMsg1').className='amsg';
   const isAdmin=auth.currentUser.email===ADMIN;
-  if(code!==validCode&&!isAdmin){$('swMsg2').className='amsg err';$('swMsg2').textContent='Code invalide. Contactez votre administrateur.';return;}
-  const btn=document.querySelector('#swS2 .abtn');if(btn){btn.disabled=true;btn.textContent='⏳';}
   let avatar='';
   if(swAvatarFile){try{const ref=st.ref(`avatars/${meUid}`);await ref.put(swAvatarFile);avatar=await ref.getDownloadURL();}catch(e){}}
-  const fn=$('swFn').value.trim(),ln=$('swLn').value.trim(),name=fn+' '+ln;
+  const name=fn+' '+ln;
   try{
     await db.collection('users').doc(meUid).set({name,firstName:fn,lastName:ln,role:$('swRole').value.trim(),avatar,email:auth.currentUser.email,presence:'online',approved:isAdmin,admin:isAdmin,createdAt:TS()});
     if(isAdmin){ME={name,firstName:fn,lastName:ln,role:$('swRole').value.trim(),avatar,email:auth.currentUser.email,presence:'online',approved:true,admin:true};startApp();}
-    else{$('sSetup').classList.remove('show');$('sSetup').style.display='';$('sAuth').classList.add('show');$('sAuth').style.display='flex';showAuthStep(1);$('authMsg1').className='amsg ok';$('authMsg1').textContent='Compte créé ! En attente de l\'approbation de l\'administrateur.';}
+    else{$('sSetup').classList.remove('show');$('sSetup').style.display='';$('sAuth').classList.add('show');$('sAuth').style.display='flex';showAuthStep(1);$('authMsg1').className='amsg ok';$('authMsg1').textContent='Profil créé ! En attente de l\'approbation de l\'administrateur.';}
   }catch(e){
-    $('swMsg2').className='amsg err';$('swMsg2').textContent='Erreur: '+(e.message||e.code||'Réessayez');
-    if(btn){btn.disabled=false;btn.textContent='Rejoindre →';}
+    $('swMsg1').className='amsg err';$('swMsg1').textContent='Erreur: '+(e.message||e.code||'Réessayez');
+    btn.disabled=false;btn.textContent='Commencer →';
   }
 }
 </script>
