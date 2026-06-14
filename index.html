@@ -218,7 +218,7 @@ a{color:var(--pr);text-decoration:none;}
 .mav-sm{width:28px;height:28px;border-radius:50%;flex:0 0 auto;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;margin-bottom:4px;}
 .mav-sm img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 .bbl{max-width:76%;border-radius:18px;word-break:break-word;font-size:14px;line-height:1.55;position:relative;cursor:default;}
-.me .bbl{background:linear-gradient(135deg,#1E3A8A,#1D4ED8);border-bottom-right-radius:5px;padding:9px 13px 6px;}
+.me .bbl{background:var(--grad);border-bottom-right-radius:5px;padding:9px 13px 6px;}
 .them .bbl{background:var(--sf);border-bottom-left-radius:5px;padding:9px 13px 6px;border:1px solid var(--bd2);}
 .bbl.del{background:transparent!important;border:1px solid var(--bd2)!important;color:var(--tx3);font-style:italic;font-size:13px;padding:8px 12px;}
 .b-fwd-tag{font-size:11px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:4px;margin-bottom:4px;font-weight:600;}
@@ -609,6 +609,109 @@ a{color:var(--pr);text-decoration:none;}
 .typing-dots span:nth-child(3){animation-delay:.4s;}
 @keyframes tdot{0%,60%,100%{opacity:.3;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
 .typing-nm{font-size:12px;color:var(--tx3);font-style:italic;}
+
+/* ══════════════════════════════════════════════════
+   THEME SYSTEM
+══════════════════════════════════════════════════ */
+
+/* ── MODE CLAIR ── */
+.theme-light{
+  --bg:#F0F4FF; --bg2:#FFFFFF; --bg3:#E6EEFF;
+  --sf:#FFFFFF; --sf2:#EDF1FF; --sf3:#D8E1FF;
+  --bd:rgba(0,0,0,.06); --bd2:rgba(0,0,0,.09); --bd3:rgba(0,0,0,.13);
+  --tx:#0D1117; --tx2:#4A5270; --tx3:#8892B0;
+  --out:#DBEAFE; --in:#FFFFFF;
+}
+.theme-light body{background:var(--bg);color:var(--tx);}
+.theme-light #splash{background:#060811;}
+.theme-light .them .bbl{background:var(--sf);border-color:var(--bd2);color:var(--tx);}
+.theme-light .msgs{background:var(--bg3);}
+.theme-light .bsh,.theme-light .mbox{background:var(--bg2);}
+.theme-light .auth-bg i:nth-child(1){background:rgba(99,102,241,.07);}
+.theme-light .auth-bg i:nth-child(2){background:rgba(59,130,246,.06);}
+.theme-light .auth-bg i:nth-child(3){background:rgba(6,182,212,.05);}
+.theme-light .bnav-bar{display:none!important;}
+.theme-light .brpl-box{background:rgba(0,0,0,.04);}
+.theme-light .ctxmenu{background:var(--bg2);}
+.theme-light .qr{background:var(--bg2);}
+
+/* ── ACCENT VIOLET ── */
+.accent-violet{
+  --pr:#7C3AED; --pr2:#6D28D9; --glow:rgba(124,58,237,.25);
+  --grad:linear-gradient(135deg,#7C3AED,#5B21B6);
+  --grad2:linear-gradient(135deg,#8B5CF6,#6D28D9);
+}
+/* ── ACCENT ÉMERAUDE ── */
+.accent-emerald{
+  --pr:#059669; --pr2:#047857; --glow:rgba(5,150,105,.25);
+  --grad:linear-gradient(135deg,#059669,#047857);
+  --grad2:linear-gradient(135deg,#10B981,#059669);
+}
+/* ── ACCENT ROSE ── */
+.accent-rose{
+  --pr:#E11D48; --pr2:#BE123C; --glow:rgba(225,29,72,.25);
+  --grad:linear-gradient(135deg,#E11D48,#9F1239);
+  --grad2:linear-gradient(135deg,#F43F5E,#BE123C);
+}
+/* ── ACCENT AMBRE ── */
+.accent-sable{
+  --pr:#B45309; --pr2:#92400E; --glow:rgba(180,83,9,.25);
+  --grad:linear-gradient(135deg,#D97706,#92400E);
+  --grad2:linear-gradient(135deg,#F59E0B,#B45309);
+}
+
+/* ── TAILLE DU TEXTE ── */
+.font-lg body,.font-lg .bbl,.font-lg .cnm,.font-lg .hn{font-size:15.5px;}
+.font-lg .nl,.font-lg .bt,.font-lg .ct{font-size:11px;}
+.font-xl body,.font-xl .bbl,.font-xl .cnm,.font-xl .hn{font-size:17px;}
+.font-xl .nl,.font-xl .bt,.font-xl .ct{font-size:12px;}
+
+/* ── CHAT BACKGROUNDS ── */
+.chat-grid .msgs{background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:24px 24px;}
+.chat-hex .msgs{background-image:radial-gradient(circle,rgba(255,255,255,.04) 2px,transparent 2px),radial-gradient(circle,rgba(255,255,255,.04) 2px,transparent 2px);background-size:18px 32px;background-position:0 0,9px 16px;}
+.chat-none .msgs{background-image:none;}
+.theme-light .chat-grid .msgs{background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);background-size:24px 24px;}
+.theme-light .chat-hex .msgs{background-image:radial-gradient(circle,rgba(0,0,0,.06) 2px,transparent 2px),radial-gradient(circle,rgba(0,0,0,.06) 2px,transparent 2px);background-size:18px 32px;background-position:0 0,9px 16px;}
+
+/* ── THEME PAGE UI ── */
+.th-section{padding:0 16px;}
+.th-mode-row{display:flex;gap:12px;padding:12px 0;}
+.theme-card{flex:1;cursor:pointer;border-radius:18px;border:2.5px solid var(--bd3);overflow:hidden;transition:.2s;position:relative;}
+.theme-card.on{border-color:var(--pr);box-shadow:0 0 0 3px var(--glow);}
+.theme-card.on::after{content:'✓';position:absolute;top:8px;right:10px;font-size:14px;font-weight:900;color:var(--pr);}
+.tp-wrap{height:100px;padding:12px;display:flex;flex-direction:column;gap:6px;position:relative;}
+.tp-dark{background:#060811;}
+.tp-light{background:#F0F4FF;}
+.tp-topbar{height:8px;border-radius:4px;width:70%;}
+.tp-dark .tp-topbar{background:#1A1D2E;}
+.tp-light .tp-topbar{background:#FFFFFF;}
+.tp-msg-me{height:10px;border-radius:5px;width:55%;margin-left:auto;background:linear-gradient(135deg,#3B82F6,#1D4ED8);}
+.tp-msg-them{height:10px;border-radius:5px;width:65%;}
+.tp-dark .tp-msg-them{background:#1A1D2E;}
+.tp-light .tp-msg-them{background:#FFFFFF;border:1px solid rgba(0,0,0,.08);}
+.tp-label{text-align:center;padding:9px;font-size:13px;font-weight:700;border-top:1px solid var(--bd);background:var(--bg2);}
+.accent-swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:12px 0;}
+.acc-sw{width:100%;aspect-ratio:1;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;font-size:0;}
+.acc-sw.on{border-color:var(--tx);font-size:16px;color:#fff;}
+.acc-sw:active{transform:scale(.9);}
+.acc-lbl-row{display:flex;gap:8px;padding-bottom:4px;}
+.acc-lbl{flex:1;text-align:center;font-size:10px;color:var(--tx3);font-weight:600;word-break:break-word;line-height:1.3;}
+.font-size-row{display:flex;gap:8px;padding:10px 0;}
+.fsize-opt{flex:1;padding:14px 6px;border-radius:14px;border:2px solid var(--bd3);background:var(--sf);color:var(--tx);cursor:pointer;text-align:center;transition:.2s;font-family:inherit;}
+.fsize-opt.on{border-color:var(--pr);background:rgba(59,130,246,.08);color:var(--pr);}
+.fsize-opt .fsz-a{font-weight:800;line-height:1.2;display:block;margin-bottom:4px;}
+.fsize-opt .fsz-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.chatbg-row{display:flex;gap:8px;padding:10px 0;flex-wrap:wrap;}
+.cbg-opt{flex:0 0 calc(25% - 6px);border:2px solid var(--bd3);border-radius:14px;background:var(--sf);cursor:pointer;overflow:hidden;transition:.2s;font-size:10px;font-weight:700;color:var(--tx3);text-align:center;}
+.cbg-opt.on{border-color:var(--pr);color:var(--pr);}
+.cbg-preview{height:46px;background:var(--bg);}
+.cbg-p-dots{background-image:radial-gradient(circle,rgba(255,255,255,.18) 1px,transparent 1px);background-size:8px 8px;}
+.cbg-p-grid{background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:8px 8px;}
+.cbg-p-hex{background-image:radial-gradient(rgba(255,255,255,.18) 2px,transparent 2px);background-size:9px 16px;}
+.cbg-p-none{background:var(--bg);}
+.cbg-lbl{padding:5px 4px 6px;}
+.theme-preview-box{border-radius:18px;overflow:hidden;border:1px solid var(--bd3);margin:8px 0;}
+.tprev-hdr{background:var(--bg2);padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bd);}
 </style>
 </head>
 <body>
@@ -858,6 +961,7 @@ a{color:var(--pr);text-decoration:none;}
         </div>
         <div class="me-section">
           <span class="me-sec-title">Outils</span>
+          <div class="me-row" onclick="goPg('pgTheme');setTimeout(updateThemeUI,80)"><div class="me-ico">🎨</div><div class="me-body"><div class="me-lbl">Thèmes & Apparence</div><div class="me-val" id="themeStatus">Sombre · Bleu Océan</div></div><div class="me-arr">›</div></div>
           <div class="me-row" onclick="goPg('pgSearch');setTimeout(initSearch,80)"><div class="me-ico">🔍</div><div class="me-body"><div class="me-lbl">Recherche globale</div><div class="me-val">Conversations, canaux, membres</div></div><div class="me-arr">›</div></div>
           <div class="me-row" onclick="goPg('pgNotifSettings');setTimeout(loadNotifSettings,80)"><div class="me-ico">🔔</div><div class="me-body"><div class="me-lbl">Notifications</div><div class="me-val" id="notifStatus">Cliquez pour configurer</div></div><div class="me-arr">›</div></div>
           <div class="me-row" onclick="goPg('pgGuide')"><div class="me-ico">❓</div><div class="me-body"><div class="me-lbl">Guide d'utilisation</div><div class="me-val">Comment utiliser GraceLink</div></div><div class="me-arr">›</div></div>
@@ -901,6 +1005,105 @@ a{color:var(--pr);text-decoration:none;}
           <div class="me-row" id="mvDobRow" style="display:none"><div class="me-ico">🎂</div><div class="me-body"><div class="me-lbl">Date de naissance</div><div class="me-val" id="mvDob">—</div></div></div>
           <div class="me-row" id="mvGenderRow" style="display:none"><div class="me-ico">🧑</div><div class="me-body"><div class="me-lbl">Genre</div><div class="me-val" id="mvGender">—</div></div></div>
         </div>
+      </div>
+    </div>
+
+    <!-- Thèmes & Apparence -->
+    <div id="pgTheme" class="pg">
+      <div class="hdr"><button class="hbk" onclick="backPg()">‹</button><div class="htitle"><div class="hn">Thèmes & Apparence</div></div></div>
+      <div class="scr">
+
+        <!-- Mode sombre / clair -->
+        <div class="th-section">
+          <span class="me-sec-title">Mode d'affichage</span>
+          <div class="th-mode-row">
+            <div class="theme-card" id="tc-dark" onclick="setThemeMode('dark')">
+              <div class="tp-wrap tp-dark">
+                <div class="tp-topbar"></div>
+                <div class="tp-msg-them"></div>
+                <div class="tp-msg-me"></div>
+                <div class="tp-msg-them" style="width:45%"></div>
+              </div>
+              <div class="tp-label">🌙 Sombre</div>
+            </div>
+            <div class="theme-card" id="tc-light" onclick="setThemeMode('light')">
+              <div class="tp-wrap tp-light">
+                <div class="tp-topbar"></div>
+                <div class="tp-msg-them"></div>
+                <div class="tp-msg-me"></div>
+                <div class="tp-msg-them" style="width:45%"></div>
+              </div>
+              <div class="tp-label">☀️ Clair</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Couleur d'accent -->
+        <div class="th-section">
+          <span class="me-sec-title">Couleur principale</span>
+          <div class="accent-swatches" id="accentSwatches">
+            <div class="acc-sw" id="as-blue" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8)" onclick="setThemeAccent('blue')">✓</div>
+            <div class="acc-sw" id="as-violet" style="background:linear-gradient(135deg,#7C3AED,#5B21B6)" onclick="setThemeAccent('violet')">✓</div>
+            <div class="acc-sw" id="as-emerald" style="background:linear-gradient(135deg,#059669,#047857)" onclick="setThemeAccent('emerald')">✓</div>
+            <div class="acc-sw" id="as-rose" style="background:linear-gradient(135deg,#E11D48,#9F1239)" onclick="setThemeAccent('rose')">✓</div>
+            <div class="acc-sw" id="as-sable" style="background:linear-gradient(135deg,#D97706,#92400E)" onclick="setThemeAccent('sable')">✓</div>
+          </div>
+          <div class="acc-lbl-row">
+            <div class="acc-lbl">Bleu Océan</div>
+            <div class="acc-lbl">Violet Élégance</div>
+            <div class="acc-lbl">Émeraude</div>
+            <div class="acc-lbl">Rose Éclat</div>
+            <div class="acc-lbl">Ambre Solaire</div>
+          </div>
+        </div>
+
+        <!-- Taille du texte -->
+        <div class="th-section">
+          <span class="me-sec-title">Taille du texte</span>
+          <div class="font-size-row">
+            <button class="fsize-opt" id="fo-normal" onclick="setFontSize('normal')">
+              <span class="fsz-a" style="font-size:15px">Aa</span>
+              <span class="fsz-l">Normal</span>
+            </button>
+            <button class="fsize-opt" id="fo-lg" onclick="setFontSize('lg')">
+              <span class="fsz-a" style="font-size:18px">Aa</span>
+              <span class="fsz-l">Grand</span>
+            </button>
+            <button class="fsize-opt" id="fo-xl" onclick="setFontSize('xl')">
+              <span class="fsz-a" style="font-size:22px">Aa</span>
+              <span class="fsz-l">Très grand</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Fond du chat -->
+        <div class="th-section">
+          <span class="me-sec-title">Motif du fond de conversation</span>
+          <div class="chatbg-row">
+            <div class="cbg-opt" id="cb-dots" onclick="setChatBg('dots')"><div class="cbg-preview cbg-p-dots"></div><div class="cbg-lbl">Points</div></div>
+            <div class="cbg-opt" id="cb-grid" onclick="setChatBg('grid')"><div class="cbg-preview cbg-p-grid"></div><div class="cbg-lbl">Grille</div></div>
+            <div class="cbg-opt" id="cb-hex" onclick="setChatBg('hex')"><div class="cbg-preview cbg-p-hex"></div><div class="cbg-lbl">Hexagones</div></div>
+            <div class="cbg-opt" id="cb-none" onclick="setChatBg('none')"><div class="cbg-preview cbg-p-none"></div><div class="cbg-lbl">Uni</div></div>
+          </div>
+        </div>
+
+        <!-- Aperçu en direct -->
+        <div class="th-section">
+          <span class="me-sec-title">Aperçu</span>
+          <div class="theme-preview-box">
+            <div class="tprev-hdr">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff">M</div>
+              <div><div style="font-size:14px;font-weight:700">Marie Dupont</div><div style="font-size:11px;color:var(--gn)">● En ligne</div></div>
+            </div>
+            <div class="msgs" style="padding:12px;min-height:140px;max-height:160px;overflow:hidden">
+              <div class="mrow them"><div class="bbl"><div>Bonjour ! Tu as vu le rapport ? 👋</div><div class="bmeta"><span class="bt">09:30</span></div></div></div>
+              <div class="mrow me"><div class="bbl"><div>Oui, je l'ai lu ce matin !</div><div class="bmeta"><span class="bt">09:31</span><span class="btick blue">✓✓</span></div></div></div>
+              <div class="mrow them"><div class="bbl"><div>Super, réunion à 14h 📅</div><div class="bmeta"><span class="bt">09:32</span></div></div></div>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+
       </div>
     </div>
 
@@ -1085,6 +1288,7 @@ function showMainPg(pgId){document.querySelectorAll('.pg').forEach(p=>p.classLis
 // ── Boot ──────────────────────────────────────────────────────────────
 window.addEventListener('load',()=>{
   if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  loadTheme();
   loadEmojis();
   auth.onAuthStateChanged(async u=>{
     if(u){
@@ -1719,6 +1923,56 @@ function renderDashboard(){
   }
   html+=`<div style="height:24px"></div>`;
   db_body.innerHTML=html;
+}
+
+// ── Theme System ─────────────────────────────────────────────────────
+const ACCENT_NAMES={blue:'Bleu Océan',violet:'Violet Élégance',emerald:'Émeraude',rose:'Rose Éclat',sable:'Ambre Solaire'};
+const ACCENT_CLASSES={violet:'accent-violet',emerald:'accent-emerald',rose:'accent-rose',sable:'accent-sable'};
+
+function loadTheme(){
+  const p=JSON.parse(localStorage.getItem('glTheme')||'{}');
+  _applyMode(p.mode||'dark');_applyAccent(p.accent||'blue');_applyFont(p.font||'normal');_applyChatBg(p.chatBg||'dots');
+  updateThemeStatusLabel();
+}
+function _applyMode(mode){
+  document.documentElement.classList.toggle('theme-light',mode==='light');
+}
+function _applyAccent(accent){
+  Object.values(ACCENT_CLASSES).forEach(c=>document.documentElement.classList.remove(c));
+  if(ACCENT_CLASSES[accent])document.documentElement.classList.add(ACCENT_CLASSES[accent]);
+}
+function _applyFont(size){
+  ['font-lg','font-xl'].forEach(c=>document.documentElement.classList.remove(c));
+  if(size==='lg')document.documentElement.classList.add('font-lg');
+  else if(size==='xl')document.documentElement.classList.add('font-xl');
+}
+function _applyChatBg(bg){
+  ['chat-grid','chat-hex','chat-none'].forEach(c=>document.documentElement.classList.remove(c));
+  if(bg==='grid')document.documentElement.classList.add('chat-grid');
+  else if(bg==='hex')document.documentElement.classList.add('chat-hex');
+  else if(bg==='none')document.documentElement.classList.add('chat-none');
+}
+function _savePref(key,val){
+  const p=JSON.parse(localStorage.getItem('glTheme')||'{}');p[key]=val;localStorage.setItem('glTheme',JSON.stringify(p));
+}
+function setThemeMode(mode){_applyMode(mode);_savePref('mode',mode);updateThemeUI();updateThemeStatusLabel();toast(mode==='dark'?'🌙 Mode sombre activé':'☀️ Mode clair activé');}
+function setThemeAccent(accent){_applyAccent(accent);_savePref('accent',accent);updateThemeUI();updateThemeStatusLabel();toast('🎨 '+ACCENT_NAMES[accent]+' appliqué');}
+function setFontSize(size){_applyFont(size);_savePref('font',size);updateThemeUI();toast({normal:'Texte normal ✓',lg:'Texte grand ✓',xl:'Texte très grand ✓'}[size]||'✓');}
+function setChatBg(bg){_applyChatBg(bg);_savePref('chatBg',bg);updateThemeUI();}
+
+function updateThemeStatusLabel(){
+  const p=JSON.parse(localStorage.getItem('glTheme')||'{}');
+  const mode=p.mode||'dark',accent=p.accent||'blue';
+  const el=$('themeStatus');if(el)el.textContent=(mode==='dark'?'🌙 Sombre':'☀️ Clair')+' · '+ACCENT_NAMES[accent];
+}
+
+function updateThemeUI(){
+  const p=JSON.parse(localStorage.getItem('glTheme')||'{}');
+  const mode=p.mode||'dark',accent=p.accent||'blue',font=p.font||'normal',chatBg=p.chatBg||'dots';
+  ['dark','light'].forEach(m=>{$('tc-'+m)?.classList.toggle('on',m===mode);});
+  ['blue','violet','emerald','rose','sable'].forEach(a=>{const el=$('as-'+a);if(el){el.classList.toggle('on',a===accent);el.style.fontSize=a===accent?'18px':'0';}});
+  ['normal','lg','xl'].forEach(s=>{$('fo-'+s)?.classList.toggle('on',s===font);});
+  ['dots','grid','hex','none'].forEach(b=>{$('cb-'+b)?.classList.toggle('on',b===chatBg);});
 }
 
 // ── Global Search ────────────────────────────────────────────────────
